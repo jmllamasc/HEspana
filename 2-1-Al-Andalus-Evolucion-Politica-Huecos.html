@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Esquema con huecos · Al-Ándalus: Evolución Política</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #1a1410;
+  --bg-card:   #241c16;
+  --bg-deep:   #14100c;
+  --ochre:     #c9912e;
+  --ochre-dim: #8a6420;
+  --ember:     #d4582a;
+  --ash:       #e8ddd0;
+  --ash-dim:   #a89a88;
+  --ash-faint: #6b6055;
+  --rule:      #3a2e24;
+  --ok:        #5a9e6f;
+  --ok-bg:     #1e2f24;
+  --ko:        #cf5b4e;
+  --ko-bg:     #321d1a;
+
+  --serif: 'Fraunces', Georgia, serif;
+  --sans:  'Inter', sans-serif;
+  --mono:  'JetBrains Mono', monospace;
+}
+
+body {
+  font-family: var(--sans);
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, #2a1f17 0%, transparent 60%),
+    var(--bg);
+  color: var(--ash);
+  min-height: 100vh;
+  line-height: 1.55;
+  padding-bottom: 80px;
+}
+
+/* ── HEADER ── */
+.masthead {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 48px 32px 28px;
+  border-bottom: 1px solid var(--rule);
+}
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--ochre);
+  margin-bottom: 14px;
+}
+.masthead h1 {
+  font-family: var(--serif);
+  font-weight: 900;
+  font-size: clamp(30px, 6vw, 50px);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  color: var(--ash);
+  margin-bottom: 12px;
+}
+.masthead p {
+  font-size: 15px;
+  color: var(--ash-dim);
+  max-width: 560px;
+}
+.howto {
+  display: flex;
+  gap: 22px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+  font-size: 13px;
+  color: var(--ash-dim);
+}
+.howto span { display: flex; align-items: center; gap: 7px; }
+.swatch {
+  width: 13px; height: 13px; border-radius: 3px; flex-shrink: 0;
+  display: inline-block;
+}
+.swatch.s-ok { background: var(--ok); }
+.swatch.s-ko { background: var(--ko); }
+.swatch.s-blank { background: transparent; border: 1.5px dashed var(--ochre); }
+
+/* ── SCORE BAR ── */
+.scorebar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(20,16,12,0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--rule);
+  padding: 12px 32px;
+}
+.scorebar-inner {
+  max-width: 880px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.score-label {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ash-faint);
+  letter-spacing: 1px;
+}
+.score-count {
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ochre);
+  min-width: 72px;
+}
+.score-track {
+  flex: 1;
+  min-width: 120px;
+  height: 6px;
+  background: var(--bg-deep);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.score-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--ochre-dim), var(--ochre), var(--ember));
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+.btn {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid var(--rule);
+  background: var(--bg-card);
+  color: var(--ash);
+  border-radius: 7px;
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.btn:hover { border-color: var(--ochre); color: var(--ochre); }
+.btn-primary { background: var(--ochre); color: var(--bg-deep); border-color: var(--ochre); }
+.btn-primary:hover { background: var(--ember); border-color: var(--ember); color: #fff; }
+
+/* ── CONTENT ── */
+.content {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 36px 32px 0;
+}
+
+.block {
+  margin-bottom: 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.block-head {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 21px;
+  color: var(--ochre);
+  padding: 18px 24px 14px;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.block-head .letter {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ash-faint);
+  border: 1px solid var(--rule);
+  border-radius: 5px;
+  padding: 2px 8px;
+}
+.block-body { padding: 16px 24px 22px; }
+
+.def {
+  font-style: italic;
+  color: var(--ash-dim);
+  border-left: 2px solid var(--ochre-dim);
+  padding: 4px 0 4px 16px;
+  margin-bottom: 16px;
+  font-family: var(--serif);
+  font-size: 16px;
+}
+
+.stage {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--ash);
+  margin: 18px 0 8px;
+  padding-top: 14px;
+  border-top: 1px dotted var(--rule);
+}
+.stage:first-child { border-top: none; padding-top: 0; }
+
+ul { list-style: none; }
+li {
+  position: relative;
+  padding: 3px 0 3px 20px;
+  font-size: 14.5px;
+  color: var(--ash);
+}
+li::before {
+  content: "";
+  position: absolute;
+  left: 4px; top: 13px;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--ochre-dim);
+}
+li li::before { background: none; border: 1px solid var(--ash-faint); top: 12px; width: 4px; height: 4px; }
+ul ul { margin-left: 6px; }
+ul ul li { font-size: 13.5px; color: var(--ash-dim); }
+
+b, strong { color: var(--ash); font-weight: 700; }
+em, i { color: var(--ash-dim); }
+
+/* ── BLANKS ── */
+.blank {
+  display: inline-flex;
+  align-items: baseline;
+}
+.blank input {
+  font-family: var(--mono);
+  font-size: 13.5px;
+  font-weight: 500;
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px dashed var(--ochre);
+  color: var(--ochre);
+  padding: 1px 4px 2px;
+  text-align: center;
+  outline: none;
+  transition: all 0.18s;
+  min-width: 70px;
+}
+.blank input::placeholder { color: var(--ash-faint); opacity: 0.5; }
+.blank input:focus { border-bottom-color: var(--ember); border-bottom-style: solid; }
+.blank input.correct {
+  border-bottom-style: solid;
+  border-bottom-color: var(--ok);
+  color: var(--ok);
+  background: var(--ok-bg);
+  border-radius: 4px 4px 0 0;
+}
+.blank input.wrong {
+  border-bottom-style: solid;
+  border-bottom-color: var(--ko);
+  color: var(--ko);
+  background: var(--ko-bg);
+  border-radius: 4px 4px 0 0;
+}
+.solution {
+  display: none;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ok);
+  margin-left: 5px;
+  white-space: nowrap;
+}
+.solution.show { display: inline; }
+
+/* ── FOOTER ── */
+.foot {
+  max-width: 880px;
+  margin: 40px auto 0;
+  padding: 0 32px;
+  text-align: center;
+}
+.result-card {
+  display: none;
+  background: var(--bg-card);
+  border: 1px solid var(--ochre-dim);
+  border-radius: 12px;
+  padding: 28px;
+}
+.result-card.show { display: block; }
+.result-card h2 {
+  font-family: var(--serif);
+  font-weight: 900;
+  font-size: 28px;
+  color: var(--ochre);
+  margin-bottom: 8px;
+}
+.result-card p { color: var(--ash-dim); font-size: 15px; }
+.result-big {
+  font-family: var(--mono);
+  font-size: 40px;
+  font-weight: 600;
+  color: var(--ash);
+  margin: 10px 0;
+}
+
+.tagline {
+  margin-top: 28px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: var(--ash-faint);
+  text-transform: uppercase;
+}
+
+@media (max-width: 600px) {
+  .masthead, .content, .scorebar { padding-left: 20px; padding-right: 20px; }
+  .block-body { padding: 14px 16px 18px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="eyebrow">Historia de España · 2.º Bachillerato · PAU</div>
+  <h1>Al-Ándalus: Evolución Política</h1>
+  <p>El esquema completo, con los datos clave en blanco. Escribe cada respuesta y comprueba. Trabaja la cuestión rellenando fechas, gobernantes, batallas y conceptos de memoria.</p>
+  <div class="howto">
+    <span><span class="swatch s-blank"></span> Hueco por rellenar</span>
+    <span><span class="swatch s-ok"></span> Acierto</span>
+    <span><span class="swatch s-ko"></span> Fallo (muestra solución)</span>
+  </div>
+</header>
+
+<div class="scorebar">
+  <div class="scorebar-inner">
+    <span class="score-label">ACIERTOS</span>
+    <span class="score-count" id="scoreCount">0 / 0</span>
+    <div class="score-track"><div class="score-fill" id="scoreFill"></div></div>
+    <button class="btn btn-primary" id="btnCheck">Comprobar</button>
+    <button class="btn" id="btnReveal">Ver soluciones</button>
+    <button class="btn" id="btnReset">Reiniciar</button>
+  </div>
+</div>
+
+<main class="content" id="content">
+
+  <!-- A. LA CONQUISTA -->
+  <section class="block">
+    <div class="block-head"><span class="letter">A</span> La Conquista Islámica (711-716)</div>
+    <div class="block-body">
+      <ul>
+        <li><b><span class="blank"><input data-answer="711" size="5" placeholder="¿año?"><span class="solution"></span></span></b> → <i><span class="blank"><input data-answer="Tarik" size="6" placeholder="¿líder?"><span class="solution"></span></span></i> derrota a <b><span class="blank"><input data-answer="Don Rodrigo" size="11" placeholder="¿rey?"><span class="solution"></span></span></b> en <b><span class="blank"><input data-answer="Guadalete" size="9" placeholder="¿batalla?"><span class="solution"></span></span></b></li>
+        <li><b><span class="blank"><input data-answer="716" size="5" placeholder="¿año?"><span class="solution"></span></span></b> → control de casi toda la península ⟶ se forma <b>Al-Ándalus</b></li>
+        <li>Estructura social desigual
+          <ul>
+            <li><b><span class="blank"><input data-answer="Árabes" size="6" placeholder="¿grupo?"><span class="solution"></span></span></b> → altos cargos</li>
+            <li><b><span class="blank"><input data-answer="Bereberes" size="9" placeholder="¿grupo?"><span class="solution"></span></span></b> → posición secundaria</li>
+          </ul>
+        </li>
+        <li>Tensión social ⟶ <b>revuelta bereber</b> (<i><span class="blank"><input data-answer="740" size="5" placeholder="¿año?"><span class="solution"></span></span></i>)</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- B. EL EMIRATO -->
+  <section class="block">
+    <div class="block-head"><span class="letter">B</span> El Emirato (711-929)</div>
+    <div class="block-body">
+      <div class="stage">1. Emirato Dependiente (711-756)</div>
+      <ul>
+        <li>Dependiente del <b>califato <span class="blank"><input data-answer="Omeya" size="6" placeholder="¿dinastía?"><span class="solution"></span></span></b> de <b><span class="blank"><input data-answer="Damasco" size="8" placeholder="¿ciudad?"><span class="solution"></span></span></b></li>
+      </ul>
+
+      <div class="stage">2. Emirato Independiente (756)</div>
+      <ul>
+        <li><b><span class="blank"><input data-answer="Abderramán I" size="13" placeholder="¿emir?"><span class="solution"></span></span></b> funda el emirato independiente → capital en <b><span class="blank"><input data-answer="Córdoba" size="7" placeholder="¿capital?"><span class="solution"></span></span></b> (<i><span class="blank"><input data-answer="756" size="5" placeholder="¿año?"><span class="solution"></span></span></i>)</li>
+        <li>Independencia <b>política</b> ⟶ NO <b><span class="blank"><input data-answer="religiosa" size="9" placeholder="¿?"><span class="solution"></span></span></b></li>
+        <li>Amenazas que controla → invasiones cristianas, ataque franco de <b><span class="blank"><input data-answer="Carlomagno" size="10" placeholder="¿rey franco?"><span class="solution"></span></span></b>, ataques vikingos</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- C. EL CALIFATO -->
+  <section class="block">
+    <div class="block-head"><span class="letter">C</span> El Califato de Córdoba (929-1031) · Esplendor</div>
+    <div class="block-body">
+      <ul>
+        <li><b><span class="blank"><input data-answer="929" size="5" placeholder="¿año?"><span class="solution"></span></span></b> → <b><span class="blank"><input data-answer="Abderramán III" size="14" placeholder="¿califa?"><span class="solution"></span></span></b> proclama el <b>Califato de Córdoba</b> (independencia política ↔ religiosa)
+          <ul>
+            <li>Vence al <b>imperio <span class="blank"><input data-answer="fatimí" size="6" placeholder="¿?"><span class="solution"></span></span></b></li>
+            <li>Conquista <b><span class="blank"><input data-answer="Ceuta" size="6" placeholder="¿ciudad?"><span class="solution"></span></span></b> y <b><span class="blank"><input data-answer="Melilla" size="7" placeholder="¿ciudad?"><span class="solution"></span></span></b></li>
+          </ul>
+        </li>
+        <li><b><span class="blank"><input data-answer="Al-Hakem II" size="11" placeholder="¿califa?"><span class="solution"></span></span></b> → impulso cultural ⟶ <b><span class="blank"><input data-answer="Medina Zahara" size="13" placeholder="¿ciudad palaciega?"><span class="solution"></span></span></b></li>
+        <li><b><span class="blank"><input data-answer="Hixam II" size="8" placeholder="¿califa?"><span class="solution"></span></span></b> → poder real en manos de <i><span class="blank"><input data-answer="Almanzor" size="8" placeholder="¿caudillo?"><span class="solution"></span></span></i>
+          <ul>
+            <li><b>"Razias"</b> (campañas de saqueo) contra <b><span class="blank"><input data-answer="Barcelona" size="9" placeholder="¿ciudad?"><span class="solution"></span></span></b> y <b><span class="blank"><input data-answer="Santiago" size="8" placeholder="¿ciudad?"><span class="solution"></span></span></b></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- D. CRISIS Y TAIFAS -->
+  <section class="block">
+    <div class="block-head"><span class="letter">D</span> Crisis y Reinos de Taifas (1002-1492)</div>
+    <div class="block-body">
+      <div class="stage">1. Caída del Califato</div>
+      <ul>
+        <li><b><span class="blank"><input data-answer="1002" size="5" placeholder="¿año?"><span class="solution"></span></span></b> → muerte de Almanzor en <b><span class="blank"><input data-answer="Calatañazor" size="11" placeholder="¿lugar?"><span class="solution"></span></span></b> ⟶ inicio de la crisis</li>
+        <li><b><span class="blank"><input data-answer="1031" size="5" placeholder="¿año?"><span class="solution"></span></span></b> → fin del califato → primeros <b>reinos de taifas</b>
+          <ul>
+            <li>Sometidos al pago de <b>"<span class="blank"><input data-answer="parias" size="6" placeholder="¿tributos?"><span class="solution"></span></span>"</b> (tributos a los cristianos)</li>
+          </ul>
+        </li>
+        <li><b><span class="blank"><input data-answer="1085" size="5" placeholder="¿año?"><span class="solution"></span></span></b> → <b><span class="blank"><input data-answer="Alfonso VI" size="10" placeholder="¿rey?"><span class="solution"></span></span></b> toma <b><span class="blank"><input data-answer="Toledo" size="6" placeholder="¿ciudad?"><span class="solution"></span></span></b></li>
+      </ul>
+
+      <div class="stage">2. Almorávides (1086-1145)</div>
+      <ul>
+        <li>Las taifas piden ayuda ⟶ llegan los <b><span class="blank"><input data-answer="almorávides" size="11" placeholder="¿dinastía?"><span class="solution"></span></span></b></li>
+        <li>Victorias → <b><span class="blank"><input data-answer="Sagrajas" size="8" placeholder="¿batalla?"><span class="solution"></span></span></b> (<i><span class="blank"><input data-answer="1086" size="5" placeholder="¿año?"><span class="solution"></span></span></i>) y <b><span class="blank"><input data-answer="Uclés" size="6" placeholder="¿batalla?"><span class="solution"></span></span></b> (<i><span class="blank"><input data-answer="1108" size="5" placeholder="¿año?"><span class="solution"></span></span></i>)</li>
+        <li>Tras su caída ⟶ <b>segundos reinos de taifas</b></li>
+      </ul>
+
+      <div class="stage">3. Almohades (1146-1232)</div>
+      <ul>
+        <li><b><span class="blank"><input data-answer="1146" size="5" placeholder="¿año?"><span class="solution"></span></span></b> → los <b><span class="blank"><input data-answer="almohades" size="9" placeholder="¿dinastía?"><span class="solution"></span></span></b> unifican Al-Ándalus</li>
+        <li><b><span class="blank"><input data-answer="1212" size="5" placeholder="¿año?"><span class="solution"></span></span></b> → derrota en <b><span class="blank"><input data-answer="Las Navas de Tolosa" size="18" placeholder="¿batalla?"><span class="solution"></span></span></b> ↔ coalición de <b><span class="blank"><input data-answer="Alfonso VIII" size="12" placeholder="¿rey?"><span class="solution"></span></span></b> de Castilla</li>
+        <li>Desaparición (1232) → <b>terceros reinos de taifas</b></li>
+      </ul>
+
+      <div class="stage">4. Reino Nazarí de Granada (1238-1492)</div>
+      <ul>
+        <li>Único reino superviviente a la Reconquista</li>
+        <li>Sometido a Castilla tras la derrota benimerín en el <b>río <span class="blank"><input data-answer="Salado" size="7" placeholder="¿río?"><span class="solution"></span></span></b> (<i><span class="blank"><input data-answer="1340" size="5" placeholder="¿año?"><span class="solution"></span></span></i>)</li>
+        <li><b><span class="blank"><input data-answer="1492" size="5" placeholder="¿año?"><span class="solution"></span></span></b> → conquista por los <b><span class="blank"><input data-answer="Reyes Católicos" size="15" placeholder="¿quiénes?"><span class="solution"></span></span></b> → fin de Al-Ándalus</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<div class="foot">
+  <div class="result-card" id="resultCard">
+    <h2 id="resultTitle">Resultado</h2>
+    <div class="result-big" id="resultBig">0 / 0</div>
+    <p id="resultMsg"></p>
+  </div>
+  <div class="tagline">Guadalete 711 ↔ inicio · Abderramán III 929 ↔ califato · parias ↔ debilidad · Las Navas 1212 ↔ giro · Granada 1492 ↔ fin</div>
+</div>
+
+<script>
+// Normaliza: minúsculas, sin tildes, espacios colapsados, sin puntos finales sueltos
+function norm(s) {
+  return s.toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/\s+/g, ' ')
+    .replace(/[.,;]+$/, '')
+    .trim();
+}
+
+const blanks = Array.from(document.querySelectorAll('.blank'));
+
+blanks.forEach(b => {
+  const input = b.querySelector('input');
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); checkAll(); }
+  });
+  input.addEventListener('input', () => {
+    input.classList.remove('correct', 'wrong');
+    b.querySelector('.solution').classList.remove('show');
+  });
+});
+
+function checkOne(b) {
+  const input = b.querySelector('input');
+  const sol = b.querySelector('.solution');
+  const answer = input.dataset.answer;
+  const val = input.value;
+  input.classList.remove('correct', 'wrong');
+  sol.classList.remove('show');
+  if (norm(val) === '' ) return null; // sin responder
+  if (norm(val) === norm(answer)) {
+    input.classList.add('correct');
+    return true;
+  } else {
+    input.classList.add('wrong');
+    sol.textContent = '→ ' + answer;
+    sol.classList.add('show');
+    return false;
+  }
+}
+
+function checkAll() {
+  let correct = 0;
+  blanks.forEach(b => { if (checkOne(b) === true) correct++; });
+  updateScore(correct);
+  showResult(correct);
+}
+
+function updateScore(correct) {
+  const total = blanks.length;
+  document.getElementById('scoreCount').textContent = correct + ' / ' + total;
+  document.getElementById('scoreFill').style.width = (correct/total*100) + '%';
+}
+
+function showResult(correct) {
+  const total = blanks.length;
+  const card = document.getElementById('resultCard');
+  card.classList.add('show');
+  document.getElementById('resultBig').textContent = correct + ' / ' + total;
+  const pct = correct/total;
+  let title, msg;
+  if (pct === 1)        { title = '¡Perfecto!'; msg = 'Dominas la cuestión por completo. Listo para la PAU.'; }
+  else if (pct >= 0.8)  { title = 'Muy bien'; msg = 'Casi impecable. Repasa los huecos en rojo y lo tendrás clavado.'; }
+  else if (pct >= 0.5)  { title = 'Vas por buen camino'; msg = 'Tienes la base. Fíjate en las fechas, gobernantes y batallas marcadas en rojo.'; }
+  else                  { title = 'Toca repasar'; msg = 'Vuelve al esquema completo, estudia y reinténtalo. La repetición es la clave.'; }
+  document.getElementById('resultTitle').textContent = title;
+  document.getElementById('resultMsg').textContent = msg;
+  card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+document.getElementById('btnCheck').addEventListener('click', checkAll);
+
+document.getElementById('btnReveal').addEventListener('click', () => {
+  blanks.forEach(b => {
+    const input = b.querySelector('input');
+    const sol = b.querySelector('.solution');
+    input.value = input.dataset.answer;
+    input.classList.remove('wrong');
+    input.classList.add('correct');
+    sol.classList.remove('show');
+  });
+  updateScore(blanks.length);
+});
+
+document.getElementById('btnReset').addEventListener('click', () => {
+  blanks.forEach(b => {
+    const input = b.querySelector('input');
+    input.value = '';
+    input.classList.remove('correct', 'wrong');
+    b.querySelector('.solution').classList.remove('show');
+  });
+  updateScore(0);
+  document.getElementById('resultCard').classList.remove('show');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+updateScore(0);
+</script>
+</body>
+</html>
