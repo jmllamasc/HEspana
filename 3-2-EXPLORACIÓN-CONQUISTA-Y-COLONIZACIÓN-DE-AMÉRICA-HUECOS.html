@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Esquema con huecos · Exploración, Conquista y Colonización de América</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #1a1410;
+  --bg-card:   #241c16;
+  --bg-deep:   #14100c;
+  --ochre:     #c9912e;
+  --ochre-dim: #8a6420;
+  --ember:     #d4582a;
+  --ash:       #e8ddd0;
+  --ash-dim:   #a89a88;
+  --ash-faint: #6b6055;
+  --rule:      #3a2e24;
+  --ok:        #5a9e6f;
+  --ok-bg:     #1e2f24;
+  --ko:        #cf5b4e;
+  --ko-bg:     #321d1a;
+
+  --serif: 'Fraunces', Georgia, serif;
+  --sans:  'Inter', sans-serif;
+  --mono:  'JetBrains Mono', monospace;
+}
+
+body {
+  font-family: var(--sans);
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, #2a1f17 0%, transparent 60%),
+    var(--bg);
+  color: var(--ash);
+  min-height: 100vh;
+  line-height: 1.55;
+  padding-bottom: 80px;
+}
+
+/* ── HEADER ── */
+.masthead {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 48px 32px 28px;
+  border-bottom: 1px solid var(--rule);
+}
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--ochre);
+  margin-bottom: 14px;
+}
+.masthead h1 {
+  font-family: var(--serif);
+  font-weight: 900;
+  font-size: clamp(30px, 6vw, 50px);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  color: var(--ash);
+  margin-bottom: 12px;
+}
+.masthead p {
+  font-size: 15px;
+  color: var(--ash-dim);
+  max-width: 560px;
+}
+.howto {
+  display: flex;
+  gap: 22px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+  font-size: 13px;
+  color: var(--ash-dim);
+}
+.howto span { display: flex; align-items: center; gap: 7px; }
+.swatch {
+  width: 13px; height: 13px; border-radius: 3px; flex-shrink: 0;
+  display: inline-block;
+}
+.swatch.s-ok { background: var(--ok); }
+.swatch.s-ko { background: var(--ko); }
+.swatch.s-blank { background: transparent; border: 1.5px dashed var(--ochre); }
+
+/* ── SCORE BAR ── */
+.scorebar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(20,16,12,0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--rule);
+  padding: 12px 32px;
+}
+.scorebar-inner {
+  max-width: 880px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.score-label {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ash-faint);
+  letter-spacing: 1px;
+}
+.score-count {
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ochre);
+  min-width: 72px;
+}
+.score-track {
+  flex: 1;
+  min-width: 120px;
+  height: 6px;
+  background: var(--bg-deep);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.score-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--ochre-dim), var(--ochre), var(--ember));
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+.btn {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid var(--rule);
+  background: var(--bg-card);
+  color: var(--ash);
+  border-radius: 7px;
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.btn:hover { border-color: var(--ochre); color: var(--ochre); }
+.btn-primary { background: var(--ochre); color: var(--bg-deep); border-color: var(--ochre); }
+.btn-primary:hover { background: var(--ember); border-color: var(--ember); color: #fff; }
+
+/* ── CONTENT ── */
+.content {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 36px 32px 0;
+}
+
+.block {
+  margin-bottom: 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.block-head {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 21px;
+  color: var(--ochre);
+  padding: 18px 24px 14px;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.block-head .letter {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ash-faint);
+  border: 1px solid var(--rule);
+  border-radius: 5px;
+  padding: 2px 8px;
+}
+.block-body { padding: 16px 24px 22px; }
+
+.def {
+  font-style: italic;
+  color: var(--ash-dim);
+  border-left: 2px solid var(--ochre-dim);
+  padding: 4px 0 4px 16px;
+  margin-bottom: 16px;
+  font-family: var(--serif);
+  font-size: 16px;
+}
+
+.stage {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--ash);
+  margin: 18px 0 8px;
+  padding-top: 14px;
+  border-top: 1px dotted var(--rule);
+}
+.stage:first-child { border-top: none; padding-top: 0; }
+
+ul { list-style: none; }
+li {
+  position: relative;
+  padding: 3px 0 3px 20px;
+  font-size: 14.5px;
+  color: var(--ash);
+}
+li::before {
+  content: "";
+  position: absolute;
+  left: 4px; top: 13px;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--ochre-dim);
+}
+li li::before { background: none; border: 1px solid var(--ash-faint); top: 12px; width: 4px; height: 4px; }
+ul ul { margin-left: 6px; }
+ul ul li { font-size: 13.5px; color: var(--ash-dim); }
+
+b, strong { color: var(--ash); font-weight: 700; }
+em, i { color: var(--ash-dim); }
+
+/* ── BLANKS ── */
+.blank {
+  display: inline-flex;
+  align-items: baseline;
+}
+.blank input {
+  font-family: var(--mono);
+  font-size: 13.5px;
+  font-weight: 500;
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px dashed var(--ochre);
+  color: var(--ochre);
+  padding: 1px 4px 2px;
+  text-align: center;
+  outline: none;
+  transition: all 0.18s;
+  min-width: 70px;
+}
+.blank input::placeholder { color: var(--ash-faint); opacity: 0.5; }
+.blank input:focus { border-bottom-color: var(--ember); border-bottom-style: solid; }
+.blank input.correct {
+  border-bottom-style: solid;
+  border-bottom-color: var(--ok);
+  color: var(--ok);
+  background: var(--ok-bg);
+  border-radius: 4px 4px 0 0;
+}
+.blank input.wrong {
+  border-bottom-style: solid;
+  border-bottom-color: var(--ko);
+  color: var(--ko);
+  background: var(--ko-bg);
+  border-radius: 4px 4px 0 0;
+}
+.solution {
+  display: none;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ok);
+  margin-left: 5px;
+  white-space: nowrap;
+}
+.solution.show { display: inline; }
+
+/* ── FOOTER ── */
+.foot {
+  max-width: 880px;
+  margin: 40px auto 0;
+  padding: 0 32px;
+  text-align: center;
+}
+.result-card {
+  display: none;
+  background: var(--bg-card);
+  border: 1px solid var(--ochre-dim);
+  border-radius: 12px;
+  padding: 28px;
+}
+.result-card.show { display: block; }
+.result-card h2 {
+  font-family: var(--serif);
+  font-weight: 900;
+  font-size: 28px;
+  color: var(--ochre);
+  margin-bottom: 8px;
+}
+.result-card p { color: var(--ash-dim); font-size: 15px; }
+.result-big {
+  font-family: var(--mono);
+  font-size: 40px;
+  font-weight: 600;
+  color: var(--ash);
+  margin: 10px 0;
+}
+
+.tagline {
+  margin-top: 28px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: var(--ash-faint);
+  text-transform: uppercase;
+}
+
+@media (max-width: 600px) {
+  .masthead, .content, .scorebar { padding-left: 20px; padding-right: 20px; }
+  .block-body { padding: 14px 16px 18px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="eyebrow">Historia de España · 2.º Bachillerato · PAU</div>
+  <h1>Exploración, Conquista y Colonización de América</h1>
+  <p>El esquema completo, con los datos clave en blanco. Escribe cada respuesta y comprueba. Trabaja la cuestión rellenando fechas, tratados, conquistadores y sistemas coloniales de memoria.</p>
+  <div class="howto">
+    <span><span class="swatch s-blank"></span> Hueco por rellenar</span>
+    <span><span class="swatch s-ok"></span> Acierto</span>
+    <span><span class="swatch s-ko"></span> Fallo (muestra solución)</span>
+  </div>
+</header>
+
+<div class="scorebar">
+  <div class="scorebar-inner">
+    <span class="score-label">ACIERTOS</span>
+    <span class="score-count" id="scoreCount">0 / 0</span>
+    <div class="score-track"><div class="score-fill" id="scoreFill"></div></div>
+    <button class="btn btn-primary" id="btnCheck">Comprobar</button>
+    <button class="btn" id="btnReveal">Ver soluciones</button>
+    <button class="btn" id="btnReset">Reiniciar</button>
+  </div>
+</div>
+
+<main class="content" id="content">
+
+  <!-- A. ANTECEDENTES Y DESCUBRIMIENTO -->
+  <section class="block">
+    <div class="block-head"><span class="letter">A</span> Antecedentes y descubrimiento</div>
+    <div class="block-body">
+      <ul>
+        <li><b>Castilla</b> inicia la expansión atlántica → conquista de <b><span class="blank"><input data-answer="Canarias" size="8" placeholder="¿islas?"><span class="solution"></span></span></b> → culmina en el descubrimiento de América (<i><span class="blank"><input data-answer="1492" size="5" placeholder="¿año?"><span class="solution"></span></span></i>)</li>
+        <li>Causas → <b>técnicas</b> (navegación), <b>religiosas</b> (catolicismo), <b>políticas</b> (competencia con <span class="blank"><input data-answer="Portugal" size="8" placeholder="¿país?"><span class="solution"></span></span>)</li>
+        <li><b>Capitulaciones de <span class="blank"><input data-answer="Santa Fe" size="9" placeholder="¿acuerdo?"><span class="solution"></span></span></b> (1492) ⟶ acuerdo entre <b>Isabel la Católica</b> y <b><span class="blank"><input data-answer="Cristóbal Colón" size="15" placeholder="¿navegante?"><span class="solution"></span></span></b>
+          <ul>
+            <li>Otorgan a Colón <b>gobierno</b> y <b>beneficios</b> de las tierras descubiertas</li>
+          </ul>
+        </li>
+        <li>El viaje
+          <ul>
+            <li>Parte del <b>Puerto de <span class="blank"><input data-answer="Palos" size="6" placeholder="¿puerto?"><span class="solution"></span></span></b> el <b>3 de agosto de 1492</b></li>
+            <li>Tres naves → la <b><span class="blank"><input data-answer="Pinta" size="6" placeholder="¿nave?"><span class="solution"></span></span></b>, la <b><span class="blank"><input data-answer="Niña" size="5" placeholder="¿nave?"><span class="solution"></span></span></b> y la <b><span class="blank"><input data-answer="Santa María" size="11" placeholder="¿nave?"><span class="solution"></span></span></b></li>
+            <li>Llega a <b><span class="blank"><input data-answer="Guanahaní" size="9" placeholder="¿isla?"><span class="solution"></span></span></b> el <b><span class="blank"><input data-answer="12 de octubre de 1492" size="20" placeholder="¿fecha?"><span class="solution"></span></span></b></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- B. REPARTO Y ETAPAS -->
+  <section class="block">
+    <div class="block-head"><span class="letter">B</span> Reparto y etapas de la expansión</div>
+    <div class="block-body">
+      <ul>
+        <li><b>Tratado de <span class="blank"><input data-answer="Tordesillas" size="11" placeholder="¿tratado?"><span class="solution"></span></span></b> (<i><span class="blank"><input data-answer="1494" size="5" placeholder="¿año?"><span class="solution"></span></span></i>) → fija zonas de influencia
+          <ul>
+            <li><b>Castilla</b> al <b><span class="blank"><input data-answer="oeste" size="6" placeholder="¿dirección?"><span class="solution"></span></span></b> ↔ <b>Portugal</b> al <b><span class="blank"><input data-answer="este" size="5" placeholder="¿dirección?"><span class="solution"></span></span></b></li>
+          </ul>
+        </li>
+      </ul>
+
+      <div class="stage">1. Etapa antillana (1493-1519)</div>
+      <ul>
+        <li>Centrada en el <b><span class="blank"><input data-answer="Caribe" size="6" placeholder="¿zona?"><span class="solution"></span></span></b></li>
+        <li><b>1513</b> → <b><span class="blank"><input data-answer="Núñez de Balboa" size="15" placeholder="¿explorador?"><span class="solution"></span></span></b> descubre el océano <b><span class="blank"><input data-answer="Pacífico" size="8" placeholder="¿océano?"><span class="solution"></span></span></b></li>
+        <li><b>1519-1522</b> → <b><span class="blank"><input data-answer="Magallanes-Elcano" size="17" placeholder="¿navegantes?"><span class="solution"></span></span></b> → primera vuelta al mundo</li>
+      </ul>
+
+      <div class="stage">2. Etapa continental (1519-1550)</div>
+      <ul>
+        <li><b><span class="blank"><input data-answer="Hernán Cortés" size="13" placeholder="¿conquistador?"><span class="solution"></span></span></b> (1519-1521) → conquista del Imperio <b><span class="blank"><input data-answer="Azteca" size="6" placeholder="¿imperio?"><span class="solution"></span></span></b></li>
+        <li><b><span class="blank"><input data-answer="Francisco Pizarro" size="17" placeholder="¿conquistador?"><span class="solution"></span></span></b> (1531-1533) → conquista del Imperio <b><span class="blank"><input data-answer="Inca" size="5" placeholder="¿imperio?"><span class="solution"></span></span></b></li>
+        <li>Otras figuras → <b>F. de Orellana</b> (<i><span class="blank"><input data-answer="Amazonas" size="8" placeholder="¿río?"><span class="solution"></span></span></i>), Hernando de Soto (Mississippi), Pedro de Mendoza (río de la Plata), <b>Pedro de Valdivia</b> (<i><span class="blank"><input data-answer="Chile" size="5" placeholder="¿territorio?"><span class="solution"></span></span></i>)</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- C. LA COLONIZACIÓN -->
+  <section class="block">
+    <div class="block-head"><span class="letter">C</span> La colonización</div>
+    <div class="block-body">
+      <ul>
+        <li>Organización → América en <b><span class="blank"><input data-answer="virreinatos" size="11" placeholder="¿unidades?"><span class="solution"></span></span></b> → <b>Nueva España</b> ↔ <b><span class="blank"><input data-answer="Perú" size="5" placeholder="¿virreinato?"><span class="solution"></span></span></b></li>
+        <li>Sistemas de explotación
+          <ul>
+            <li><b><span class="blank"><input data-answer="Encomienda" size="10" placeholder="¿sistema?"><span class="solution"></span></span></b> → trabajo indígena a cambio de protección y evangelización</li>
+            <li><b><span class="blank"><input data-answer="Requerimiento" size="13" placeholder="¿texto legal?"><span class="solution"></span></span></b> → texto legal que exigía sumisión al indígena</li>
+            <li><b><span class="blank"><input data-answer="Mita" size="5" placeholder="¿sistema?"><span class="solution"></span></span></b> → trabajo forzado por turnos</li>
+          </ul>
+        </li>
+        <li>Consecuencias demográficas
+          <ul>
+            <li>Gran pérdida demográfica ⟶ enfermedades y abusos</li>
+            <li>Denuncia de <b><span class="blank"><input data-answer="Bartolomé de las Casas" size="22" placeholder="¿defensor?"><span class="solution"></span></span></b> → influye en las <b>Leyes de Indias</b></li>
+            <li>Aun así → continuó la <b>esclavitud negra</b></li>
+          </ul>
+        </li>
+        <li>Imposición cultural → <b><span class="blank"><input data-answer="castellano" size="10" placeholder="¿lengua?"><span class="solution"></span></span></b>, catolicismo, economía monetaria, nuevos cultivos (trigo, cebada, olivo) y animales (caballo, oveja, vaca)</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- D. CONSECUENCIAS PARA EUROPA -->
+  <section class="block">
+    <div class="block-head"><span class="letter">D</span> Consecuencias para Europa</div>
+    <div class="block-body">
+      <ul>
+        <li>América aporta <b>hegemonía a la Monarquía Hispánica</b> en el <b>siglo XVI</b></li>
+        <li>Nuevos productos a Europa → <b><span class="blank"><input data-answer="patata" size="6" placeholder="¿producto?"><span class="solution"></span></span></b>, <b><span class="blank"><input data-answer="cacao" size="5" placeholder="¿producto?"><span class="solution"></span></span></b>, <b><span class="blank"><input data-answer="maíz" size="5" placeholder="¿producto?"><span class="solution"></span></span></b>, algodón, pavo</li>
+        <li>Grandes ingresos por el control del <b>tráfico comercial</b></li>
+        <li>⟶ provocan una enorme <b><span class="blank"><input data-answer="inflación" size="9" placeholder="¿fenómeno?"><span class="solution"></span></span></b> de precios en el <b>siglo XVII</b></li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<div class="foot">
+  <div class="result-card" id="resultCard">
+    <h2 id="resultTitle">Resultado</h2>
+    <div class="result-big" id="resultBig">0 / 0</div>
+    <p id="resultMsg"></p>
+  </div>
+  <div class="tagline">Santa Fe 1492 ↔ base jurídica · 12-oct-1492 ↔ descubrimiento · Tordesillas 1494 ↔ reparto · Cortés/Pizarro ↔ aztecas/incas · inflación s. XVII</div>
+</div>
+
+<script>
+// Normaliza: minúsculas, sin tildes, espacios colapsados, sin puntos finales sueltos
+function norm(s) {
+  return s.toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/\s+/g, ' ')
+    .replace(/[.,;]+$/, '')
+    .trim();
+}
+
+const blanks = Array.from(document.querySelectorAll('.blank'));
+
+blanks.forEach(b => {
+  const input = b.querySelector('input');
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); checkAll(); }
+  });
+  input.addEventListener('input', () => {
+    input.classList.remove('correct', 'wrong');
+    b.querySelector('.solution').classList.remove('show');
+  });
+});
+
+function checkOne(b) {
+  const input = b.querySelector('input');
+  const sol = b.querySelector('.solution');
+  const answer = input.dataset.answer;
+  const val = input.value;
+  input.classList.remove('correct', 'wrong');
+  sol.classList.remove('show');
+  if (norm(val) === '' ) return null; // sin responder
+  if (norm(val) === norm(answer)) {
+    input.classList.add('correct');
+    return true;
+  } else {
+    input.classList.add('wrong');
+    sol.textContent = '→ ' + answer;
+    sol.classList.add('show');
+    return false;
+  }
+}
+
+function checkAll() {
+  let correct = 0;
+  blanks.forEach(b => { if (checkOne(b) === true) correct++; });
+  updateScore(correct);
+  showResult(correct);
+}
+
+function updateScore(correct) {
+  const total = blanks.length;
+  document.getElementById('scoreCount').textContent = correct + ' / ' + total;
+  document.getElementById('scoreFill').style.width = (correct/total*100) + '%';
+}
+
+function showResult(correct) {
+  const total = blanks.length;
+  const card = document.getElementById('resultCard');
+  card.classList.add('show');
+  document.getElementById('resultBig').textContent = correct + ' / ' + total;
+  const pct = correct/total;
+  let title, msg;
+  if (pct === 1)        { title = '¡Perfecto!'; msg = 'Dominas la cuestión por completo. Listo para la PAU.'; }
+  else if (pct >= 0.8)  { title = 'Muy bien'; msg = 'Casi impecable. Repasa los huecos en rojo y lo tendrás clavado.'; }
+  else if (pct >= 0.5)  { title = 'Vas por buen camino'; msg = 'Tienes la base. Fíjate en las fechas, conquistadores y sistemas marcados en rojo.'; }
+  else                  { title = 'Toca repasar'; msg = 'Vuelve al esquema completo, estudia y reinténtalo. La repetición es la clave.'; }
+  document.getElementById('resultTitle').textContent = title;
+  document.getElementById('resultMsg').textContent = msg;
+  card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+document.getElementById('btnCheck').addEventListener('click', checkAll);
+
+document.getElementById('btnReveal').addEventListener('click', () => {
+  blanks.forEach(b => {
+    const input = b.querySelector('input');
+    const sol = b.querySelector('.solution');
+    input.value = input.dataset.answer;
+    input.classList.remove('wrong');
+    input.classList.add('correct');
+    sol.classList.remove('show');
+  });
+  updateScore(blanks.length);
+});
+
+document.getElementById('btnReset').addEventListener('click', () => {
+  blanks.forEach(b => {
+    const input = b.querySelector('input');
+    input.value = '';
+    input.classList.remove('correct', 'wrong');
+    b.querySelector('.solution').classList.remove('show');
+  });
+  updateScore(0);
+  document.getElementById('resultCard').classList.remove('show');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+updateScore(0);
+</script>
+</body>
+</html>

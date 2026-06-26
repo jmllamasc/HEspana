@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Esquema con huecos · Los Austrias del Siglo XVII</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #1a1410;
+  --bg-card:   #241c16;
+  --bg-deep:   #14100c;
+  --ochre:     #c9912e;
+  --ochre-dim: #8a6420;
+  --ember:     #d4582a;
+  --ash:       #e8ddd0;
+  --ash-dim:   #a89a88;
+  --ash-faint: #6b6055;
+  --rule:      #3a2e24;
+  --ok:        #5a9e6f;
+  --ok-bg:     #1e2f24;
+  --ko:        #cf5b4e;
+  --ko-bg:     #321d1a;
+
+  --serif: 'Fraunces', Georgia, serif;
+  --sans:  'Inter', sans-serif;
+  --mono:  'JetBrains Mono', monospace;
+}
+
+body {
+  font-family: var(--sans);
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, #2a1f17 0%, transparent 60%),
+    var(--bg);
+  color: var(--ash);
+  min-height: 100vh;
+  line-height: 1.55;
+  padding-bottom: 80px;
+}
+
+/* ── HEADER ── */
+.masthead {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 48px 32px 28px;
+  border-bottom: 1px solid var(--rule);
+}
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--ochre);
+  margin-bottom: 14px;
+}
+.masthead h1 {
+  font-family: var(--serif);
+  font-weight: 900;
+  font-size: clamp(30px, 6vw, 50px);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  color: var(--ash);
+  margin-bottom: 12px;
+}
+.masthead p {
+  font-size: 15px;
+  color: var(--ash-dim);
+  max-width: 560px;
+}
+.howto {
+  display: flex;
+  gap: 22px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+  font-size: 13px;
+  color: var(--ash-dim);
+}
+.howto span { display: flex; align-items: center; gap: 7px; }
+.swatch {
+  width: 13px; height: 13px; border-radius: 3px; flex-shrink: 0;
+  display: inline-block;
+}
+.swatch.s-ok { background: var(--ok); }
+.swatch.s-ko { background: var(--ko); }
+.swatch.s-blank { background: transparent; border: 1.5px dashed var(--ochre); }
+
+/* ── SCORE BAR ── */
+.scorebar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(20,16,12,0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--rule);
+  padding: 12px 32px;
+}
+.scorebar-inner {
+  max-width: 880px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.score-label {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ash-faint);
+  letter-spacing: 1px;
+}
+.score-count {
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ochre);
+  min-width: 72px;
+}
+.score-track {
+  flex: 1;
+  min-width: 120px;
+  height: 6px;
+  background: var(--bg-deep);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.score-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--ochre-dim), var(--ochre), var(--ember));
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+.btn {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid var(--rule);
+  background: var(--bg-card);
+  color: var(--ash);
+  border-radius: 7px;
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.btn:hover { border-color: var(--ochre); color: var(--ochre); }
+.btn-primary { background: var(--ochre); color: var(--bg-deep); border-color: var(--ochre); }
+.btn-primary:hover { background: var(--ember); border-color: var(--ember); color: #fff; }
+
+/* ── CONTENT ── */
+.content {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 36px 32px 0;
+}
+
+.block {
+  margin-bottom: 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.block-head {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 21px;
+  color: var(--ochre);
+  padding: 18px 24px 14px;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.block-head .letter {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ash-faint);
+  border: 1px solid var(--rule);
+  border-radius: 5px;
+  padding: 2px 8px;
+}
+.block-body { padding: 16px 24px 22px; }
+
+.def {
+  font-style: italic;
+  color: var(--ash-dim);
+  border-left: 2px solid var(--ochre-dim);
+  padding: 4px 0 4px 16px;
+  margin-bottom: 16px;
+  font-family: var(--serif);
+  font-size: 16px;
+}
+
+.stage {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--ash);
+  margin: 18px 0 8px;
+  padding-top: 14px;
+  border-top: 1px dotted var(--rule);
+}
+.stage:first-child { border-top: none; padding-top: 0; }
+
+ul { list-style: none; }
+li {
+  position: relative;
+  padding: 3px 0 3px 20px;
+  font-size: 14.5px;
+  color: var(--ash);
+}
+li::before {
+  content: "";
+  position: absolute;
+  left: 4px; top: 13px;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--ochre-dim);
+}
+li li::before { background: none; border: 1px solid var(--ash-faint); top: 12px; width: 4px; height: 4px; }
+ul ul { margin-left: 6px; }
+ul ul li { font-size: 13.5px; color: var(--ash-dim); }
+
+b, strong { color: var(--ash); font-weight: 700; }
+em, i { color: var(--ash-dim); }
+
+/* ── BLANKS ── */
+.blank {
+  display: inline-flex;
+  align-items: baseline;
+}
+.blank input {
+  font-family: var(--mono);
+  font-size: 13.5px;
+  font-weight: 500;
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px dashed var(--ochre);
+  color: var(--ochre);
+  padding: 1px 4px 2px;
+  text-align: center;
+  outline: none;
+  transition: all 0.18s;
+  min-width: 70px;
+}
+.blank input::placeholder { color: var(--ash-faint); opacity: 0.5; }
+.blank input:focus { border-bottom-color: var(--ember); border-bottom-style: solid; }
+.blank input.correct {
+  border-bottom-style: solid;
+  border-bottom-color: var(--ok);
+  color: var(--ok);
+  background: var(--ok-bg);
+  border-radius: 4px 4px 0 0;
+}
+.blank input.wrong {
+  border-bottom-style: solid;
+  border-bottom-color: var(--ko);
+  color: var(--ko);
+  background: var(--ko-bg);
+  border-radius: 4px 4px 0 0;
+}
+.solution {
+  display: none;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ok);
+  margin-left: 5px;
+  white-space: nowrap;
+}
+.solution.show { display: inline; }
+
+/* ── FOOTER ── */
+.foot {
+  max-width: 880px;
+  margin: 40px auto 0;
+  padding: 0 32px;
+  text-align: center;
+}
+.result-card {
+  display: none;
+  background: var(--bg-card);
+  border: 1px solid var(--ochre-dim);
+  border-radius: 12px;
+  padding: 28px;
+}
+.result-card.show { display: block; }
+.result-card h2 {
+  font-family: var(--serif);
+  font-weight: 900;
+  font-size: 28px;
+  color: var(--ochre);
+  margin-bottom: 8px;
+}
+.result-card p { color: var(--ash-dim); font-size: 15px; }
+.result-big {
+  font-family: var(--mono);
+  font-size: 40px;
+  font-weight: 600;
+  color: var(--ash);
+  margin: 10px 0;
+}
+
+.tagline {
+  margin-top: 28px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: var(--ash-faint);
+  text-transform: uppercase;
+}
+
+@media (max-width: 600px) {
+  .masthead, .content, .scorebar { padding-left: 20px; padding-right: 20px; }
+  .block-body { padding: 14px 16px 18px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="eyebrow">Historia de España · 2.º Bachillerato · PAU</div>
+  <h1>Los Austrias del Siglo XVII</h1>
+  <p>El esquema completo, con los datos clave en blanco. Escribe cada respuesta y comprueba. Trabaja la cuestión rellenando monarcas, validos, fechas y conflictos de memoria.</p>
+  <div class="howto">
+    <span><span class="swatch s-blank"></span> Hueco por rellenar</span>
+    <span><span class="swatch s-ok"></span> Acierto</span>
+    <span><span class="swatch s-ko"></span> Fallo (muestra solución)</span>
+  </div>
+</header>
+
+<div class="scorebar">
+  <div class="scorebar-inner">
+    <span class="score-label">ACIERTOS</span>
+    <span class="score-count" id="scoreCount">0 / 0</span>
+    <div class="score-track"><div class="score-fill" id="scoreFill"></div></div>
+    <button class="btn btn-primary" id="btnCheck">Comprobar</button>
+    <button class="btn" id="btnReveal">Ver soluciones</button>
+    <button class="btn" id="btnReset">Reiniciar</button>
+  </div>
+</div>
+
+<main class="content" id="content">
+
+  <!-- A. POLÍTICA INTERIOR -->
+  <section class="block">
+    <div class="block-head"><span class="letter">A</span> Política Interior: los Austrias Menores y sus Validos</div>
+    <div class="block-body">
+      <div class="def">S. XVII → profunda <b>crisis</b> económica, política y social. Los <i>Austrias menores</i> delegaron el poder en <b><span class="blank"><input data-answer="validos" size="7" placeholder="¿en quién?"><span class="solution"></span></span></b>, al margen de los consejos.</div>
+
+      <div class="stage">1. Felipe III (1598-1621) ↔ Duque de Lerma</div>
+      <ul>
+        <li>Política exterior <b><span class="blank"><input data-answer="pacifista" size="9" placeholder="¿tipo?"><span class="solution"></span></span></b></li>
+        <li><b>Expulsión de los moriscos</b> (<i><span class="blank"><input data-answer="1609" size="5" placeholder="¿año?"><span class="solution"></span></span></i>) ⟶ agravó la crisis económica</li>
+      </ul>
+
+      <div class="stage">2. Felipe IV (1621-1665) ↔ Conde-Duque de Olivares</div>
+      <ul>
+        <li>Reformas modernizadoras
+          <ul>
+            <li>Creación de un <b>banco estatal</b></li>
+            <li>Unificación jurídica → <b><span class="blank"><input data-answer="Gran Memorial" size="13" placeholder="¿documento?"><span class="solution"></span></span></b></li>
+            <li>Ejército permanente → <b><span class="blank"><input data-answer="Unión de Armas" size="14" placeholder="¿proyecto?"><span class="solution"></span></span></b> (<i><span class="blank"><input data-answer="1626" size="5" placeholder="¿año?"><span class="solution"></span></span></i>)</li>
+          </ul>
+        </li>
+        <li>Consecuencia → <b>Crisis de <span class="blank"><input data-answer="1640" size="5" placeholder="¿año?"><span class="solution"></span></span></b>
+          <ul>
+            <li>Rebelión de <b><span class="blank"><input data-answer="Cataluña" size="8" placeholder="¿territorio?"><span class="solution"></span></span></b> → <i>Guerra de los Segadores</i></li>
+            <li>Independencia de <b><span class="blank"><input data-answer="Portugal" size="8" placeholder="¿reino?"><span class="solution"></span></span></b> → Tratado de Lisboa (1668)</li>
+          </ul>
+        </li>
+      </ul>
+
+      <div class="stage">3. Carlos II (1665-1700) → la decadencia final</div>
+      <ul>
+        <li>Inicio con la regencia de <b><span class="blank"><input data-answer="Mariana de Austria" size="18" placeholder="¿regente?"><span class="solution"></span></span></b></li>
+        <li>Conflictos internos → <b>Motín de los <span class="blank"><input data-answer="Gatos" size="6" placeholder="¿?"><span class="solution"></span></span></b> (1699) y <b>Segunda Germanía</b></li>
+        <li>Muere <b>sin descendencia</b> ⟶ abre el problema sucesorio</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- B. POLÍTICA EXTERIOR -->
+  <section class="block">
+    <div class="block-head"><span class="letter">B</span> Política Exterior: Hegemonía y Catolicismo</div>
+    <div class="block-body">
+      <div class="stage">1. Guerra de los Treinta Años (1618-1648)</div>
+      <ul>
+        <li>Objetivo → defender la <b>hegemonía</b> española y el <b>catolicismo</b></li>
+        <li>Victoria → <b><span class="blank"><input data-answer="Breda" size="6" placeholder="¿batalla?"><span class="solution"></span></span></b></li>
+        <li>Derrota → <b><span class="blank"><input data-answer="Rocroi" size="6" placeholder="¿batalla?"><span class="solution"></span></span></b></li>
+        <li><b>Paz de <span class="blank"><input data-answer="Westfalia" size="9" placeholder="¿paz?"><span class="solution"></span></span></b> (<i><span class="blank"><input data-answer="1648" size="5" placeholder="¿año?"><span class="solution"></span></span></i>) → reconoció la independencia de las <b><span class="blank"><input data-answer="Provincias Unidas" size="17" placeholder="¿territorio?"><span class="solution"></span></span></b></li>
+      </ul>
+
+      <div class="stage">2. Paz de los Pirineos (1659)</div>
+      <ul>
+        <li>Marcó la <b>decadencia española</b> ↔ ascenso de <b><span class="blank"><input data-answer="Francia" size="7" placeholder="¿país?"><span class="solution"></span></span></b></li>
+        <li>Sellada con el matrimonio <b><span class="blank"><input data-answer="Luis XIV" size="8" placeholder="¿rey?"><span class="solution"></span></span></b> ↔ <b>María Teresa de Austria</b></li>
+        <li>⟶ origen de futuras <b>aspiraciones borbónicas</b></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- C. GUERRA DE SUCESIÓN -->
+  <section class="block">
+    <div class="block-head"><span class="letter">C</span> La Guerra de Sucesión (1701-1714)</div>
+    <div class="block-body">
+      <ul>
+        <li>Causa → muerte de <b>Carlos II</b> sin descendencia</li>
+        <li>Contendientes → <b><span class="blank"><input data-answer="Felipe de Anjou" size="15" placeholder="¿candidato?"><span class="solution"></span></span></b> (Borbón) ↔ <b><span class="blank"><input data-answer="Carlos de Austria" size="17" placeholder="¿candidato?"><span class="solution"></span></span></b></li>
+        <li>Victorias decisivas → <b><span class="blank"><input data-answer="Almansa" size="7" placeholder="¿batalla?"><span class="solution"></span></span></b> y <b><span class="blank"><input data-answer="Villaviciosa" size="12" placeholder="¿batalla?"><span class="solution"></span></span></b></li>
+        <li>Resultado → triunfo de <b><span class="blank"><input data-answer="Felipe V" size="8" placeholder="¿rey?"><span class="solution"></span></span></b></li>
+        <li><b>Tratado de <span class="blank"><input data-answer="Utrecht" size="7" placeholder="¿tratado?"><span class="solution"></span></span></b> ⟶ consolidó la <b>dinastía borbónica</b></li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<div class="foot">
+  <div class="result-card" id="resultCard">
+    <h2 id="resultTitle">Resultado</h2>
+    <div class="result-big" id="resultBig">0 / 0</div>
+    <p id="resultMsg"></p>
+  </div>
+  <div class="tagline">Validos ↔ Austrias menores · moriscos 1609 ↔ crisis · 1640 Cataluña/Portugal ↔ fractura · Rocroi/Westfalia ↔ fin hegemonía · Utrecht ↔ Borbones</div>
+</div>
+
+<script>
+// Normaliza: minúsculas, sin tildes, espacios colapsados, sin puntos finales sueltos
+function norm(s) {
+  return s.toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/\s+/g, ' ')
+    .replace(/[.,;]+$/, '')
+    .trim();
+}
+
+const blanks = Array.from(document.querySelectorAll('.blank'));
+
+blanks.forEach(b => {
+  const input = b.querySelector('input');
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); checkAll(); }
+  });
+  input.addEventListener('input', () => {
+    input.classList.remove('correct', 'wrong');
+    b.querySelector('.solution').classList.remove('show');
+  });
+});
+
+function checkOne(b) {
+  const input = b.querySelector('input');
+  const sol = b.querySelector('.solution');
+  const answer = input.dataset.answer;
+  const val = input.value;
+  input.classList.remove('correct', 'wrong');
+  sol.classList.remove('show');
+  if (norm(val) === '' ) return null; // sin responder
+  if (norm(val) === norm(answer)) {
+    input.classList.add('correct');
+    return true;
+  } else {
+    input.classList.add('wrong');
+    sol.textContent = '→ ' + answer;
+    sol.classList.add('show');
+    return false;
+  }
+}
+
+function checkAll() {
+  let correct = 0;
+  blanks.forEach(b => { if (checkOne(b) === true) correct++; });
+  updateScore(correct);
+  showResult(correct);
+}
+
+function updateScore(correct) {
+  const total = blanks.length;
+  document.getElementById('scoreCount').textContent = correct + ' / ' + total;
+  document.getElementById('scoreFill').style.width = (correct/total*100) + '%';
+}
+
+function showResult(correct) {
+  const total = blanks.length;
+  const card = document.getElementById('resultCard');
+  card.classList.add('show');
+  document.getElementById('resultBig').textContent = correct + ' / ' + total;
+  const pct = correct/total;
+  let title, msg;
+  if (pct === 1)        { title = '¡Perfecto!'; msg = 'Dominas la cuestión por completo. Listo para la PAU.'; }
+  else if (pct >= 0.8)  { title = 'Muy bien'; msg = 'Casi impecable. Repasa los huecos en rojo y lo tendrás clavado.'; }
+  else if (pct >= 0.5)  { title = 'Vas por buen camino'; msg = 'Tienes la base. Fíjate en los validos, fechas y conflictos marcados en rojo.'; }
+  else                  { title = 'Toca repasar'; msg = 'Vuelve al esquema completo, estudia y reinténtalo. La repetición es la clave.'; }
+  document.getElementById('resultTitle').textContent = title;
+  document.getElementById('resultMsg').textContent = msg;
+  card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+document.getElementById('btnCheck').addEventListener('click', checkAll);
+
+document.getElementById('btnReveal').addEventListener('click', () => {
+  blanks.forEach(b => {
+    const input = b.querySelector('input');
+    const sol = b.querySelector('.solution');
+    input.value = input.dataset.answer;
+    input.classList.remove('wrong');
+    input.classList.add('correct');
+    sol.classList.remove('show');
+  });
+  updateScore(blanks.length);
+});
+
+document.getElementById('btnReset').addEventListener('click', () => {
+  blanks.forEach(b => {
+    const input = b.querySelector('input');
+    input.value = '';
+    input.classList.remove('correct', 'wrong');
+    b.querySelector('.solution').classList.remove('show');
+  });
+  updateScore(0);
+  document.getElementById('resultCard').classList.remove('show');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+updateScore(0);
+</script>
+</body>
+</html>
