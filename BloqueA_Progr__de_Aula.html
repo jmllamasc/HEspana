@@ -472,10 +472,11 @@ body {
 }
 .duo {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 12px;
   margin-bottom: 40px;
 }
+@media (max-width: 900px) { .duo { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 640px) { .duo { grid-template-columns: 1fr; } }
 .duo-card {
   background: var(--white);
@@ -489,6 +490,8 @@ body {
   transition: box-shadow 0.15s;
 }
 .duo-card.blue { border-top-color: var(--a1); }
+.duo-card.granate { border-top-color: #7B1A1A; }
+.duo-card.granate .duo-link { color: #7B1A1A; }
 .duo-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
 .duo-icon { font-size: 24px; }
 .duo-title { font-family: var(--serif); font-size: 17px; margin-top: 10px; color: var(--ink); }
@@ -758,9 +761,15 @@ body {
   <div class="duo-head">
     <span class="section-code" style="background: var(--ink);">BLOQUE A</span>
     <span class="section-title">Materiales transversales</span>
-    <span class="section-count">2 recursos</span>
+    <span class="section-count">3 recursos</span>
   </div>
   <div class="duo">
+    <a class="duo-card granate" href="https://jmllamasc.github.io/HEspana/Cuaderno-de-bitacora.html" target="_blank" rel="noopener">
+      <div class="duo-icon">🧭</div>
+      <div class="duo-title">Cuaderno de bitácora</div>
+      <div class="duo-desc">Cómo trabajar cada cuestión en casa y en clase, cómo es el examen y semáforo de autoevaluación de las 18 cuestiones.</div>
+      <span class="duo-link">ABRIR RECURSO →</span>
+    </a>
     <a class="duo-card" href="https://jmllamasc.github.io/HEspana/A3-como-elaborar-un-esquema.html" target="_blank" rel="noopener">
       <div class="duo-icon">✍</div>
       <div class="duo-title">A3 · ¿Cómo elaborar un esquema?</div>
