@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¿Cómo elaborar un esquema?</title>
+<meta name="description" content="Guía metodológica para construir esquemas de estudio orientados a la PAU, con las nueve cuestiones de la Edad Moderna resueltas paso a paso.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+
+:root {
+  color-scheme: light;
+  --paper:#F7F7F5; --surface:#FFFFFF; --surface-2:#FBFBF9;
+  --ink:#1C1C1E; --ink-soft:#55555C; --ink-faint:#8E8E96;
+  --rule:#E4E4E0; --rule-soft:#EFEFEC;
+  --casa:#5C4B8A; --casa-light:#F0ECF8; --casa-edge:#D6CCEC;
+  --clase:#1A6B6B; --clase-light:#E6F4F4; --clase-edge:#BEE0E0;
+  --granate:#7B1A1A; --granate-deep:#4A0E0E; --cobre:#C0622A;
+  --a1:#2B4C7E; --a1-light:#E8EEF7;
+  --a2:#2D6A4F; --a2-light:#E8F5EE;
+  --a3:#7B3F00; --a3-light:#FDF0E6;
+  --verde:#2E8B57; --verde-bg:#DFF2E7;
+  --ambar:#B07908; --ambar-bg:#FBEEC9;
+  --rojo:#B3261E; --rojo-bg:#F8DEDB;
+  --onacc:#FFFFFF;
+  --shadow:0 1px 2px rgba(28,28,30,.04), 0 6px 20px rgba(28,28,30,.05);
+  --sans:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --serif:'Playfair Display',Georgia,'Times New Roman',serif;
+  --mono:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --paper:#16161A; --surface:#1D1D22; --surface-2:#212128;
+    --ink:#ECECE8; --ink-soft:#B0B0B8; --ink-faint:#7E7E88;
+    --rule:#33333C; --rule-soft:#2A2A32;
+    --casa:#A995DD; --casa-light:#2A2440; --casa-edge:#453B66;
+    --clase:#56BCB8; --clase-light:#16302F; --clase-edge:#2A5250;
+    --granate:#C4595A; --granate-deep:#2E0909; --cobre:#E08A4A;
+    --a1:#7EA3D8; --a1-light:#1B2739;
+    --a2:#6FBF95; --a2-light:#162C21;
+    --a3:#D19B60; --a3-light:#2E2113;
+    --verde:#5CC98B; --verde-bg:#163325;
+    --ambar:#E0AC3C; --ambar-bg:#35290D;
+    --rojo:#E27A72; --rojo-bg:#3A1917;
+    --onacc:#14141A;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.28);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper:#16161A; --surface:#1D1D22; --surface-2:#212128;
+  --ink:#ECECE8; --ink-soft:#B0B0B8; --ink-faint:#7E7E88;
+  --rule:#33333C; --rule-soft:#2A2A32;
+  --casa:#A995DD; --casa-light:#2A2440; --casa-edge:#453B66;
+  --clase:#56BCB8; --clase-light:#16302F; --clase-edge:#2A5250;
+  --granate:#C4595A; --granate-deep:#2E0909; --cobre:#E08A4A;
+  --a1:#7EA3D8; --a1-light:#1B2739;
+  --a2:#6FBF95; --a2-light:#162C21;
+  --a3:#D19B60; --a3-light:#2E2113;
+  --verde:#5CC98B; --verde-bg:#163325;
+  --ambar:#E0AC3C; --ambar-bg:#35290D;
+  --rojo:#E27A72; --rojo-bg:#3A1917;
+  --onacc:#14141A;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.28);
+}
+
+body { margin:0; font-family:var(--sans); background:var(--paper); color:var(--ink);
+       font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased; }
+p { margin:0 0 1em; } p:last-child { margin-bottom:0; }
+h1,h2,h3,h4 { margin:0; text-wrap:balance; }
+ul,ol { margin:0; padding:0; list-style:none; }
+a { color:inherit; }
+:focus-visible { outline:2px solid var(--cobre); outline-offset:2px; }
+
+/* ── CABECERA ── */
+.hero { background:
+    radial-gradient(120% 140% at 15% 0%, rgba(192,98,42,.28) 0%, rgba(192,98,42,0) 55%),
+    linear-gradient(135deg,#4A0E0E 0%,#7B1A1A 52%,#3E0B0B 100%);
+  border-bottom:3px solid #C0622A; padding:30px 24px 28px; color:#fff; }
+.hero-grid { max-width:1040px; margin:0 auto; display:grid;
+  grid-template-columns:148px 1fr 86px; align-items:center; gap:28px; }
+.hero-logo { display:flex; }
+.hero-logo.left { justify-content:flex-start; }
+.hero-logo.right { justify-content:flex-end; }
+.hero-logo.left img { width:100%; max-width:148px; height:auto; display:block;
+  background:#fff; border-radius:7px; padding:7px 10px; }
+.hero-logo.right img { width:86px; height:86px; object-fit:cover; display:block;
+  border-radius:8px; box-shadow:0 2px 14px rgba(0,0,0,.42); }
+.hero-center { text-align:center; min-width:0; }
+.hero-kicker { font-family:var(--mono); font-size:10px; letter-spacing:.2em;
+  text-transform:uppercase; color:rgba(255,255,255,.6); margin-bottom:12px; }
+.hero h1 { font-family:var(--serif); font-weight:700; font-size:clamp(1.9rem,5vw,2.9rem);
+  line-height:1.05; letter-spacing:-.015em; color:#fff; }
+.hero h1 em { font-style:italic; font-weight:400; color:#F0C9A8; }
+.hero-sub { margin:12px auto 0; max-width:52ch; font-size:14.5px; line-height:1.5;
+  color:rgba(255,255,255,.76); }
+.hero-tags { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-top:16px; }
+.hero-tag { font-family:var(--mono); font-size:10.5px; letter-spacing:.06em;
+  padding:4px 10px; border-radius:20px; background:rgba(255,255,255,.13);
+  color:rgba(255,255,255,.88); }
+@media (max-width:760px) {
+  .hero-grid { grid-template-columns:1fr; gap:20px; justify-items:center; }
+  .hero-logo.left,.hero-logo.right { justify-content:center; }
+  .hero-logo.left img { max-width:180px; }
+  .hero-logo.right img { width:70px; height:70px; }
+  .hero-logo.right { order:3; } .hero-center { order:2; }
+}
+
+/* ── ESTRUCTURA ── */
+.wrap { max-width:1040px; margin:0 auto; padding:0 24px; }
+.narrow { max-width:780px; margin:0 auto; padding:0 24px; }
+section { padding:46px 0 0; scroll-margin-top:72px; }
+.eyebrow { font-family:var(--mono); font-size:10.5px; letter-spacing:.2em;
+  text-transform:uppercase; color:var(--cobre); margin-bottom:10px; }
+h2 { font-family:var(--serif); font-size:clamp(1.5rem,3.4vw,2rem); font-weight:600;
+  line-height:1.15; margin-bottom:12px; }
+h3 { font-family:var(--serif); font-size:1.22rem; font-weight:600; margin-bottom:8px; }
+.lede { font-size:16.5px; line-height:1.6; color:var(--ink-soft); max-width:64ch; margin-bottom:24px; }
+.lede strong { color:var(--ink); font-weight:600; }
+.divider { max-width:1040px; margin:48px auto 0; padding:0 24px; }
+.divider::after { content:""; display:block; height:1px;
+  background:linear-gradient(90deg,transparent,var(--rule) 12%,var(--rule) 88%,transparent); }
+
+/* ── CALLOUTS ── */
+.callout { background:var(--surface); border:1px solid var(--rule);
+  border-left:3px solid var(--cobre); border-radius:4px; padding:18px 22px;
+  font-size:15.5px; line-height:1.6; color:var(--ink-soft); box-shadow:var(--shadow); }
+.callout strong, .callout b { color:var(--ink); font-weight:600; }
+.callout .k { font-family:var(--mono); font-size:10px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--cobre); display:block; margin-bottom:6px; }
+
+/* ── BOTONES ── */
+.btn { font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--ink-soft); background:var(--surface); border:1px solid var(--rule);
+  border-radius:5px; padding:7px 13px; cursor:pointer; transition:border-color .15s,color .15s; }
+.btn:hover { color:var(--ink); border-color:var(--ink-faint); }
+.btn.on { background:var(--cobre); border-color:var(--cobre); color:#fff; }
+
+/* ── PIE ── */
+.foot { margin-top:60px; border-top:1px solid var(--rule); padding:20px 24px 30px;
+  background:var(--surface-2); }
+.foot-inner { max-width:1040px; margin:0 auto; display:flex; flex-wrap:wrap;
+  gap:8px 24px; justify-content:space-between; font-family:var(--mono);
+  font-size:10.5px; letter-spacing:.06em; color:var(--ink-faint); }
+.foot-inner a { color:var(--cobre); text-decoration:none; border-bottom:1px solid currentColor; }
+
+@media (prefers-reduced-motion: reduce) { * { transition:none !important; animation:none !important; } }
+
+.idx { position:sticky; top:0; z-index:50; background:color-mix(in srgb,var(--paper) 90%,transparent);
+  backdrop-filter:blur(10px); border-bottom:1px solid var(--rule); }
+.idx-in { max-width:1040px; margin:0 auto; padding:0 24px; display:flex; gap:4px;
+  overflow-x:auto; scrollbar-width:none; }
+.idx-in::-webkit-scrollbar { display:none; }
+.idx a { flex:none; font-family:var(--mono); font-size:10.5px; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--ink-faint); text-decoration:none; padding:13px 10px;
+  border-bottom:2px solid transparent; white-space:nowrap; transition:color .15s,border-color .15s; }
+.idx a:hover,.idx a:focus-visible { color:var(--ink); border-bottom-color:var(--cobre); }
+
+/* SÍ / NO */
+.sino { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+@media (max-width:640px){ .sino { grid-template-columns:1fr; } }
+.sino-c { background:var(--surface); border:1px solid var(--rule); border-radius:7px; padding:18px 20px; }
+.sino-c.si { border-top:3px solid var(--verde); }
+.sino-c.no { border-top:3px solid var(--rojo); }
+.sino-h { font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase;
+  margin-bottom:10px; }
+.sino-c.si .sino-h { color:var(--verde); } .sino-c.no .sino-h { color:var(--rojo); }
+.sino-c li { font-size:14.8px; line-height:1.5; color:var(--ink-soft); padding:8px 0 8px 20px;
+  position:relative; border-top:1px solid var(--rule-soft); }
+.sino-c li:first-child { border-top:none; }
+.sino-c.si li::before { content:"+"; position:absolute; left:2px; color:var(--verde);
+  font-family:var(--mono); font-weight:600; }
+.sino-c.no li::before { content:"−"; position:absolute; left:2px; color:var(--rojo);
+  font-family:var(--mono); font-weight:600; }
+
+/* 5 pasos */
+.pasos5 { counter-reset:pp; display:flex; flex-direction:column; gap:1px;
+  background:var(--rule); border:1px solid var(--rule); border-radius:8px; overflow:hidden; }
+.p5 { counter-increment:pp; background:var(--surface); padding:15px 20px 15px 56px; position:relative;
+  font-size:15px; line-height:1.55; color:var(--ink-soft); }
+.p5::before { content:counter(pp,decimal-leading-zero); position:absolute; left:20px; top:17px;
+  font-family:var(--mono); font-size:11.5px; font-weight:600; color:var(--cobre); }
+.p5 b { color:var(--ink); font-weight:600; }
+
+/* tabla tipos */
+.tipos { border:1px solid var(--rule); border-radius:8px; overflow:hidden; background:var(--surface); }
+.tipos-h, .tipos-r { display:grid; grid-template-columns:130px 1fr 1fr; }
+.tipos-h { background:var(--surface-2); border-bottom:1px solid var(--rule);
+  font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--ink-faint); }
+.tipos-h span, .tipos-r > div { padding:13px 16px; border-right:1px solid var(--rule); }
+.tipos-h span:last-child, .tipos-r > div:last-child { border-right:none; }
+.tipos-r { border-bottom:1px solid var(--rule); font-size:14.6px; line-height:1.45; color:var(--ink-soft); }
+.tipos-r:last-child { border-bottom:none; }
+.tipos-n { font-family:var(--serif); font-size:1.05rem; font-weight:600; color:var(--ink); }
+.tipos-k { font-family:var(--mono); font-size:13px; color:var(--cobre); }
+@media (max-width:640px){
+  .tipos-h { display:none; }
+  .tipos-r { grid-template-columns:1fr; }
+  .tipos-r > div { border-right:none; border-bottom:1px solid var(--rule-soft); }
+}
+
+/* plantillas */
+.plant { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:12px; }
+.pl { background:var(--surface); border:1px solid var(--rule); border-radius:7px; overflow:hidden; }
+.pl-h { padding:11px 16px; border-bottom:1px solid var(--rule); background:var(--surface-2);
+  font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--cobre); }
+.pl-b { padding:13px 16px; font-family:var(--mono); font-size:12px; line-height:1.75; color:var(--ink-soft); }
+.pl-b .t0 { color:var(--ink); font-weight:600; display:block; margin-bottom:4px; }
+.pl-b .t1 { display:block; color:var(--ink); }
+.pl-b .t2 { display:block; padding-left:14px; }
+
+/* tabla resumen 9 */
+.res { border:1px solid var(--rule); border-radius:8px; overflow:hidden; background:var(--surface); }
+.res-r { display:grid; grid-template-columns:40px 1fr 210px; align-items:center;
+  border-bottom:1px solid var(--rule-soft); text-decoration:none; color:inherit; transition:background .13s; }
+.res-r:last-child { border-bottom:none; }
+.res-r:hover { background:var(--surface-2); }
+.res-n { font-family:var(--mono); font-size:12px; color:var(--onacc); background:var(--a3);
+  padding:5px 0; text-align:center; border-radius:3px; margin-left:10px; }
+.res-t { padding:11px 14px; font-size:14.6px; }
+.res-k { padding:11px 16px 11px 0; font-family:var(--mono); font-size:11px; color:var(--cobre);
+  text-align:right; }
+@media (max-width:640px){ .res-r { grid-template-columns:40px 1fr; } .res-k { display:none; } }
+
+/* cuestiones */
+.qfilt { display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin-bottom:18px; }
+.chip { font-family:var(--mono); font-size:10.5px; letter-spacing:.04em; color:var(--ink-soft);
+  background:var(--surface); border:1px solid var(--rule); border-radius:20px; padding:5px 11px;
+  cursor:pointer; transition:all .13s; }
+.chip:hover { border-color:var(--ink-faint); color:var(--ink); }
+.chip.on { background:var(--a3); border-color:var(--a3); color:var(--onacc); }
+.qcount { font-family:var(--mono); font-size:11px; color:var(--ink-faint); margin-left:auto; }
+
+.cues { background:var(--surface); border:1px solid var(--rule); border-radius:9px;
+  overflow:hidden; margin-bottom:16px; box-shadow:var(--shadow); scroll-margin-top:70px; }
+.cues.oculta { display:none; }
+.c-head { padding:17px 22px 15px; border-bottom:1px solid var(--rule); background:var(--surface-2); }
+.c-top { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:5px; }
+.c-n { font-family:var(--mono); font-size:10.5px; color:var(--onacc); background:var(--a3);
+  padding:3px 8px; border-radius:3px; }
+.c-cod { font-family:var(--mono); font-size:10.5px; color:var(--ink-faint); }
+.c-tipo { margin-left:auto; font-family:var(--mono); font-size:10px; letter-spacing:.06em;
+  color:var(--cobre); border:1px solid var(--cobre); border-radius:20px; padding:3px 10px; }
+.c-t { font-family:var(--serif); font-size:1.24rem; font-weight:600; line-height:1.25; }
+.c-clasif { padding:14px 22px; border-bottom:1px solid var(--rule); font-size:14.6px;
+  line-height:1.55; color:var(--ink-soft); background:var(--casa-light); }
+.c-clasif b { color:var(--casa); }
+.c-clasif p { margin:0 0 6px; } .c-clasif p:last-child { margin:0; }
+
+/* esquema jerárquico */
+.esq { padding:18px 22px 20px; }
+.e0 { font-family:var(--serif); font-size:1.02rem; font-weight:600; line-height:1.35;
+  color:var(--onacc); background:var(--a3); padding:11px 15px; border-radius:6px; margin-bottom:12px; }
+.e0 b { font-weight:600; }
+.e1 { font-size:15px; font-weight:600; color:var(--ink); line-height:1.45;
+  margin:13px 0 5px; padding-left:16px; position:relative; }
+.e1::before { content:"●"; position:absolute; left:0; top:1px; font-size:8px; color:var(--a3); }
+.e2 { font-size:14.4px; line-height:1.5; color:var(--ink-soft); margin:4px 0 4px 16px;
+  padding-left:16px; position:relative; border-left:1px solid var(--rule); }
+.e2::before { content:"–"; position:absolute; left:5px; color:var(--ink-faint); }
+.e3 { font-size:13.6px; line-height:1.45; color:var(--ink-faint); margin:3px 0 3px 32px;
+  padding-left:16px; position:relative; border-left:1px solid var(--rule); font-style:italic; }
+.e3::before { content:"·"; position:absolute; left:6px; }
+.e1 b,.e2 b,.e3 b { color:var(--ink); font-weight:600; }
+.plus { font-family:var(--mono); font-size:9px; letter-spacing:.06em; color:var(--cobre);
+  border:1px solid var(--cobre); border-radius:3px; padding:1px 5px; margin-left:6px;
+  white-space:nowrap; vertical-align:1px; }
+.c-porque { padding:14px 22px; border-top:1px dashed var(--rule); background:var(--surface-2);
+  font-size:14.2px; line-height:1.55; color:var(--ink-soft); }
+.c-porque b { color:var(--verde); }
+
+/* modo práctica */
+body.practica .esq, body.practica .c-porque { display:none; }
+body.practica .cues.abierta .esq, body.practica .cues.abierta .c-porque { display:block; }
+.tapa { display:none; margin:0; padding:16px 22px; font-family:var(--mono); font-size:11px;
+  letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint); background:none;
+  border:none; border-top:1px dashed var(--rule); width:100%; text-align:left; cursor:pointer; }
+.tapa:hover { color:var(--ink); }
+body.practica .tapa { display:block; }
+body.practica .cues.abierta .tapa { display:none; }
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="hero-grid">
+    <div class="hero-logo left"><img src="data:image/jpeg;base64,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" alt="Colegios El Valle"></div>
+    <div class="hero-center">
+      <div class="hero-kicker">Historia de España · 2.º de Bachillerato · Bloque A</div>
+      <h1>¿Cómo elaborar<br>un <em>esquema</em>?</h1>
+      <p class="hero-sub">El método en cinco pasos y las nueve cuestiones del Bloque A3 resueltas, cada una con su clasificación razonada y su esquema modelo.</p>
+      <div class="hero-tags"><span class="hero-tag">5 pasos</span><span class="hero-tag">3 plantillas</span><span class="hero-tag">9 cuestiones resueltas</span></div>
+    </div>
+    <div class="hero-logo right"><img src="data:image/jpeg;base64,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" alt="Departamento de Ciencias Sociales"></div>
+  </div>
+</header>
+
+<nav class="idx" aria-label="Índice">
+  <div class="idx-in">
+    <a href="#que">Qué es un esquema</a>
+    <a href="#pasos">Los 5 pasos</a>
+    <a href="#tipos">Qué tipo usar</a>
+    <a href="#plantillas">Plantillas</a>
+    <a href="#resumen">Las 9 cuestiones</a>
+    <a href="#resueltas">Resueltas</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<section id="que">
+  <div class="eyebrow">Primera parte · El método</div>
+  <h2>Qué es (y qué no es) un esquema</h2>
+  <div class="callout" style="margin-bottom:16px">
+    <span class="k">Dónde aparece esta pregunta</span>
+    En la Parte A se responden <strong>2 de 3 preguntas cortas</strong> (3 puntos, 30 % de la nota).
+    Una es de los temas 1-2 y dos del tema 3; <strong>una de las del tema 3 consiste en elaborar un
+    esquema</strong>. Cada cuestión vale <strong>1,5 puntos</strong>.
+  </div>
+  <div class="callout" style="border-left-color:var(--verde); margin-bottom:22px">
+    <span class="k" style="color:var(--verde)">La idea que lo cambia todo</span>
+    La PAU dice que <strong>no hace falta mencionar todos los aspectos</strong> para aprobar.
+    Un esquema premia <strong>seleccionar y jerarquizar bien</strong>, no vaciar todo lo que sabes.
+  </div>
+  <div class="sino">
+    <div class="sino-c si">
+      <div class="sino-h">Sí es un esquema</div>
+      <ul>
+        <li>Estructura jerarquizada por niveles (general → apartados → datos).</li>
+        <li>Con contenido real: fechas, nombres, conceptos.</li>
+        <li>Selección de lo esencial, bien ordenado.</li>
+      </ul>
+    </div>
+    <div class="sino-c no">
+      <div class="sino-h">No es un esquema</div>
+      <ul>
+        <li>Un texto redactado de corrido.</li>
+        <li>Una lista de palabras sueltas sin datos.</li>
+        <li>Un volcado de todo lo que sé, sin jerarquía.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="pasos">
+  <div class="eyebrow">El procedimiento</div>
+  <h2>Los cinco pasos para elaborar cualquier esquema</h2>
+  <div class="pasos5">
+    <div class="p5"><b>Descodifica el enunciado.</b> ¿Te piden un PROCESO (evoluciona) o una ESTRUCTURA
+      (se describe por partes)? Esto decide la forma.</div>
+    <div class="p5"><b>Fija los límites espacio-temporales.</b> Inicio, fin y marco geográfico.
+      Van al principio y son de lo más valorado.</div>
+    <div class="p5"><b>Elige el criterio de división.</b> Cronológico, temático o causal, según el tipo
+      de pregunta.</div>
+    <div class="p5"><b>Vuelca en niveles jerárquicos.</b> Idea general → apartados → datos concretos.
+      Cada rama con fechas, nombres o conceptos.</div>
+    <div class="p5"><b>Depura.</b> Quita lo redundante, comprueba que ninguna rama queda vacía y usa
+      lenguaje histórico.</div>
+  </div>
+  <div class="callout" style="margin-top:14px">
+    <span class="k">Regla de niveles</span>
+    Tres niveles por defecto (bloques → subapartados → datos); un cuarto solo cuando una rama lo pida.
+    Más allá, el esquema se vuelve ilegible.
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="tipos">
+  <div class="eyebrow">La forma sigue al enunciado</div>
+  <h2>Qué tipo de esquema usar según la pregunta</h2>
+  <div class="tipos">
+    <div class="tipos-h"><span>Tipo</span><span>Cuándo se usa</span><span>Palabras clave</span></div>
+    <div class="tipos-r"><div class="tipos-n">Cronológico</div>
+      <div>Procesos que evolucionan por etapas o reinados.</div>
+      <div class="tipos-k">«evolución de…», «etapas de…»</div></div>
+    <div class="tipos-r"><div class="tipos-n">Temático</div>
+      <div>Realidades que se describen por ámbitos o partes.</div>
+      <div class="tipos-k">«instituciones de…», «sociedad/economía de…»</div></div>
+    <div class="tipos-r"><div class="tipos-n">Causal</div>
+      <div>Hechos concretos vistos desde causas y efectos.</div>
+      <div class="tipos-k">«causas y consecuencias de…»</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="plantillas">
+  <div class="eyebrow">Para copiar en sucio</div>
+  <h2>Plantillas por tipo</h2>
+  <div class="plant">
+    <div class="pl">
+      <div class="pl-h">A · Cronológica</div>
+      <div class="pl-b">
+        <span class="t0">▸ TÍTULO DEL PROCESO (año inicio – año fin; espacio)</span>
+        <span class="t1">• Etapa 1 (fechas): rasgo definitorio</span>
+        <span class="t2">– hecho / protagonista / dato</span>
+        <span class="t1">• Etapa 2 (fechas): rasgo definitorio</span>
+        <span class="t2">– hecho / protagonista / dato</span>
+        <span class="t1">• Balance / consecuencia final</span>
+      </div>
+    </div>
+    <div class="pl">
+      <div class="pl-h">B · Temática</div>
+      <div class="pl-b">
+        <span class="t0">▸ TÍTULO DEL TEMA (marco temporal y espacial)</span>
+        <span class="t1">• Ámbito político</span><span class="t2">– dato / nombre</span>
+        <span class="t1">• Ámbito económico</span><span class="t2">– dato / nombre</span>
+        <span class="t1">• Ámbito social</span><span class="t2">– dato / nombre</span>
+        <span class="t1">• Ámbito cultural / religioso (si procede)</span><span class="t2">– dato / nombre</span>
+      </div>
+    </div>
+    <div class="pl">
+      <div class="pl-h">C · Causal</div>
+      <div class="pl-b">
+        <span class="t0">▸ TÍTULO DEL HECHO (fecha y lugar)</span>
+        <span class="t1">• CAUSAS</span><span class="t2">– causa política / económica / internacional</span>
+        <span class="t1">• DESARROLLO (hitos esenciales)</span><span class="t2">– hito con fecha</span>
+        <span class="t1">• CONSECUENCIAS</span><span class="t2">– consecuencia política / económica</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="resumen">
+  <div class="eyebrow">De un vistazo</div>
+  <h2>El tipo que corresponde a cada cuestión</h2>
+  <p class="lede">Los tres tipos aparecen representados, con variantes mixtas que enseñan a adaptar el
+  esquema al enunciado. Pulsa una fila para ir a su esquema resuelto.</p>
+  <div class="res"><a class="res-r" href="#c1"><span class="res-n">1</span><span class="res-t">Los Reyes Católicos</span><span class="res-k">Temático + cronológico</span></a><a class="res-r" href="#c2"><span class="res-n">2</span><span class="res-t">Exploración y colonización de América</span><span class="res-k">Cronológico + temático</span></a><a class="res-r" href="#c3"><span class="res-n">3</span><span class="res-t">Los Austrias del siglo XVI</span><span class="res-k">Temático (por reinados)</span></a><a class="res-r" href="#c4"><span class="res-n">4</span><span class="res-t">Los Austrias del siglo XVII</span><span class="res-k">Temático (por reinados)</span></a><a class="res-r" href="#c5"><span class="res-n">5</span><span class="res-t">Sociedad, economía y cultura (XVI–XVII)</span><span class="res-k">Temático (contraste)</span></a><a class="res-r" href="#c6"><span class="res-n">6</span><span class="res-t">La Guerra de Sucesión y Utrecht</span><span class="res-k">Causal</span></a><a class="res-r" href="#c7"><span class="res-n">7</span><span class="res-t">La nueva Monarquía borbónica (Nueva Planta)</span><span class="res-k">Temático + arranque causal</span></a><a class="res-r" href="#c8"><span class="res-n">8</span><span class="res-t">Las reformas borbónicas en América</span><span class="res-k">Temático + envoltura causal</span></a><a class="res-r" href="#c9"><span class="res-n">9</span><span class="res-t">Sociedad, economía y cultura del siglo XVIII</span><span class="res-k">Temático puro</span></a></div>
+</section>
+
+<div class="divider"></div>
+
+<section id="resueltas" style="padding-bottom:10px">
+  <div class="eyebrow">Segunda parte</div>
+  <h2>Las nueve cuestiones resueltas</h2>
+  <p class="lede">Cada cuestión incluye su clasificación razonada y el esquema modelo listo para estudiar
+  o adaptar. En <strong>modo práctica</strong> los esquemas se ocultan: haz el tuyo en un folio y
+  después compara.</p>
+  <div class="qfilt">
+    <button class="btn" id="practica" type="button">Modo práctica</button>
+    <button class="chip" data-tag="cronologico" type="button">Cronológico</button>
+    <button class="chip" data-tag="tematico" type="button">Temático</button>
+    <button class="chip" data-tag="causal" type="button">Causal</button>
+    <span class="qcount" id="qcount"></span>
+  </div>
+  <article class="cues" id="c1" data-tags="tematico cronologico">
+  <div class="c-head">
+    <div class="c-top"><span class="c-n">Cuestión 1</span><span class="c-cod">A3.1</span>
+      <span class="c-tipo">Temático + cronológico</span></div>
+    <h3 class="c-t">Los Reyes Católicos: unión dinástica e instituciones. La guerra de Granada. Exploración</h3>
+  </div>
+  <div class="c-clasif"><p><b>Tipo: temático</b> con bloque final <b>cronológico</b> (la guerra de Granada y la exploración).</p><p><b>Por qué: </b>el núcleo (“unión dinástica e instituciones”) se describe por ámbitos y contrastando Castilla y Aragón; la guerra de Granada y la exploración son procesos con secuencia y fechas.</p></div>
+  <button class="tapa" type="button">Haz tú el esquema primero · pulsa para comprobar</button>
+  <div class="esq"><div class="e0"><b>REYES CATÓLICOS: UNIÓN DINÁSTICA, INSTITUCIONES, GRANADA Y EXPLORACIÓN (1469–1516; Coronas de Castilla y Aragón)</b></div><div class="e1">1. Antecedente y unión dinástica</div><div class="e2">Pacto de los Toros de Guisando (1468): Enrique IV reconoce a Isabel heredera de Castilla frente a su hija Juana</div><div class="e2">Matrimonio de Isabel y Fernando (1469): Capitulaciones de Cervera; Enrique IV rompe el pacto y nombra heredera a Juana la Beltraneja</div><div class="e2">Guerra de Sucesión castellana (1474–1479): Isabel (Aragón, papado, ciudades castellanas) vs. Juana (Portugal y Francia); giro en la batalla de Toro (1476); Tratado de Alcaçovas (1479)</div><div class="e2">Muerte de Juan II y coronación de Fernando en Aragón (1479): culmina la unión dinástica</div><div class="e3">unión personal, NO territorial: cada reino conserva sus leyes, Cortes, instituciones y moneda</div><div class="e1">2. Instituciones de gobierno (contraste Castilla / Aragón)</div><div class="e2"><b>Ejecutivo (Cortes): </b>en Castilla, consultivas y con tendencia a la monarquía autoritaria; en Aragón, carácter pactista</div><div class="e2"><b>Legislativo: </b>en Castilla corresponde al rey; en Aragón se comparte (Generalitat en Cataluña, Diputación en Valencia)</div><div class="e2"><b>Judicial: </b>en Castilla, Audiencias y Chancillerías; en Aragón, el Justicia de Aragón defiende los fueros</div><div class="e2"><b>Consejos: </b>Consejo de Castilla y Consejo de Aragón; virreyes en los territorios no castellanos</div><div class="e2"><b>Hacienda y municipios: </b>contadurías (impuestos); corregidores controlan los concejos</div><div class="e2"><b>Orden público y religión: </b>Santa Hermandad; Inquisición (1478): pureza religiosa (conversos y moriscos)</div><div class="e1">3. Unidad religiosa y territorial</div><div class="e2">El catolicismo como instrumento de unidad; abandono de la política de tolerancia</div><div class="e2">Expulsión de los judíos (1492)</div><div class="e1">4. Guerra de Granada (1481–1492)</div><div class="e2">Último reino musulmán, sostenido por parias; inicio en Zahara (1481) y toma de Málaga (1485–87)</div><div class="e2">Aprovechamiento de la guerra civil nazarí (Muley Hacén, El Zagal, Boabdil)</div><div class="e2">Rendición de Granada (1492): fin de al-Ándalus</div><div class="e1"><b>5. Exploración </b><span class="plus">+ añadido</span></div><div class="e2">Capitulaciones de Santa Fe (1492); primer viaje de Colón (12 de octubre de 1492)<span class="plus">+ añadido</span></div><div class="e2">Reparto atlántico con Portugal: Alcaçovas (1479) → Tratado de Tordesillas (1494)<span class="plus">+ añadido</span></div></div>
+  <div class="c-porque"><b>Por qué funciona:</b> marco espacio-temporal en el título, antecedente comprimido, núcleo institucional con el contraste Castilla/Aragón, y los dos procesos (Granada, Exploración) con sus fechas. Selectivo pero completo, en 3 niveles.</div>
+</article><article class="cues" id="c2" data-tags="cronologico tematico">
+  <div class="c-head">
+    <div class="c-top"><span class="c-n">Cuestión 2</span><span class="c-cod">A3.2</span>
+      <span class="c-tipo">Cronológico + temático</span></div>
+    <h3 class="c-t">Exploración, conquista y colonización de América</h3>
+  </div>
+  <div class="c-clasif"><p><b>Tipo: cronológico</b> con bloque final <b>temático</b> (la colonización). Patrón inverso a la cuestión 1.</p></div>
+  <button class="tapa" type="button">Haz tú el esquema primero · pulsa para comprobar</button>
+  <div class="esq"><div class="e0"><b>EXPLORACIÓN, CONQUISTA Y COLONIZACIÓN DE AMÉRICA (1492–1550; Corona de Castilla / Nuevo Mundo)</b></div><div class="e1">0. Antecedentes y causas</div><div class="e2">Expansión atlántica previa: conquista de Canarias</div><div class="e2">Causas técnicas, religiosas y políticas (competir con Portugal; caída de Constantinopla en 1453)</div><div class="e1">1. El descubrimiento (1492)</div><div class="e2">Juan II de Portugal rechaza a Colón; Isabel firma las Capitulaciones de Santa Fe</div><div class="e2">Salida del Puerto de Palos (3 de agosto de 1492): Pinta, Niña y Santa María; llegada a Guanahaní (12 de octubre)</div><div class="e1">2. El reparto con Portugal</div><div class="e2">Tratado de Tordesillas (1494): Castilla al oeste, Portugal al este</div><div class="e1">3. Etapa antillana (1493–1519)</div><div class="e2">Asentamiento en el Caribe; Núñez de Balboa descubre el Pacífico (1519)</div><div class="e2">Primera vuelta al mundo (1519–1522): Magallanes y Elcano</div><div class="e1">4. Etapa continental (1519–1550)</div><div class="e2">Hernán Cortés: Imperio azteca en México (1519–1521)</div><div class="e2">Francisco Pizarro: Imperio inca en Perú (1531–1533)</div><div class="e2">Otras figuras: Orellana (Amazonas), Hernando de Soto (Mississippi), Mendoza (Río de la Plata), Valdivia (Chile)</div><div class="e1">5. La colonización (organización, economía y sociedad)</div><div class="e2"><b>Organización: </b>virreinatos (Nueva España y Perú)</div><div class="e2"><b>Explotación: </b>encomienda, mita y requerimiento</div><div class="e2"><b>Impacto y debate: </b>pérdidas por enfermedades y abusos; Bartolomé de las Casas y las Nuevas Leyes de Indias; esclavos negros</div><div class="e2"><b>Sociedad: </b>estamental (peninsulares y criollos); castellano, catolicismo y cultura española</div><div class="e2"><b>Intercambio: </b>a América: trigo, cebada, olivo, caballo, oveja; a Europa: patata, maíz, cacao, algodón, pavo</div><div class="e1">6. Consecuencias para la Monarquía Hispánica</div><div class="e2">Sustento de la hegemonía europea del XVI; grandes ingresos → inflación de precios en el XVII</div></div>
+  <div class="c-porque"><b>Por qué funciona:</b> las causas quedan en un marco previo breve, la conquista avanza en etapas fechadas y la colonización se abre en abanico temático. El tránsito de lo cronológico a lo temático respeta el enunciado.</div>
+</article><article class="cues" id="c3" data-tags="tematico">
+  <div class="c-head">
+    <div class="c-top"><span class="c-n">Cuestión 3</span><span class="c-cod">A3.3</span>
+      <span class="c-tipo">Temático (por reinados)</span></div>
+    <h3 class="c-t">Los Austrias del siglo XVI: política interior y exterior</h3>
+  </div>
+  <div class="c-clasif"><p><b>Tipo: temático</b> (interior / exterior) con desarrollo <b>cronológico</b> por reinados (arquitectura por reinados; dentro, interior y exterior).</p></div>
+  <button class="tapa" type="button">Haz tú el esquema primero · pulsa para comprobar</button>
+  <div class="esq"><div class="e0"><b>LOS AUSTRIAS DEL SIGLO XVI: POLÍTICA INTERIOR Y EXTERIOR (1516–1598; Monarquía Hispánica)</b></div><div class="e1">0. Origen de la dinastía</div><div class="e2">Fin de los Trastámara; llegan los Austrias o Habsburgo (reinarán 1517–1700)</div><div class="e2">Monarquía como agrupación de estados con autonomía interna y un mismo soberano</div><div class="e2">Herencia de Carlos I (1516): de los maternos (RR.CC.), Castilla y Aragón; de los paternos, Países Bajos, Franco Condado, Austria, Tirol y la dignidad imperial</div><div class="e1">1. Carlos I (1516–1556)</div><div class="e1"><b> » Política interior</b></div><div class="e2">Cortes de Valladolid (1518): demandas al joven rey; elección imperial (1519) y exigencia de fondos</div><div class="e2">Guerra de las Comunidades (1520–22): comuneros derrotados en Villalar (1521); ejecución de Bravo, Padilla y Maldonado</div><div class="e2">Germanías de Valencia y Mallorca (1519–23): revuelta antiseñorial sofocada (1523)</div><div class="e3">resultado: Corona y nobleza reforzadas, Cortes debilitadas; Castilla, centro del imperio</div><div class="e1"><b> » Política exterior</b></div><div class="e2">Francia: victoria de Pavía (1525) y Milanesado</div><div class="e2">Turcos: defensa de Viena (1532); toma de Túnez (1535), fracaso en Argel</div><div class="e2">Reforma protestante (Lutero, 1527): Mühlberg (1547), Paz de Augsburgo (1555), abdicación (1556)</div><div class="e1">2. Felipe II (1556–1598)</div><div class="e1"><b> » Política interior</b></div><div class="e2">Centralización; capital fija en Madrid (1561)</div><div class="e2">Sistema polisinodial: consejos (Estado, Guerra, Inquisición, Hacienda; territoriales); virreyes; Consejo de Estado como vínculo</div><div class="e2">Rebelión de las Alpujarras (1568); conflicto del Justicia de Aragón (Antonio Pérez / Lanuza)</div><div class="e2">Incorporación de Portugal (Cortes de Tomar, 1581): unión peninsular; viraje atlántico</div><div class="e1"><b> » Política exterior</b></div><div class="e2">Francia: San Quintín y Paz de Cateau-Cambrésis (1559)</div><div class="e2">Turcos: Liga Santa y Lepanto (1571)</div><div class="e2">Países Bajos e Inglaterra: Armada Invencible (1588) → inicio de la decadencia europea</div></div>
+  <div class="c-porque"><b>Por qué funciona:</b> cada reinado se lee completo (interior + exterior) sin saltos temporales, el sistema polisinodial queda en el interior de Felipe II y las fechas clave estructuran cada rama.</div>
+</article><article class="cues" id="c4" data-tags="tematico">
+  <div class="c-head">
+    <div class="c-top"><span class="c-n">Cuestión 4</span><span class="c-cod">A3.4</span>
+      <span class="c-tipo">Temático (por reinados)</span></div>
+    <h3 class="c-t">Los Austrias del siglo XVII: política interior y exterior</h3>
+  </div>
+  <div class="c-clasif"><p><b>Tipo: temático</b> (interior / exterior) con desarrollo <b>cronológico</b> por reinados. Gemela de la cuestión 3.</p><p><b>Nota: </b>la Crisis de 1640 va detallada y Carlos II incluye la Guerra de Sucesión y Utrecht (se solapan con la cuestión 6). Aportaciones con <b>[+]</b>.</p></div>
+  <button class="tapa" type="button">Haz tú el esquema primero · pulsa para comprobar</button>
+  <div class="esq"><div class="e0"><b>LOS AUSTRIAS DEL SIGLO XVII: POLÍTICA INTERIOR Y EXTERIOR (1598–1700; Monarquía Hispánica)</b></div><div class="e1">0. Rasgos generales del siglo</div><div class="e2">Austrias Menores: Felipe III (1598–1621), Felipe IV (1621–1665) y Carlos II (1665–1700)</div><div class="e2">Gobierno por validos; pérdida progresiva de la hegemonía europea</div><div class="e1">1. Felipe III (1598–1621)</div><div class="e1"><b> » Política interior</b></div><div class="e2">Validos: Duque de Lerma y Duque de Uceda</div><div class="e2">Expulsión de los moriscos (1609): grave impacto económico<span class="plus">+ añadido</span></div><div class="e1"><b> » Política exterior</b></div><div class="e2">Política de paz: Paz de Vervins (1598) y Tregua de los Doce Años (1609)</div><div class="e1">2. Felipe IV (1621–1665)</div><div class="e1"><b> » Política interior: el Conde-Duque de Olivares</b></div><div class="e2">Valido reformista ante la crisis; Unión de Armas (contribución de todos los territorios)</div><div class="e3">resistencia foral: Aragón y Valencia, un donativo; Cataluña y Portugal se niegan</div><div class="e2"><b>Crisis de 1640 · Cataluña: </b>Corpus de Sangre (1640); Pau Claris ofrece Barcelona a Luis XIII; fin con Juan José de Austria (1652)</div><div class="e2"><b>Crisis de 1640 · Portugal: </b>Braganza proclamado Juan IV; guerra de Restauración hasta la independencia (1668)</div><div class="e2">Caída de Olivares (1643) tras Rocroi; le sucede Luis de Haro</div><div class="e1"><b> » Política exterior</b></div><div class="e2">Guerra de los Treinta Años (1618–1648); derrota de Rocroi (1643)</div><div class="e2">Paz de Westfalia (1648): independencia de Holanda</div><div class="e2">Paz de los Pirineos (1659): Rosellón y Cerdaña; Francia, primera potencia</div><div class="e1">3. Carlos II (1665–1700)</div><div class="e1"><b> » Política interior</b></div><div class="e2">“El Hechizado”: crisis política, económica y social; intrigas y devaluaciones<span class="plus">+ añadido</span></div><div class="e1"><b> » Política exterior y problema sucesorio</b></div><div class="e2">Guerras frente a la Francia de Luis XIV; muerte sin descendencia: Borbón vs. Habsburgo</div><div class="e2"><b>Guerra de Sucesión y Paz de Utrecht (1713): </b>triunfo de Felipe V; Gibraltar y Menorca a Inglaterra; Países Bajos, Cerdeña y Nápoles a Austria; Sicilia a Saboya</div></div>
+  <div class="c-porque"><b>Por qué funciona:</b> mantiene la estructura gemela de la cuestión 3, sitúa a cada valido en su reinado, desarrolla la Crisis de 1640 como núcleo de Felipe IV y cierra con el problema sucesorio y Utrecht.</div>
+</article><article class="cues" id="c5" data-tags="tematico">
+  <div class="c-head">
+    <div class="c-top"><span class="c-n">Cuestión 5</span><span class="c-cod">A3.5</span>
+      <span class="c-tipo">Temático (contraste)</span></div>
+    <h3 class="c-t">Sociedad, economía y cultura de los siglos XVI y XVII</h3>
+  </div>
+  <div class="c-clasif"><p><b>Tipo: temático puro</b>. Dentro de cada ámbito se contrasta el <b>auge del XVI</b> con la <b>crisis del XVII</b>.</p></div>
+  <button class="tapa" type="button">Haz tú el esquema primero · pulsa para comprobar</button>
+  <div class="esq"><div class="e0"><b>SOCIEDAD, ECONOMÍA Y CULTURA (SS. XVI–XVII; Monarquía Hispánica)</b></div><div class="e1">Marco: del auge del XVI (expansión) al declive del XVII (crisis general)</div><div class="e1">1. Economía</div><div class="e1"><b> » Siglo XVI (auge)</b></div><div class="e2">Metales de América; “revolución de los precios” (inflación)<span class="plus">+ añadido</span></div><div class="e2">Castilla, centro económico; lana y Mesta<span class="plus">+ añadido</span></div><div class="e1"><b> » Siglo XVII (crisis)</b></div><div class="e2">Caída agraria; crisis comercial y artesanal (textil poco competitivo)</div><div class="e2">Descenso de metales; medidas fallidas de Olivares (devaluación, impuestos, venta de cargos)</div><div class="e1">2. Sociedad</div><div class="e1"><b> » Rasgo estructural (ambos siglos)</b></div><div class="e2">Sociedad estamental: privilegiados (nobleza, clero) y no privilegiados</div><div class="e1"><b> » Siglo XVII (crisis y mentalidad)</b></div><div class="e2">Descenso demográfico: epidemias, expulsión morisca (1609), guerras, emigración (~1 millón)</div><div class="e2">La burguesía aspira a ennoblecerse; empobrecimiento popular (pícaros, bandolerismo, revueltas)</div><div class="e1">3. Cultura: el Siglo de Oro</div><div class="e1"><b> » Marco</b></div><div class="e2">Esplendor cultural en pleno declive (aprox. 1550–1650)</div><div class="e1"><b> » Literatura</b></div><div class="e2">Cervantes; Góngora y Quevedo; Lope de Vega y Calderón<span class="plus">+ añadido</span></div><div class="e1"><b> » Pintura</b></div><div class="e2">Velázquez, Murillo, Zurbarán; El Greco entre ambos siglos<span class="plus">+ añadido</span></div></div>
+  <div class="c-porque"><b>Por qué funciona:</b> respeta la partición del enunciado y muestra el contraste XVI–XVII en cada ámbito. El color (azul XVI / morado XVII) lo hace visible de un vistazo.</div>
+</article><article class="cues" id="c6" data-tags="causal">
+  <div class="c-head">
+    <div class="c-top"><span class="c-n">Cuestión 6</span><span class="c-cod">A3.6</span>
+      <span class="c-tipo">Causal</span></div>
+    <h3 class="c-t">La Guerra de Sucesión española. La Paz de Utrecht. Los pactos de familia</h3>
+  </div>
+  <div class="c-clasif"><p><b>Tipo: causal</b> (causas → desarrollo → consecuencias). Los pactos de familia van en un bloque final de “proyección posterior”, no como consecuencia directa.</p></div>
+  <button class="tapa" type="button">Haz tú el esquema primero · pulsa para comprobar</button>
+  <div class="esq"><div class="e0"><b>LA GUERRA DE SUCESIÓN ESPAÑOLA (1701–1714; España y Europa)</b></div><div class="e1">1. CAUSAS</div><div class="e2">Muerte sin descendencia de Carlos II (1700)</div><div class="e2">Dos candidatos: Felipe de Anjou (Borbón) y el archiduque Carlos (Habsburgo)</div><div class="e2">Testamento a favor de Felipe de Anjou; temor europeo → Alianza de La Haya</div><div class="e1">2. DESARROLLO (conflicto europeo y guerra civil)</div><div class="e2"><b>Civil: </b>Corona de Aragón con el archiduque (foralismo); Castilla con Felipe V (centralismo)</div><div class="e2"><b>Militar: </b>Almansa (1707), Brihuega y Villaviciosa</div><div class="e2"><b>Giro de 1711: </b>el archiduque, emperador; el Reino Unido busca la paz</div><div class="e1">3. CONSECUENCIAS (Utrecht 1713; Rastadt 1714)</div><div class="e2">Felipe V, rey de España, renuncia al trono francés</div><div class="e2">Reino Unido: Gibraltar, Menorca, navío de permiso y asiento de negros</div><div class="e2">España pierde posesiones europeas (Austria y Saboya); resistencia de Cataluña (1714) y Mallorca (1715)</div><div class="e1">4. PROYECCIÓN POSTERIOR: los Pactos de Familia</div><div class="e2">Alianza con la Francia borbónica; Pactos de 1733 y 1743 (Felipe V)</div><div class="e2">Tercer Pacto (1761, Carlos III): apoyo a EE. UU.; Paz de Versalles (1783): Menorca y Florida</div></div>
+  <div class="c-porque"><b>Por qué funciona:</b> separa causas, desarrollo y consecuencias; destaca el doble carácter europeo y civil (que enlaza con la Nueva Planta de la cuestión 7) y ubica los pactos como proyección posterior.</div>
+</article><article class="cues" id="c7" data-tags="tematico causal">
+  <div class="c-head">
+    <div class="c-top"><span class="c-n">Cuestión 7</span><span class="c-cod">A3.7</span>
+      <span class="c-tipo">Temático + arranque causal</span></div>
+    <h3 class="c-t">La nueva Monarquía borbónica. Los Decretos de Nueva Planta. Modelo de Estado y alcance de las reformas</h3>
+  </div>
+  <div class="c-clasif"><p><b>Tipo: temático</b> (reformas por ámbitos) con <b>arranque causal</b>: Nueva Planta como consecuencia de la Guerra de Sucesión (enlace con la cuestión 6).</p></div>
+  <button class="tapa" type="button">Haz tú el esquema primero · pulsa para comprobar</button>
+  <div class="esq"><div class="e0"><b>LA NUEVA MONARQUÍA BORBÓNICA Y LAS REFORMAS DEL SIGLO XVIII (1700–1788; Monarquía Hispánica)</b></div><div class="e1">0. Punto de partida (enlace causal)</div><div class="e2">Tras la guerra, dinastía Borbón (Felipe V, 1700–1746); modelo absolutista y centralizador a imagen de Francia</div><div class="e1">1. Decretos de Nueva Planta (centralización política)</div><div class="e2">Consecuencia de la guerra: supresión de fueros e instituciones de la Corona de Aragón</div><div class="e2">Imposición del modelo castellano y Cortes únicas</div><div class="e2">Excepción: País Vasco y Navarra conservan fueros (fidelidad); Cortes de Navarra</div><div class="e1">2. Administración central</div><div class="e2">Secretarías de Despacho (antecedente de los ministerios); Consejo de Castilla como asesor; Junta Suprema de Estado (1787)</div><div class="e1">3. Administración territorial y ejército</div><div class="e2">Intendencias (antecedente de las provincias); virreinatos e intendencias en América</div><div class="e2">Regimientos en lugar de tercios; Guardia Real; construcción naval</div><div class="e1">4. Hacienda y economía</div><div class="e2">Intervención del Estado: límites a la Mesta, libertad comercial; manufacturas reales y obras públicas</div><div class="e2">Catastro del Marqués de la Ensenada (1749) en Castilla; moneda única (Real de a dos)</div><div class="e1">5. Cultura y religión</div><div class="e2">Biblioteca Nacional, Academias, Sociedades de Amigos del País; difusión de la Ilustración</div><div class="e2">Regalismo: Concordato con la Santa Sede (1753)</div></div>
+  <div class="c-porque"><b>Por qué funciona:</b> abre con el enganche causal (Nueva Planta como consecuencia de la guerra) y despliega las reformas por ámbitos, con sus fechas clave.</div>
+</article><article class="cues" id="c8" data-tags="tematico causal">
+  <div class="c-head">
+    <div class="c-top"><span class="c-n">Cuestión 8</span><span class="c-cod">A3.8</span>
+      <span class="c-tipo">Temático + envoltura causal</span></div>
+    <h3 class="c-t">Las reformas borbónicas en los virreinatos americanos</h3>
+  </div>
+  <div class="c-clasif"><p><b>Tipo: temático</b> con envoltura <b>causal</b>: causas al inicio y consecuencias al final, alrededor de un cuerpo temático.</p></div>
+  <button class="tapa" type="button">Haz tú el esquema primero · pulsa para comprobar</button>
+  <div class="esq"><div class="e0"><b>LAS REFORMAS BORBÓNICAS EN AMÉRICA (s. XVIII, esp. Felipe V y Carlos III)</b></div><div class="e1">0. Marco (enlace con la cuestión 7)</div><div class="e2">Mismo reformismo borbónico, aplicado a las colonias</div><div class="e1">1. CAUSAS: crisis del sistema colonial heredado</div><div class="e2">Crecimiento colonial; administración lenta y corrupta; contrabando (Inglaterra, Portugal)</div><div class="e2">Excesivo poder criollo y clerical; objetivos: hegemonía comercial-militar y mejor explotación</div><div class="e1">2. Reformas administrativas y territoriales</div><div class="e2">Nuevos virreinatos: Nueva Granada (1740) y Río de la Plata (1776)</div><div class="e2">Capitanías Generales (Guatemala, Venezuela, Chile, La Habana); Intendencias (1764); fin de corregimientos (1784)</div><div class="e1">3. Reformas económicas y comerciales</div><div class="e2">Mercantilismo: colonias proveedoras y consumidoras; apoyo a la burguesía peninsular</div><div class="e2">Decreto de Libre Comercio (1778, Carlos III); lucha contra el contrabando</div><div class="e1">4. CONSECUENCIAS</div><div class="e2">Más control e ingresos; tensiones y guerras con Inglaterra y Portugal</div><div class="e2">Malestar criollo por la presión fiscal: germen del futuro independentismo<span class="plus">+ añadido</span></div></div>
+  <div class="c-porque"><b>Por qué funciona:</b> enmarca en una línea el vínculo con el reformismo peninsular, desarrolla las causas como bloque propio, ordena las reformas y cierra con las consecuencias.</div>
+</article><article class="cues" id="c9" data-tags="tematico">
+  <div class="c-head">
+    <div class="c-top"><span class="c-n">Cuestión 9</span><span class="c-cod">A3.9</span>
+      <span class="c-tipo">Temático puro</span></div>
+    <h3 class="c-t">Sociedad, economía y cultura del siglo XVIII</h3>
+  </div>
+  <div class="c-clasif"><p><b>Tipo: temático puro</b>. La Ilustración y el despotismo se tratan como pensamiento y mentalidad, no como catálogo de reformas (eso está en la cuestión 7).</p></div>
+  <button class="tapa" type="button">Haz tú el esquema primero · pulsa para comprobar</button>
+  <div class="esq"><div class="e0"><b>SOCIEDAD, ECONOMÍA Y CULTURA DEL SIGLO XVIII (España; reformismo ilustrado, esp. Carlos III)</b></div><div class="e1">1. Economía (base agraria y reformismo)</div><div class="e2">Predominio agrario: baja rentabilidad, tierras amortizadas, crisis de subsistencia</div><div class="e2">Reformismo agrario: Informe sobre la Ley Agraria de Jovellanos; primeras desamortizaciones</div><div class="e3">medidas limitadas: tierras comunales en Extremadura, Sierra Morena (fallida), reducción de la Mesta</div><div class="e2">Industria: fin del monopolio gremial (1772), Reales Fábricas, proteccionismo</div><div class="e2">Comercio: Banco Nacional de San Carlos; fin de la Casa de Contratación; apertura a América (1765, 1778)</div><div class="e2">Cataluña: mayor crecimiento; burguesía textil → bases del despegue del XIX</div><div class="e1">2. Sociedad (estamental, con tensiones)</div><div class="e2">Sociedad estamental del Antiguo Régimen<span class="plus">+ añadido</span></div><div class="e2"><b>Motín de Esquilache (1766): </b>detonante en vestimenta; fondo: rechazo a recortar privilegios, precio del pan, presión fiscal</div><div class="e2"><b>Consecuencias: </b>Aranda; expulsión de los jesuitas (regalismo)</div><div class="e1">3. Cultura: la Ilustración</div><div class="e2">Corriente europea; base ideológica de las reformas; razón y crítica frente a la superstición</div><div class="e2">Difusión: Reales Academias (Neoclasicismo), Sociedades de Amigos del País, prensa</div><div class="e2">Figuras: Jovellanos, Feijoo, Samaniego</div><div class="e1">4. El despotismo ilustrado</div><div class="e2">Monarquía absoluta + rey benefactor; lema “Todo para el pueblo, pero sin el pueblo”</div><div class="e2">Carlos III (1759–1788): Olavide, Campomanes, Floridablanca; reformas urbanas, económicas y educativas</div></div>
+  <div class="c-porque"><b>Por qué funciona:</b> respeta la partición del enunciado y trata la Ilustración como mentalidad, evitando repetir las reformas de la cuestión 7. Esquilache y los jesuitas cierran el bloque social.</div>
+</article>
+</section>
+
+</main>
+
+<footer class="foot"><div class="foot-inner">
+  <span>Historia de España · 2.º de Bachillerato · Bloque A</span>
+  <span>Departamento de Ciencias Sociales · Colegios El Valle</span>
+</div></footer>
+<script>
+(function(){
+  "use strict";
+  var cues = [].slice.call(document.querySelectorAll('.cues'));
+  var sel = {};
+  var qc = document.getElementById('qcount');
+
+  function filtrar(){
+    var act = Object.keys(sel).filter(function(k){ return sel[k]; });
+    var n = 0;
+    cues.forEach(function(c){
+      var tags = c.dataset.tags.split(' ');
+      var ok = !act.length || act.some(function(t){ return tags.indexOf(t) >= 0; });
+      c.classList.toggle('oculta', !ok);
+      if (ok) n++;
+    });
+    qc.textContent = n + ' de ' + cues.length + ' cuestiones';
+  }
+
+  [].forEach.call(document.querySelectorAll('.chip[data-tag]'), function(b){
+    b.addEventListener('click', function(){
+      var k = b.dataset.tag; sel[k] = !sel[k];
+      b.classList.toggle('on', sel[k]); filtrar();
+    });
+  });
+
+  var bp = document.getElementById('practica');
+  bp.addEventListener('click', function(){
+    var on = document.body.classList.toggle('practica');
+    bp.classList.toggle('on', on);
+    bp.textContent = on ? 'Salir de la práctica' : 'Modo práctica';
+    if (!on) cues.forEach(function(c){ c.classList.remove('abierta'); });
+  });
+
+  cues.forEach(function(c){
+    var t = c.querySelector('.tapa');
+    if (t) t.addEventListener('click', function(){ c.classList.add('abierta'); });
+  });
+
+  filtrar();
+})();
+</script>
+</body>
+</html>
