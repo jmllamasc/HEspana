@@ -149,6 +149,48 @@ h3 { font-family:var(--serif); font-size:1.22rem; font-weight:600; margin-bottom
 
 @media (prefers-reduced-motion: reduce) { * { transition:none !important; animation:none !important; } }
 
+/* ─────────── IMPRESIÓN ─────────── */
+@media print {
+  @page { size: A4; margin: 14mm 13mm; }
+  :root {
+    --paper:#FFF; --surface:#FFF; --surface-2:#FAFAF8;
+    --ink:#111; --ink-soft:#333; --ink-faint:#666;
+    --rule:#CCC; --rule-soft:#E4E4E0; --shadow:none;
+  }
+  html, body { background:#FFF !important; color:#111 !important; font-size:10.5pt; }
+  * { -webkit-print-color-adjust:exact; print-color-adjust:exact; box-shadow:none !important; }
+
+  /* fuera todo lo que sólo sirve en pantalla */
+  .tools, .idx, .railnav, .btn, .reveal, .chip, .qfilt, .count, .vacio, .tapa,
+  .sem-foot, .timer, .leyenda { display:none !important; }
+
+  /* desplegar lo que en pantalla está oculto o plegado */
+  .f-body, .esq, .c-porque, .duo-options { display:block !important; }
+  .ficha.oculta, .grupo.oculto, .cues.oculta { display:block !important; }
+  .limpio { border:1px solid var(--rule) !important; }
+  .limpio > summary { list-style:none; }
+  .limpio > p { display:block !important; }
+  details { display:block !important; }
+  details > summary { display:block !important; }
+  details:not([open]) > *:not(summary) { display:block !important; }
+  body.repaso .f-body, body.practica .esq, body.practica .c-porque { display:block !important; }
+  .ej-txt .s1, .ej-txt .s2, .ej-txt .s3 { background:none !important; box-shadow:none !important; }
+
+  /* cortes de página razonables */
+  .ficha, .cues, .tool, .win, .mo, .f4, .er, .pl, .law, .lw, .ej, .fmt, .pt,
+  .callout, .aviso, .sino-c, .preg-c, .ia-col, .ia-c, .p5, .spaced, .partes,
+  .anatomy, .metodo, .tipos, .res, .semaforo { break-inside:avoid; page-break-inside:avoid; }
+  h2, h3, .grupo-h, .sec-h { break-after:avoid; page-break-after:avoid; }
+  section { padding:18px 0 0 !important; }
+  .divider { margin-top:18px !important; }
+  .hero { padding:22px 18px 20px !important; }
+  .hero h1 { font-size:26pt !important; }
+  .wrap, .wrap-wide, .narrow { max-width:none !important; padding:0 !important; }
+  .foot { margin-top:24px !important; }
+  a { text-decoration:none; color:inherit; }
+}
+
+
 /* ── BARRA DE HERRAMIENTAS ── */
 .tools { position:sticky; top:0; z-index:50; background:color-mix(in srgb,var(--paper) 92%,transparent);
   backdrop-filter:blur(10px); border-bottom:1px solid var(--rule); padding:12px 0 11px; }
@@ -289,7 +331,7 @@ mark { background:var(--ambar-bg); color:inherit; border-radius:2px; padding:0 1
     </div>
     <div class="callout"><span class="k">Cómo leer estas fichas</span>
       Cada una aplica el método <strong>situar → explicar → conectar</strong>. El desglose por pasos es el
-      andamiaje mental: en el examen se redacta seguido, en un solo párrafo de seis a diez líneas.
+      andamiaje mental: en el examen se redacta seguido, en un solo párrafo de <strong>unas quince líneas</strong>.
       Las entradas más importantes incluyen además la <strong>respuesta en limpio</strong>, tal como se
       entregaría. Lo marcado con <strong>+ añadido</strong> es contexto que amplía el material base.
     </div>
@@ -492,7 +534,7 @@ mark { background:var(--ambar-bg); color:inherit; border-radius:2px; padding:0 1
 
 <footer class="foot"><div class="foot-inner">
   <span>Historia de España · 2.º de Bachillerato · Bloque A</span>
-  <span>Departamento de Ciencias Sociales · Colegios El Valle</span>
+  <span>Modelo de examen PAU · curso 2026-2027 &nbsp;·&nbsp; Departamento de Ciencias Sociales · Colegios El Valle</span>
 </div></footer>
 <script>
 (function(){

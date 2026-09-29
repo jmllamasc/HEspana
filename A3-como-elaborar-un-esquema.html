@@ -149,6 +149,48 @@ h3 { font-family:var(--serif); font-size:1.22rem; font-weight:600; margin-bottom
 
 @media (prefers-reduced-motion: reduce) { * { transition:none !important; animation:none !important; } }
 
+/* ─────────── IMPRESIÓN ─────────── */
+@media print {
+  @page { size: A4; margin: 14mm 13mm; }
+  :root {
+    --paper:#FFF; --surface:#FFF; --surface-2:#FAFAF8;
+    --ink:#111; --ink-soft:#333; --ink-faint:#666;
+    --rule:#CCC; --rule-soft:#E4E4E0; --shadow:none;
+  }
+  html, body { background:#FFF !important; color:#111 !important; font-size:10.5pt; }
+  * { -webkit-print-color-adjust:exact; print-color-adjust:exact; box-shadow:none !important; }
+
+  /* fuera todo lo que sólo sirve en pantalla */
+  .tools, .idx, .railnav, .btn, .reveal, .chip, .qfilt, .count, .vacio, .tapa,
+  .sem-foot, .timer, .leyenda { display:none !important; }
+
+  /* desplegar lo que en pantalla está oculto o plegado */
+  .f-body, .esq, .c-porque, .duo-options { display:block !important; }
+  .ficha.oculta, .grupo.oculto, .cues.oculta { display:block !important; }
+  .limpio { border:1px solid var(--rule) !important; }
+  .limpio > summary { list-style:none; }
+  .limpio > p { display:block !important; }
+  details { display:block !important; }
+  details > summary { display:block !important; }
+  details:not([open]) > *:not(summary) { display:block !important; }
+  body.repaso .f-body, body.practica .esq, body.practica .c-porque { display:block !important; }
+  .ej-txt .s1, .ej-txt .s2, .ej-txt .s3 { background:none !important; box-shadow:none !important; }
+
+  /* cortes de página razonables */
+  .ficha, .cues, .tool, .win, .mo, .f4, .er, .pl, .law, .lw, .ej, .fmt, .pt,
+  .callout, .aviso, .sino-c, .preg-c, .ia-col, .ia-c, .p5, .spaced, .partes,
+  .anatomy, .metodo, .tipos, .res, .semaforo { break-inside:avoid; page-break-inside:avoid; }
+  h2, h3, .grupo-h, .sec-h { break-after:avoid; page-break-after:avoid; }
+  section { padding:18px 0 0 !important; }
+  .divider { margin-top:18px !important; }
+  .hero { padding:22px 18px 20px !important; }
+  .hero h1 { font-size:26pt !important; }
+  .wrap, .wrap-wide, .narrow { max-width:none !important; padding:0 !important; }
+  .foot { margin-top:24px !important; }
+  a { text-decoration:none; color:inherit; }
+}
+
+
 .idx { position:sticky; top:0; z-index:50; background:color-mix(in srgb,var(--paper) 90%,transparent);
   backdrop-filter:blur(10px); border-bottom:1px solid var(--rule); }
 .idx-in { max-width:1040px; margin:0 auto; padding:0 24px; display:flex; gap:4px;
@@ -452,6 +494,20 @@ body.practica .cues.abierta .tapa { display:none; }
   <p class="lede">Cada cuestión incluye su clasificación razonada y el esquema modelo listo para estudiar
   o adaptar. En <strong>modo práctica</strong> los esquemas se ocultan: haz el tuyo en un folio y
   después compara.</p>
+
+  <div class="callout" style="margin-bottom:22px">
+    <span class="k">Aviso importante: el enunciado puede no coincidir con ningún epígrafe</span>
+    En el examen modelo publicado para este curso, la pregunta de esquema dice:
+    <strong>«Elabore un esquema sobre la política exterior de los Austrias»</strong>. Eso no es ninguno
+    de los nueve epígrafes: los epígrafes son «Los Austrias del siglo XVI. Política interior y exterior»
+    y el equivalente del XVII. La pregunta <strong>ha cortado a través de dos epígrafes y se ha quedado
+    con una mitad de cada uno</strong>.
+    <br><br>
+    Por eso estos nueve esquemas son <strong>tu base, no tu repertorio</strong>. Si te aprendes nueve
+    dibujos de memoria, un enunciado transversal te deja bloqueado. Lo que hay que dominar es el
+    <strong>procedimiento</strong>: descodificar el enunciado, fijar los límites, elegir el criterio y
+    volcar en niveles. Con eso puedes montar un esquema de cualquier recorte que te pidan.
+  </div>
   <div class="qfilt">
     <button class="btn" id="practica" type="button">Modo práctica</button>
     <button class="chip" data-tag="cronologico" type="button">Cronológico</button>
@@ -556,7 +612,7 @@ body.practica .cues.abierta .tapa { display:none; }
 
 <footer class="foot"><div class="foot-inner">
   <span>Historia de España · 2.º de Bachillerato · Bloque A</span>
-  <span>Modelo armonizado PAU 2027 · pendiente del definitivo de octubre &nbsp;·&nbsp; Departamento de Ciencias Sociales · Colegios El Valle</span>
+  <span>Modelo de examen PAU · curso 2026-2027 &nbsp;·&nbsp; Departamento de Ciencias Sociales · Colegios El Valle</span>
 </div></footer>
 <script>
 (function(){
