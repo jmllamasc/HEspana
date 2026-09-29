@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Guía de método de trabajo y estudio para Historia de España de 2.º de Bachillerato: el circuito casa-clase, el examen completo, los cuatro formatos de la Parte A y el semáforo de autoevaluación de las 18 cuestiones del Bloque A.">
+<meta name="description" content="Guía de método de trabajo y estudio para Historia de España de 2.º de Bachillerato.">
 <style>*, *::before, *::after { box-sizing: border-box; } html { -webkit-text-size-adjust: 100%; }</style>
 <title>Cuaderno de Bitácora</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -776,6 +776,48 @@ h2 {
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
 }
+
+/* ─────────── IMPRESIÓN ─────────── */
+@media print {
+  @page { size: A4; margin: 14mm 13mm; }
+  :root {
+    --paper:#FFF; --surface:#FFF; --surface-2:#FAFAF8;
+    --ink:#111; --ink-soft:#333; --ink-faint:#666;
+    --rule:#CCC; --rule-soft:#E4E4E0; --shadow:none;
+  }
+  html, body { background:#FFF !important; color:#111 !important; font-size:10.5pt; }
+  * { -webkit-print-color-adjust:exact; print-color-adjust:exact; box-shadow:none !important; }
+
+  /* fuera todo lo que sólo sirve en pantalla */
+  .tools, .idx, .railnav, .btn, .reveal, .chip, .qfilt, .count, .vacio, .tapa,
+  .sem-foot, .timer, .leyenda { display:none !important; }
+
+  /* desplegar lo que en pantalla está oculto o plegado */
+  .f-body, .esq, .c-porque, .duo-options { display:block !important; }
+  .ficha.oculta, .grupo.oculto, .cues.oculta { display:block !important; }
+  .limpio { border:1px solid var(--rule) !important; }
+  .limpio > summary { list-style:none; }
+  .limpio > p { display:block !important; }
+  details { display:block !important; }
+  details > summary { display:block !important; }
+  details:not([open]) > *:not(summary) { display:block !important; }
+  body.repaso .f-body, body.practica .esq, body.practica .c-porque { display:block !important; }
+  .ej-txt .s1, .ej-txt .s2, .ej-txt .s3 { background:none !important; box-shadow:none !important; }
+
+  /* cortes de página razonables */
+  .ficha, .cues, .tool, .win, .mo, .f4, .er, .pl, .law, .lw, .ej, .fmt, .pt,
+  .callout, .aviso, .sino-c, .preg-c, .ia-col, .ia-c, .p5, .spaced, .partes,
+  .anatomy, .metodo, .tipos, .res, .semaforo { break-inside:avoid; page-break-inside:avoid; }
+  h2, h3, .grupo-h, .sec-h { break-after:avoid; page-break-after:avoid; }
+  section { padding:18px 0 0 !important; }
+  .divider { margin-top:18px !important; }
+  .hero { padding:22px 18px 20px !important; }
+  .hero h1 { font-size:26pt !important; }
+  .wrap, .wrap-wide, .narrow { max-width:none !important; padding:0 !important; }
+  .foot { margin-top:24px !important; }
+  a { text-decoration:none; color:inherit; }
+}
+
 </style>
 
 </head>
@@ -806,6 +848,7 @@ h2 {
     <a href="#ritmo">El ritmo</a>
     <a href="#examen">El examen</a>
     <a href="#respuesta">Cómo preguntan</a>
+    <a href="#doble">¿Esto ya vale?</a>
     <a href="#semaforo">El semáforo</a>
     <a href="#ia">La IA</a>
     <a href="#reglas">Ocho reglas</a>
@@ -1214,6 +1257,17 @@ h2 {
 .aviso-h { font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase;
   color:var(--rojo); margin-bottom:7px; }
 .aviso p { font-size:15px; line-height:1.55; color:var(--ink); }
+
+.facsimil { margin-top:16px; background:var(--surface-2); border:1px solid var(--rule);
+  border-radius:8px; overflow:hidden; }
+.fac-h { padding:11px 18px; border-bottom:1px solid var(--rule); background:var(--surface);
+  font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--ink-faint); }
+.fac-b { padding:16px 20px; font-family:var(--mono); font-size:13.5px; line-height:1.75;
+  color:var(--ink-soft); }
+.fac-b .tit { color:var(--ink); font-weight:600; display:block; margin-bottom:7px; }
+.fac-b .pr { display:block; padding-left:20px; text-indent:-20px; }
+.fac-b .esq { color:var(--a3); font-weight:600; }
 .prov { margin-top:18px; font-size:13px; line-height:1.5; color:var(--ink-faint);
   border-left:2px solid var(--rule); padding-left:12px; }
 .callout { background:var(--surface); border:1px solid var(--rule);
@@ -1227,7 +1281,7 @@ h2 {
   <div class="wrap">
     <div class="eyebrow">El examen, de una vez</div>
     <h2>Tres partes, noventa minutos</h2>
-    <p class="lede">Conviene que sepas dónde encaja el Bloque A antes de estudiarlo. Estos son los pesos del <strong>modelo armonizado que se estrena este curso</strong>.</p>
+    <p class="lede">Conviene que sepas dónde encaja el Bloque A antes de estudiarlo. Estos son los pesos del <strong>modelo que se estrena este curso</strong>, ya publicado.</p>
 
     <div class="partes">
       <div class="pt">
@@ -1277,7 +1331,29 @@ h2 {
       <p class="tp-foot">Unos once minutos por pregunta corta. Si una se te resiste, pasa a la siguiente y vuelve: un minuto de bloqueo cuesta más que una línea que falta. Y reserva de verdad los últimos minutos para releer: ahí está el 10 % de la ortografía.</p>
     </div>
 
-    <p class="prov">Datos tomados de la <em>Información descriptiva del modelo armonizado de Historia de España, PAU 2027</em>, del Distrito Universitario Único de Madrid, que se aplica desde el curso 2026-2027. La comisión publica los modelos definitivos en octubre; si cambia algo, esta página se actualiza.</p>
+
+    <div class="facsimil">
+      <div class="fac-h">Así es la Parte A del examen modelo publicado</div>
+      <div class="fac-b">
+        <span class="tit">A. (3 puntos) PREGUNTAS CORTAS</span>
+        <span>Responda a dos de las siguientes tres preguntas:</span>
+        <span class="pr">1.— La Hispania romana.</span>
+        <span class="pr">2.— Los Reyes Católicos: unión dinástica e instituciones de gobierno. La guerra de Granada.</span>
+        <span class="pr esq">3.— Elabore un esquema sobre la política exterior de los Austrias.</span>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:14px;border-left-color:var(--a3)">
+      <span class="k" style="color:var(--a3)">Fíjate en la tercera</span>
+      <strong>«La política exterior de los Austrias» no es ninguno de los nueve epígrafes del tema 3.</strong>
+      Los epígrafes son «Los Austrias del siglo XVI. Política interior y exterior» y «Los Austrias del siglo
+      XVII. Política interior y exterior». La pregunta ha <strong>cortado a través de dos epígrafes y se ha
+      quedado con una mitad de cada uno</strong>. Los nueve esquemas resueltos son tu base, pero el examen
+      puede pedirte recombinarlos: por eso importa entender la lógica del esquema y no memorizar nueve
+      dibujos.
+    </div>
+
+    <p class="prov">Datos tomados del <em>Modelo de examen de Historia de España, curso 2026-2027</em>, publicado por las Universidades Públicas de la Comunidad de Madrid. Es el modelo definitivo, no una previsión. El criterio de corrección lingüística —hasta el 10 %— procede de la <em>información descriptiva del modelo armonizado</em> del mismo distrito.</p>
   </div>
 </section>
 
@@ -1456,7 +1532,113 @@ h2 {
 
 <div class="divider"></div>
 
-<!-- ══════════ 7. SEMÁFORO ══════════ -->
+<!-- ══════════ 7. LA DOBLE COMPROBACIÓN ══════════ -->
+<style>
+.dobles { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+@media (max-width:660px){ .dobles { grid-template-columns:1fr; } }
+.db { background:var(--surface); border:1px solid var(--rule); border-radius:8px; overflow:hidden;
+  box-shadow:var(--shadow); }
+.db-h { padding:14px 20px; border-bottom:1px solid var(--rule); background:var(--surface-2); }
+.db-k { font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--cobre); }
+.db-t { font-family:var(--serif); font-size:1.12rem; font-weight:600; margin-top:4px; line-height:1.2; }
+.db-q { font-size:13.5px; color:var(--ink-faint); font-style:italic; margin-top:3px; }
+.db-b { padding:14px 20px 16px; font-size:14.5px; line-height:1.55; color:var(--ink-soft); }
+.db-b b { color:var(--ink); font-weight:600; }
+.rubrica { display:flex; flex-direction:column; gap:1px; background:var(--rule);
+  border:1px solid var(--rule); border-radius:8px; overflow:hidden; margin-top:16px; }
+.ru { display:grid; grid-template-columns:34px 150px 1fr; gap:0; background:var(--surface); }
+@media (max-width:660px){ .ru { grid-template-columns:34px 1fr; } .ru-q { grid-column:2; } }
+.ru-n { display:flex; align-items:center; justify-content:center; font-family:var(--mono);
+  font-size:12px; font-weight:600; color:var(--cobre); background:var(--surface-2); }
+.ru-t { padding:13px 16px; background:var(--surface-2); }
+.ru-t b { font-family:var(--serif); font-size:1rem; font-weight:600; display:block; line-height:1.2; }
+.ru-t i { font-family:var(--mono); font-style:normal; font-size:9.5px; letter-spacing:.1em;
+  color:var(--ink-faint); display:block; margin-top:3px; }
+.ru-q { padding:13px 18px; font-size:14.3px; line-height:1.5; color:var(--ink-soft); }
+.ru-q b { color:var(--ink); font-weight:600; }
+.arreglo { margin-top:16px; display:grid; grid-template-columns:1fr 1fr; gap:0 18px; }
+@media (max-width:660px){ .arreglo { grid-template-columns:1fr; } }
+.ar2 { display:grid; grid-template-columns:120px 1fr; gap:10px; padding:9px 0;
+  border-top:1px solid var(--rule-soft); font-size:13.8px; line-height:1.45; }
+.ar2 span:first-child { font-weight:600; color:var(--rojo); }
+.ar2 span:last-child { color:var(--ink-soft); }
+.ar2 b { color:var(--ink); font-weight:600; }
+</style>
+<section id="doble">
+  <div class="wrap-wide">
+    <div class="eyebrow">Después de escribir</div>
+    <h2>¿Esto ya vale?</h2>
+    <p class="lede">Has hecho tu esquema y, desde él, tu redacción, sin mirar nada. Falta lo más importante: saber si <strong>ya está</strong>. Y eso son dos comprobaciones distintas, en este orden. La primera la hacen los apuntes. La segunda la haces tú.</p>
+
+    <div class="dobles">
+      <div class="db">
+        <div class="db-h">
+          <div class="db-k">Comprobación 1</div>
+          <div class="db-t">Contra los apuntes y el esquema del profesor</div>
+          <div class="db-q">¿He dicho algo falso? ¿Me he dejado algo esencial?</div>
+        </div>
+        <div class="db-b">
+          <p style="margin-bottom:8px"><b>En rojo</b>, lo que hayas escrito mal: una fecha cambiada, un nombre confundido, una causa que no era.</p>
+          <p style="margin-bottom:8px"><b>En azul</b>, lo esencial que falte: un apartado entero de tu esquema que no ha llegado a la redacción.</p>
+          <p><b>Ojo:</b> lo que está en los apuntes y no en tu folio no es automáticamente un fallo. Los apuntes son más completos que cualquier respuesta de quince líneas —tienen que serlo—. Solo cuenta como falta lo que deja la respuesta coja.</p>
+        </div>
+      </div>
+      <div class="db">
+        <div class="db-h">
+          <div class="db-k">Comprobación 2</div>
+          <div class="db-t">Contra la rúbrica</div>
+          <div class="db-q">¿Esto puntúa?</div>
+        </div>
+        <div class="db-b">
+          <p style="margin-bottom:8px">Seis preguntas sobre tu propio texto, de las que solo caben dos respuestas. Salen de los <b>criterios de valoración del modelo</b>, no de una manía del profesor.</p>
+          <p>Esta es la comprobación que te deja cerrar la cuestión. La primera nunca se acaba: siempre habrá más en los apuntes. <b>Esta sí tiene final.</b></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="rubrica">
+      <div class="ru"><div class="ru-n">1</div>
+        <div class="ru-t"><b>Sitúo</b><i>MARCO</i></div>
+        <div class="ru-q">¿Hay <b>una fecha y un lugar</b> en las dos primeras líneas, antes de empezar a contar?</div></div>
+      <div class="ru"><div class="ru-n">2</div>
+        <div class="ru-t"><b>Cada idea, su dato</b><i>CONTENIDO</i></div>
+        <div class="ru-q">Subraya todas las fechas, nombres propios, leyes y cifras. ¿Queda <b>alguna frase entera sin nada subrayado</b>?</div></div>
+      <div class="ru"><div class="ru-n">3</div>
+        <div class="ru-t"><b>Se ve el orden</b><i>SÍNTESIS</i></div>
+        <div class="ru-q">¿Podrías <b>reconstruir tu esquema</b> leyendo solo la redacción? Si no, no hay estructura: hay un montón.</div></div>
+      <div class="ru"><div class="ru-n">4</div>
+        <div class="ru-t"><b>Cierro</b><i>CONECTAR</i></div>
+        <div class="ru-q">La última frase, ¿dice <b>en qué desemboca</b>, qué cambió o qué abrió? ¿O se acaba en seco?</div></div>
+      <div class="ru"><div class="ru-n">5</div>
+        <div class="ru-t"><b>Hablo como historiador</b><i>LENGUAJE</i></div>
+        <div class="ru-q">¿Uso los <b>términos de la asignatura</b> —unión dinástica, regalismo, foralismo, desamortización— o los rodeo con palabras vagas?</div></div>
+      <div class="ru"><div class="ru-n">6</div>
+        <div class="ru-t"><b>La medida</b><i>EXTENSIÓN</i></div>
+        <div class="ru-q">¿Ronda las <b>quince líneas</b>? Cinco se queda corto; treinta es contarlo todo en vez de seleccionar.</div></div>
+    </div>
+
+    <div class="callout" style="margin-top:14px;border-left-color:var(--clase)">
+      <span class="k" style="color:var(--clase)">El permiso que te da el modelo</span>
+      Tu versión <strong>no tiene que ser la del profesor</strong>. El modelo dice literalmente que <strong>no hace falta mencionar todos los aspectos</strong> para evaluar bien la respuesta: puedes seleccionar y ordenar distinto, y seguir sacando la nota entera. Lo que no puede faltar es fecha, orden y cierre.
+    </div>
+
+    <h3 style="font-family:var(--serif);font-size:19px;font-weight:600;margin-top:34px">Si algo falla, qué hacer antes de repetirlo</h3>
+    <p class="lede" style="margin-top:8px;margin-bottom:10px">No repitas lo mismo esperando otro resultado.</p>
+    <div class="arreglo">
+      <div class="ar2"><span>1 · Sitúo</span><span>Tu <b>esquema no tenía marco</b>. Su primer renglón debe llevar años y espacio: «(1469–1516; Castilla y Aragón)».</span></div>
+      <div class="ar2"><span>4 · Cierro</span><span>Mira el paso <b>«conectar»</b> de la ficha de esa cuestión. Es el que sube la nota y el que más se olvida.</span></div>
+      <div class="ar2"><span>2 · Cada idea, su dato</span><span>Cinco minutos de <b>tarjetas</b>. Es memoria de datos sueltos, no de estructura: se arregla rápido.</span></div>
+      <div class="ar2"><span>5 · Lenguaje</span><span>Subraya en los apuntes los <b>términos técnicos</b> de esa cuestión y oblígate a colocarlos.</span></div>
+      <div class="ar2"><span>3 · Se ve el orden</span><span>El problema está en el <b>esquema</b>, no en la redacción. Rehazlo antes de volver a escribir.</span></div>
+      <div class="ar2"><span>6 · La medida</span><span>Si te pasas, estás <b>contando en vez de seleccionando</b>. Si te quedas corto, faltan datos.</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════ 8. SEMÁFORO ══════════ -->
 <section id="semaforo">
   <div class="wrap-wide">
     <div class="eyebrow">Autoevaluación</div>
@@ -1489,15 +1671,15 @@ h2 {
       <div class="sem-legend">
         <div class="leg">
           <div class="leg-t"><span class="bullet" style="background:var(--verde)"></span>Verde</div>
-          <div class="leg-d">He escrito la respuesta entera de memoria, en doce minutos, y estaba completa. No «creo que me la sé».</div>
+          <div class="leg-d">He pasado <strong>las dos comprobaciones</strong>: la escribí de memoria sin mirar, no hay errores de contenido y la rúbrica sale con seis síes. No «creo que me la sé».</div>
         </div>
         <div class="leg">
           <div class="leg-t"><span class="bullet" style="background:var(--ambar)"></span>Ámbar</div>
-          <div class="leg-d">Tengo la estructura, pero se me escapan los datos: fechas, nombres, leyes. Toca tarjetas.</div>
+          <div class="leg-d">El contenido está, pero <strong>fallo alguna casilla</strong> de la rúbrica. Arréglalo y vuelve a escribirla en el próximo repaso.</div>
         </div>
         <div class="leg">
           <div class="leg-t"><span class="bullet" style="background:var(--rojo)"></span>Rojo</div>
-          <div class="leg-d">Necesito volver a los apuntes y rehacer el esquema. Reconocerlo hoy cuesta veinte minutos; en junio, punto y medio.</div>
+          <div class="leg-d">Hay <strong>errores de contenido</strong>, o no he sido capaz de escribirla sin mirar. Vuelve a los apuntes y rehaz tu esquema.</div>
         </div>
       </div>
 
@@ -1591,7 +1773,7 @@ h2 {
 <footer class="foot">
   <div class="foot-inner">
     <span>Historia de España · 2.º de Bachillerato · Bloque A</span>
-    <span>Modelo armonizado PAU 2027 · pendiente del modelo definitivo de octubre</span>
+    <span>Modelo de examen PAU · curso 2026-2027</span>
     <span>Departamento de Ciencias Sociales</span>
   </div>
 </footer>
