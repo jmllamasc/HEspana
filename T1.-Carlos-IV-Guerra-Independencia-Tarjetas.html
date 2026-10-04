@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tarjetas didácticas · Carlos IV y la Guerra de la Independencia</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  :root{
+    --vellum:    #e9e0cb;
+    --vellum-dk: #ddd1b4;
+    --ink:       #2a2118;
+    --ink-soft:  #5a4d3a;
+    --gold:      #a8842c;
+        --gold-lt:   #c9a64e;
+    --porphyry:  #7d2e3a;
+    --porphyry-dk:#5f1f29;
+    --verdigris: #3f6b5c;
+    --line:      rgba(42,33,24,.18);
+    --shadow:    rgba(42,33,24,.28);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0;}
+
+  body{
+    font-family:'Spectral',Georgia,serif;
+    color:var(--ink);
+    background:
+      radial-gradient(circle at 20% 10%, rgba(168,132,44,.10), transparent 45%),
+      radial-gradient(circle at 85% 90%, rgba(125,46,58,.10), transparent 45%),
+      var(--vellum);
+    background-attachment:fixed;
+    min-height:100vh;
+    padding:2rem 1.25rem 4rem;
+    -webkit-tap-highlight-color:transparent;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    mix-blend-mode:multiply;
+  }
+
+  .wrap{max-width:760px;margin:0 auto;position:relative;z-index:1;}
+
+  /* ---------- Cabecera ---------- */
+  header{text-align:center;margin-bottom:1.6rem;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--porphyry);margin-bottom:.7rem;
+  }
+  h1{
+    font-family:'Cinzel',serif;font-weight:700;
+    font-size:clamp(1.7rem,5.5vw,2.7rem);
+    line-height:1.05;color:var(--ink);
+    letter-spacing:.01em;
+  }
+  h1 .crown{display:block;color:var(--gold);font-size:1.4rem;margin-bottom:.3rem;}
+  .sub{
+    margin-top:.6rem;color:var(--ink-soft);font-style:italic;
+    font-size:.95rem;
+  }
+  .rule{
+    width:140px;height:2px;margin:1.1rem auto 0;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  }
+
+  /* ---------- Barra de control ---------- */
+  .controls{
+    display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;
+    margin:1.6rem 0 1.2rem;
+  }
+  .btn{
+    font-family:'IBM Plex Mono',monospace;font-size:.72rem;
+    letter-spacing:.12em;text-transform:uppercase;
+    padding:.6rem 1rem;border:1.5px solid var(--ink);
+    background:transparent;color:var(--ink);cursor:pointer;
+    border-radius:2px;transition:all .18s ease;
+  }
+  .btn:hover{background:var(--ink);color:var(--vellum);}
+  .btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px;}
+  .btn.primary{background:var(--porphyry);border-color:var(--porphyry);color:var(--vellum);}
+  .btn.primary:hover{background:var(--porphyry-dk);border-color:var(--porphyry-dk);}
+
+  /* ---------- Progreso ---------- */
+  .meta{
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:'IBM Plex Mono',monospace;font-size:.72rem;
+    color:var(--ink-soft);letter-spacing:.08em;margin-bottom:.7rem;
+    padding:0 .2rem;
+  }
+  .tag{
+    font-family:'IBM Plex Mono',monospace;font-size:.62rem;
+    letter-spacing:.16em;text-transform:uppercase;
+    padding:.25rem .55rem;border-radius:2px;
+    color:var(--vellum);background:var(--verdigris);
+  }
+  .tag.fecha{background:var(--gold);}
+  .tag.causa{background:var(--porphyry);}
+  .tag.concepto{background:var(--verdigris);}
+  .tag.institucion{background:#4a5a78;}
+
+  /* ---------- Tarjeta ---------- */
+  .stage{perspective:1600px;margin-bottom:1.2rem;}
+  .card{
+    position:relative;width:100%;min-height:340px;
+    transform-style:preserve-3d;transition:transform .6s cubic-bezier(.4,.1,.2,1);
+    cursor:pointer;
+  }
+  .card.flipped{transform:rotateY(180deg);}
+  .face{
+    position:absolute;inset:0;backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
+    border-radius:6px;padding:2.2rem 2rem;
+    display:flex;flex-direction:column;
+    box-shadow:0 18px 38px -16px var(--shadow), 0 0 0 1px var(--line);
+    overflow:auto;
+  }
+  .face::after{
+    content:"";position:absolute;inset:.55rem;border:1px solid var(--line);
+    border-radius:3px;pointer-events:none;
+  }
+  .front{
+    background:linear-gradient(160deg,var(--vellum) 0%,var(--vellum-dk) 100%);
+  }
+  .back{
+    background:linear-gradient(160deg,#2f2519 0%,#241c12 100%);
+    color:var(--vellum);transform:rotateY(180deg);
+  }
+  .back::after{border-color:rgba(201,166,78,.3);}
+
+  .corner{
+    position:absolute;top:1.1rem;right:1.3rem;
+    font-family:'Cinzel',serif;font-size:.85rem;font-weight:600;
+    color:var(--gold);letter-spacing:.05em;z-index:2;
+  }
+  .card-label{
+    font-family:'IBM Plex Mono',monospace;font-size:.65rem;
+    letter-spacing:.2em;text-transform:uppercase;
+    color:var(--porphyry);margin-bottom:1.1rem;
+  }
+  .back .card-label{color:var(--gold);}
+  .q{
+    font-family:'Cinzel',serif;font-weight:600;
+    font-size:clamp(1.25rem,3.6vw,1.7rem);line-height:1.3;
+    margin:auto 0;
+  }
+  .a{
+    font-size:clamp(1rem,2.6vw,1.15rem);line-height:1.6;
+    margin:auto 0;
+  }
+  .a strong{color:var(--gold-lt);font-weight:600;}
+  .hint-flip{
+    position:absolute;bottom:1.2rem;left:0;right:0;text-align:center;
+    font-family:'IBM Plex Mono',monospace;font-size:.62rem;
+    letter-spacing:.16em;text-transform:uppercase;opacity:.5;
+  }
+
+  /* ---------- Autoevaluación ---------- */
+  .judge{
+    display:flex;gap:.8rem;justify-content:center;margin-bottom:1rem;
+    opacity:0;pointer-events:none;transition:opacity .3s ease;
+  }
+  .judge.show{opacity:1;pointer-events:auto;}
+  .judge button{
+    flex:1;max-width:200px;font-family:'IBM Plex Mono',monospace;
+    font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;
+    padding:.8rem;border-radius:3px;cursor:pointer;border:1.5px solid;
+    transition:all .18s ease;
+  }
+  .know{background:transparent;border-color:var(--verdigris);color:var(--verdigris);}
+  .know:hover{background:var(--verdigris);color:var(--vellum);}
+  .dont{background:transparent;border-color:var(--porphyry);color:var(--porphyry);}
+  .dont:hover{background:var(--porphyry);color:var(--vellum);}
+
+  /* ---------- Navegación ---------- */
+  .nav{display:flex;justify-content:space-between;align-items:center;gap:1rem;}
+  .nav button{
+    font-family:'Cinzel',serif;font-size:1rem;font-weight:600;
+    background:transparent;border:none;color:var(--ink);cursor:pointer;
+    padding:.5rem .8rem;border-radius:3px;transition:background .15s;
+  }
+  .nav button:hover:not(:disabled){background:rgba(42,33,24,.08);}
+  .nav button:disabled{opacity:.25;cursor:default;}
+  .dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;max-width:60%;}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--line);transition:all .2s;}
+  .dot.active{background:var(--porphyry);transform:scale(1.5);}
+  .dot.known{background:var(--verdigris);}
+  .dot.unknown{background:var(--gold);}
+
+  /* ---------- Resumen ---------- */
+  .summary{
+    background:linear-gradient(160deg,#2f2519,#241c12);color:var(--vellum);
+    border-radius:6px;padding:2.4rem 2rem;text-align:center;
+    box-shadow:0 18px 38px -16px var(--shadow);display:none;
+  }
+  .summary h2{font-family:'Cinzel',serif;color:var(--gold);font-size:1.6rem;margin-bottom:1.2rem;}
+  .score{display:flex;justify-content:center;gap:2.5rem;margin:1.5rem 0;}
+  .score div{font-family:'IBM Plex Mono',monospace;}
+  .score .n{font-size:2.4rem;font-family:'Cinzel',serif;display:block;}
+  .score .ok .n{color:#7fb89e;}
+  .score .ko .n{color:var(--gold-lt);}
+  .score span.lbl{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;opacity:.7;}
+  .summary p{font-style:italic;opacity:.85;margin-bottom:1.6rem;line-height:1.5;}
+
+  footer{text-align:center;margin-top:2.5rem;font-family:'IBM Plex Mono',monospace;
+    font-size:.62rem;letter-spacing:.14em;color:var(--ink-soft);opacity:.7;text-transform:uppercase;}
+
+  @media(max-width:480px){
+    .face{padding:1.8rem 1.4rem;}
+    .dots{display:none;}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .card{transition:none;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Historia de España · 2.º Bachillerato</div>
+    <h1><span class="crown">✦</span>El reinado de Carlos IV.<br>La Guerra de la Independencia</h1>
+    <div class="sub">Bloque B · B1.1 · Tarjetas de repaso para la PAU</div>
+    <div class="rule"></div>
+  </header>
+
+  <div class="controls">
+    <button class="btn primary" id="shuffle">↻ Barajar</button>
+    <button class="btn" id="restart">Reiniciar repaso</button>
+    <button class="btn" id="onlyFails" disabled>Repasar fallos</button>
+  </div>
+
+  <div class="meta">
+    <span id="counter">Tarjeta 1 / 30</span>
+    <span class="tag" id="typeTag">Concepto</span>
+  </div>
+
+  <div class="stage">
+    <div class="card" id="card">
+      <div class="face front">
+        <span class="corner" id="cornerFront"></span>
+        <div class="card-label">Pregunta</div>
+        <div class="q" id="question"></div>
+        <div class="hint-flip">Toca para ver la respuesta</div>
+      </div>
+      <div class="face back">
+        <span class="corner" id="cornerBack"></span>
+        <div class="card-label">Respuesta</div>
+        <div class="a" id="answer"></div>
+        <div class="hint-flip">Toca para volver</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="judge" id="judge">
+    <button class="know" id="know">✓ Lo sé</button>
+    <button class="dont" id="dont">✗ No lo sé</button>
+  </div>
+
+  <div class="nav">
+    <button id="prev">‹ Anterior</button>
+    <div class="dots" id="dots"></div>
+    <button id="next">Siguiente ›</button>
+  </div>
+
+  <div class="summary" id="summary">
+    <h2>Repaso completado</h2>
+    <div class="score">
+      <div class="ok"><span class="n" id="okN">0</span><span class="lbl">Las sé</span></div>
+      <div class="ko"><span class="n" id="koN">0</span><span class="lbl">A repasar</span></div>
+    </div>
+    <p id="verdict"></p>
+    <button class="btn primary" id="reviewFails">Repasar las que fallé</button>
+    <button class="btn" id="restart2">Empezar de nuevo</button>
+  </div>
+
+  <footer>Colegios El Valle · B1.1 — Bloque B</footer>
+</div>
+
+<script>
+const CARDS = [
+  {t:"concepto", ti:"Contexto", q:"¿Quién reinó en España entre <em>1788 y 1808</em> y quién ejercía realmente el poder?",
+   a:"<strong>Carlos IV</strong>, que se alejó del despotismo ilustrado de su padre, <strong>Carlos III</strong>. El poder real lo ejercía su valido <strong>Manuel Godoy</strong>."},
+  {t:"causa", ti:"Causa-consec.", q:"¿Qué acontecimiento exterior condicionó todo el reinado de Carlos IV y por qué preocupó tanto?",
+   a:"El estallido de la <strong>Revolución Francesa (1789)</strong>. Alarmó por la <strong>cercanía geográfica</strong> y por el <strong>parentesco</strong> entre los monarcas de ambos países."},
+  {t:"concepto", ti:"Visión de conjunto", q:"Enumera las <em>tres fases</em> de la política española frente a la Revolución Francesa.",
+   a:"<strong>Neutralidad</strong> (1789-1792) → Floridablanca.<br><strong>Guerra</strong> (1793-1795) → Godoy, derrota y Paz de Basilea.<br><strong>Alianza</strong> con Francia (1796-1808) → enfrentamiento con Inglaterra."},
+  {t:"concepto", ti:"Concepto", q:"¿En qué consistió la <em>política de aislamiento</em> de Floridablanca?",
+   a:"Durante la fase de <strong>neutralidad (1789-1792)</strong>, España no intervino ante la Revolución pero tomó <strong>medidas represivas contra la propaganda revolucionaria</strong> para evitar su entrada."},
+  {t:"fecha", ti:"Fecha", q:"¿Qué supusieron la <em>Paz de Basilea (1795)</em> y el <em>Tratado de San Ildefonso</em>?",
+   a:"Basilea cierra la <strong>guerra contra Francia</strong>, perdida por España. Se restablecen los <strong>«Pactos de Familia»</strong> y el Tratado de San Ildefonso sella la <strong>alianza con Francia</strong>, lo que implica <strong>enfrentarse a Inglaterra</strong>."},
+  {t:"concepto", ti:"Concepto", q:"¿Qué eran los <em>Pactos de Familia</em> y por qué arrastraron a España contra Inglaterra?",
+   a:"Alianzas entre los <strong>Borbones de España y Francia</strong>. Restablecidos tras la <strong>Paz de Basilea (1795)</strong>, situaron a España en el bando francés y, por tanto, <strong>enfrentada a Inglaterra</strong>: es la <strong>fase de alianza (1796-1808)</strong>."},
+  {t:"fecha", ti:"Fecha", q:"¿Qué consecuencias tuvo la batalla de <em>Trafalgar (1805)</em>?",
+   a:"España pierde su <strong>hegemonía marítima</strong>: se hunde su flota y queda <strong>sin contacto con las colonias americanas</strong>."},
+  {t:"causa", ti:"Relación", q:"¿Qué relación hay entre <em>Trafalgar</em> y la América española?",
+   a:"Sin flota, España <strong>pierde el contacto con sus colonias</strong>. Es un antecedente del <strong>proceso de independencia de las colonias americanas</strong>, que arranca durante la guerra (epígrafe B1.4)."},
+  {t:"causa", ti:"Causa-consec.", q:"¿Qué autorizaba el <em>Tratado de Fontainebleau (1807)</em> y por qué fue una causa de la guerra?",
+   a:"Permitía la <strong>entrada de tropas francesas</strong> para conquistar y repartir <strong>Portugal</strong>, aliado de Inglaterra y único país que no respetaba el <strong>Bloqueo Continental</strong>. Napoleón aprovechó el paso para <strong>ocupar la península</strong>."},
+  {t:"concepto", ti:"Concepto", q:"¿Qué era el <em>Bloqueo Continental</em> y qué papel tuvo Portugal?",
+   a:"Medida de <strong>Napoleón</strong> para aislar comercialmente a <strong>Inglaterra</strong> en el continente. <strong>Portugal</strong>, aliado inglés, era el <strong>único país que no lo respetaba</strong>: de ahí el Tratado de Fontainebleau."},
+  {t:"causa", ti:"Causa-consec.", q:"¿Cómo reaccionaron la sociedad y la Corte ante la entrada de las tropas francesas?",
+   a:"<strong>Oleada de protestas</strong> de la <strong>Iglesia, la nobleza y el pueblo</strong>. El rey y Godoy, indecisos, inician una <strong>huida hacia Andalucía</strong> para embarcar rumbo a <strong>América (marzo de 1808)</strong>; en el trayecto, la Corte se detiene en Aranjuez."},
+  {t:"fecha", ti:"Fecha", q:"¿Qué fue el <em>Motín de Aranjuez (marzo de 1808)</em>?",
+   a:"Revuelta de los <strong>partidarios del príncipe Fernando</strong> cuando la Corte intentaba huir hacia Andalucía y América. Provoca la <strong>caída de Godoy</strong> y la <strong>abdicación de Carlos IV en Fernando VII</strong>."},
+  {t:"fecha", ti:"Fecha", q:"Explica la cadena de las <em>Abdicaciones de Bayona (1808)</em>.",
+   a:"Napoleón presiona a <strong>Fernando VII</strong> para que devuelva la corona a su padre → <strong>Carlos IV</strong> la cede a <strong>Napoleón</strong> → este la entrega a su hermano <strong>José Bonaparte</strong>."},
+  {t:"institucion", ti:"Institución", q:"¿Qué era el <em>Estatuto de Bayona</em> y qué pretendía?",
+   a:"Texto firmado por <strong>José I</strong>: una <strong>carta otorgada</strong> de carácter liberal. Buscaba <strong>eliminar el Antiguo Régimen</strong> con apoyo de los ilustrados, aplicando las teorías liberales de la Revolución Francesa."},
+  {t:"concepto", ti:"Concepto", q:"¿Por qué el Estatuto de Bayona es una <em>carta otorgada</em> y con qué otro proyecto político compite?",
+   a:"Porque lo <strong>concede el monarca</strong> (José I), no nace de unos representantes de la nación. Compite con la <strong>Constitución de 1812</strong>: son los <strong>dos proyectos políticos</strong> de la España en guerra."},
+  {t:"fecha", ti:"Fecha", q:"¿Por qué el <em>2 de mayo de 1808</em> marca el inicio de la guerra?",
+   a:"Con los monarcas fuera de España y <strong>Murat</strong> en Madrid, el pueblo madrileño <strong>se amotina</strong>. La dura <strong>represión francesa</strong> desencadena la <strong>Guerra de la Independencia</strong>."},
+  {t:"institucion", ti:"Institución", q:"¿Qué eran las <em>Juntas provinciales</em> y en nombre de quién actuaban?",
+   a:"Órganos surgidos en las zonas <strong>no ocupadas</strong> ante el <strong>vacío de poder</strong>. Legitiman su poder en nombre del <strong>rey ausente, Fernando VII «el Deseado»</strong>, y <strong>asumen la soberanía</strong>."},
+  {t:"causa", ti:"Relación", q:"¿Por qué es clave que las Juntas actuaran <em>en nombre de Fernando VII</em>?",
+   a:"Porque el poder se asumió <strong>en nombre del rey ausente</strong>. Esto ayuda a entender el <strong>golpe de Estado fernandino de 1814</strong>, cuando Fernando VII regrese y reclame ese poder (epígrafe B1.3)."},
+  {t:"institucion", ti:"Institución", q:"¿Qué fue la <em>Junta Suprema Central</em> y cómo terminó?",
+   a:"Unión de delegados de las Juntas provinciales en <strong>Aranjuez (1808)</strong>: <strong>máximo órgano de gobierno</strong>. En <strong>enero de 1810 convoca Cortes</strong> y se disuelve, cediendo el poder a una <strong>Regencia de cinco miembros</strong> hasta la apertura de las Cortes (septiembre de 1810)."},
+  {t:"concepto", ti:"Concepto", q:"¿Qué efecto tuvo la lucha contra los franceses en el <em>sentimiento nacional</em>?",
+   a:"<strong>Acrecentó el sentimiento de pertenencia a una misma nación</strong>. Pero bajo esa <strong>aparente unidad</strong> había dos grandes bandos: <strong>afrancesados</strong> y <strong>antifranceses</strong>."},
+  {t:"concepto", ti:"Concepto", q:"¿Quiénes eran los <em>afrancesados</em>?",
+   a:"Partidarios de <strong>José I</strong>: además de oportunistas, muchos <strong>ilustrados y reformistas</strong> que buscaban una <strong>modernización pacífica y gradual</strong>, sin revolución. Aceptaron el <strong>Estatuto de Bayona</strong>."},
+  {t:"concepto", ti:"Concepto", q:"¿En qué dos grupos se dividían los <em>antifranceses</em>?",
+   a:"Los que querían <strong>expulsar a Napoleón y volver al absolutismo</strong>, y los que, aceptando a <strong>Fernando VII</strong>, querían <strong>acabar con el Antiguo Régimen e implantar el liberalismo</strong>."},
+  {t:"concepto", ti:"Concepto", q:"¿Por qué se dice que la guerra fue un <em>doble conflicto</em>?",
+   a:"Fue un <strong>conflicto civil</strong> (patriotas contra afrancesados) y un <strong>conflicto internacional</strong> (Francia contra Gran Bretaña en suelo español). Además fue un <strong>choque ideológico</strong>: liberalismo contra Antiguo Régimen."},
+  {t:"concepto", ti:"Concepto", q:"¿Qué fue la <em>guerrilla</em> y cuál era su finalidad?",
+   a:"Lucha del <strong>pueblo llano</strong>, surgida espontáneamente y luego regulada por la Junta Central. No buscaba conquistar territorio sino <strong>atacar constantemente</strong> a los franceses (guarniciones, abastecimientos, rezagados) con <strong>sorpresa, rapidez y conocimiento del terreno</strong>."},
+  {t:"fecha", ti:"Fase 1 · 1808", q:"¿Qué ciudades simbolizan la <em>inesperada resistencia</em> española de 1808?",
+   a:"<strong>Girona</strong> y <strong>Zaragoza</strong>, que resistieron los asedios franceses (Zaragoza, <strong>1808-1809</strong>). Mostraron que la ocupación no sería el paseo militar que esperaba Napoleón."},
+  {t:"fecha", ti:"Fase 1 · 1808", q:"¿Por qué fue tan importante la batalla de <em>Bailén (julio de 1808)</em>?",
+   a:"Fue la <strong>primera derrota de Napoleón en tierra</strong>. Obligó a <strong>José I a evacuar Madrid</strong> y, en octubre de 1808, los franceses quedaron <strong>limitados al norte</strong> de la península."},
+  {t:"causa", ti:"Fase 2 · 1808-1812", q:"¿Qué ocurrió en la fase de <em>reacción francesa</em>?",
+   a:"<strong>Napoleón entra en España (noviembre de 1808)</strong> y José I recupera Madrid. Derrotas españolas → auge de la <strong>guerrilla</strong>. <strong>Soult</strong> conquista Andalucía (Sevilla, 1810) y la Junta Central se refugia en <strong>Cádiz</strong>."},
+  {t:"institucion", ti:"Lugar clave", q:"¿Por qué <em>Cádiz</em> se convierte en el centro de la España resistente?",
+   a:"Tras la caída de Sevilla (1810), la Junta Central se refugia allí: es el <strong>único rincón del sur libre</strong> de ocupación. Resiste el <strong>sitio de Soult (1810-1812)</strong> y será la sede de las <strong>Cortes</strong> (epígrafe B1.2)."},
+  {t:"causa", ti:"Fase 3 · 1812-1814", q:"¿Por qué cambió el rumbo de la guerra en <em>1812</em> y cómo terminó?",
+   a:"Napoleón retira tropas para la <strong>campaña de Rusia</strong>. <strong>Wellington</strong> vence en <strong>Arapiles (1812)</strong> y José I abandona Madrid. Tras la derrota definitiva de 1813, el <strong>Tratado de Valençay (diciembre de 1813)</strong> devuelve la corona a <strong>Fernando VII</strong>."},
+  {t:"concepto", ti:"Visión de conjunto", q:"Ordena cronológicamente: Bailén, Trafalgar, Valençay, Aranjuez, Fontainebleau, Arapiles.",
+   a:"<strong>Trafalgar</strong> (1805) → <strong>Fontainebleau</strong> (1807) → <strong>Motín de Aranjuez</strong> (marzo 1808) → <strong>Bailén</strong> (julio 1808) → <strong>Arapiles</strong> (1812) → <strong>Tratado de Valençay</strong> (diciembre 1813)."}
+];
+
+let order = CARDS.map((_,i)=>i);
+let pos = 0;
+const status = {}; // idx -> 'known' | 'unknown'
+
+const card = document.getElementById('card');
+const qEl = document.getElementById('question');
+const aEl = document.getElementById('answer');
+const counter = document.getElementById('counter');
+const typeTag = document.getElementById('typeTag');
+const cornerF = document.getElementById('cornerFront');
+const cornerB = document.getElementById('cornerBack');
+const dotsEl = document.getElementById('dots');
+const judge = document.getElementById('judge');
+const summary = document.getElementById('summary');
+const stage = document.querySelector('.stage');
+const onlyFailsBtn = document.getElementById('onlyFails');
+
+function render(){
+  const idx = order[pos];
+  const c = CARDS[idx];
+  card.classList.remove('flipped');
+  judge.classList.remove('show');
+  setTimeout(()=>{
+    qEl.innerHTML = c.q;
+    aEl.innerHTML = c.a;
+  }, card.classList.contains('flipped')?280:0);
+  qEl.innerHTML = c.q;
+  aEl.innerHTML = c.a;
+  counter.textContent = `Tarjeta ${pos+1} / ${order.length}`;
+  typeTag.textContent = c.ti;
+  typeTag.className = 'tag '+c.t;
+  cornerF.textContent = cornerB.textContent = (idx+1);
+  document.getElementById('prev').disabled = pos===0;
+  document.getElementById('next').textContent = pos===order.length-1 ? 'Terminar ›' : 'Siguiente ›';
+  buildDots();
+}
+
+function buildDots(){
+  dotsEl.innerHTML='';
+  order.forEach((idx,i)=>{
+    const d=document.createElement('div');
+    d.className='dot';
+    if(i===pos) d.classList.add('active');
+    if(status[idx]==='known') d.classList.add('known');
+    if(status[idx]==='unknown') d.classList.add('unknown');
+    dotsEl.appendChild(d);
+  });
+}
+
+card.addEventListener('click',()=>{
+  card.classList.toggle('flipped');
+  if(card.classList.contains('flipped')) judge.classList.add('show');
+});
+
+document.getElementById('know').addEventListener('click',e=>{e.stopPropagation();mark('known');});
+document.getElementById('dont').addEventListener('click',e=>{e.stopPropagation();mark('unknown');});
+
+function mark(val){
+  status[order[pos]]=val;
+  buildDots();
+  refreshFailsBtn();
+  if(pos<order.length-1){ pos++; render(); }
+  else finish();
+}
+
+function refreshFailsBtn(){
+  const fails = Object.values(status).filter(v=>v==='unknown').length;
+  onlyFailsBtn.disabled = fails===0;
+}
+
+document.getElementById('next').addEventListener('click',()=>{
+  if(pos<order.length-1){pos++;render();} else finish();
+});
+document.getElementById('prev').addEventListener('click',()=>{
+  if(pos>0){pos--;render();}
+});
+
+document.getElementById('shuffle').addEventListener('click',()=>{
+  for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]];}
+  pos=0;showStage();render();
+});
+
+function fullReset(){
+  order=CARDS.map((_,i)=>i);
+  for(const k in status) delete status[k];
+  pos=0;showStage();render();refreshFailsBtn();
+}
+document.getElementById('restart').addEventListener('click',fullReset);
+document.getElementById('restart2').addEventListener('click',fullReset);
+
+function reviewFails(){
+  const fails = order.filter(idx=>status[idx]==='unknown');
+  if(!fails.length) return;
+  order = fails;
+  for(const idx of fails) delete status[idx];
+  pos=0;showStage();render();refreshFailsBtn();
+}
+onlyFailsBtn.addEventListener('click',reviewFails);
+document.getElementById('reviewFails').addEventListener('click',reviewFails);
+
+function showStage(){
+  stage.style.display='';
+  judge.parentElement.querySelector('.judge')?.classList.remove('show');
+  document.querySelector('.nav').style.display='flex';
+  document.querySelector('.meta').style.display='flex';
+  summary.style.display='none';
+}
+
+function finish(){
+  const ok = Object.values(status).filter(v=>v==='known').length;
+  const ko = Object.values(status).filter(v=>v==='unknown').length;
+  document.getElementById('okN').textContent=ok;
+  document.getElementById('koN').textContent=ko;
+  let msg;
+  if(ko===0 && ok>0) msg="Dominas el tema de Carlos IV y la guerra. Listo para el examen.";
+  else if(ok>=ko) msg="Buen nivel. Repasa las marcadas y afianza fechas y fases de la guerra.";
+  else msg="Conviene un segundo repaso: céntrate en las tarjetas a repasar.";
+  document.getElementById('verdict').textContent=msg;
+  document.getElementById('reviewFails').style.display = ko>0?'':'none';
+  stage.style.display='none';
+  judge.classList.remove('show');
+  document.querySelector('.nav').style.display='none';
+  document.querySelector('.meta').style.display='none';
+  summary.style.display='block';
+}
+
+document.addEventListener('keydown',e=>{
+  if(summary.style.display==='block') return;
+  if(e.key==='ArrowRight'){document.getElementById('next').click();}
+  if(e.key==='ArrowLeft'){document.getElementById('prev').click();}
+  if(e.key===' '){e.preventDefault();card.click();}
+});
+
+render();
+refreshFailsBtn();
+</script>
+</body>
+</html>

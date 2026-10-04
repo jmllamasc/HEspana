@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T1. El reinado de Carlos IV. La Guerra de la Independencia — Cuestionario</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#1B1A17;
+  --ink-soft:#57544E;
+  --ink-faint:#94908A;
+  --paper:#F7F7F5;
+  --white:#FFFFFF;
+  --rule:#E3E1DB;
+
+  --carbon:#23211E;        /* noche del 2 de mayo */
+  --carbon-2:#3A3631;
+  --farol:#A9761B;         /* ocre del farol de Goya */
+  --farol-claro:#FBF3E3;
+  --azul:#2B4C7E;          /* azul napoleónico */
+  --ok:#2D6A4F;
+  --ok-claro:#E9F4EE;
+  --mal:#9B2226;
+  --mal-claro:#FBECEC;
+
+  --sans:'IBM Plex Sans',-apple-system,'Segoe UI',Arial,sans-serif;
+  --serif:'Playfair Display',Georgia,serif;
+  --mono:'IBM Plex Mono',ui-monospace,Consolas,monospace;
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+html{scroll-behavior:smooth;scroll-padding-top:120px}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);font-size:16px;line-height:1.6;-webkit-text-size-adjust:100%}
+:focus-visible{outline:2.5px solid var(--farol);outline-offset:2px}
+
+/* ── CABECERA ── */
+.head{background:linear-gradient(140deg,#1B1A17 0%,#33302B 55%,#1B1A17 100%);color:#fff;padding:34px 28px 30px;border-bottom:3px solid var(--farol)}
+.head-in{max-width:880px;margin:0 auto}
+.head .curso{font-family:var(--mono);font-size:11px;letter-spacing:1.6px;color:rgba(255,255,255,.5)}
+.head h1{font-family:var(--serif);font-weight:700;font-size:clamp(25px,4.4vw,38px);line-height:1.12;margin:10px 0 8px}
+.head p{color:rgba(255,255,255,.66);font-size:14.5px;max-width:62ch}
+.head .datos{display:flex;gap:26px;flex-wrap:wrap;margin-top:18px;font-family:var(--mono);font-size:11.5px;color:rgba(255,255,255,.55)}
+.head .datos strong{color:var(--farol);font-size:13px;font-weight:500}
+
+/* ── BARRA FIJA ── */
+.barra{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.97);border-bottom:1px solid var(--rule);backdrop-filter:blur(6px)}
+.barra-in{max-width:880px;margin:0 auto;padding:11px 28px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.pista{flex:1;min-width:150px;height:7px;background:var(--rule);border-radius:4px;overflow:hidden}
+.relleno{height:100%;width:0;background:linear-gradient(90deg,var(--farol),var(--azul));transition:width .35s ease}
+.marcador{font-family:var(--mono);font-size:12.5px;white-space:nowrap}
+.marcador b{font-weight:500}
+.reinicio{font-family:var(--mono);font-size:11px;color:var(--ink-faint);background:none;border:1px solid var(--rule);border-radius:5px;padding:5px 11px;cursor:pointer}
+.reinicio:hover{color:var(--ink);border-color:var(--ink-soft)}
+
+/* ── PESTAÑAS DE BLOQUE ── */
+.pestanas{max-width:880px;margin:0 auto;padding:0 28px 11px;display:flex;gap:7px;overflow-x:auto}
+.pest{flex:1;min-width:58px;background:none;border:1px solid var(--rule);border-radius:7px;padding:7px 6px 8px;cursor:pointer;font-family:var(--sans);text-align:center;color:var(--ink-faint);transition:border-color .2s,color .2s}
+.pest b{display:block;font-family:var(--mono);font-size:13px;font-weight:500;line-height:1.3}
+.pest span{display:block;font-size:10px;letter-spacing:.3px}
+.pest:hover{border-color:var(--ink-soft);color:var(--ink-soft)}
+.pest[aria-selected="true"]{background:var(--carbon);border-color:var(--carbon);color:#fff}
+.pest[aria-selected="true"] span{color:rgba(255,255,255,.6)}
+.pest.hecho:not([aria-selected="true"]){border-color:var(--ok);color:var(--ok)}
+
+/* ── CUERPO ── */
+main{max-width:880px;margin:0 auto;padding:30px 28px 70px}
+.bloque[hidden]{display:none}
+.bloque-cab{border-left:3px solid var(--farol);padding-left:15px;margin-bottom:26px}
+.bloque-cab .n{font-family:var(--mono);font-size:11px;letter-spacing:1.4px;color:var(--farol)}
+.bloque-cab h2{font-family:var(--serif);font-size:24px;font-weight:600;line-height:1.25;margin-top:5px}
+
+.p{background:var(--white);border:1px solid var(--rule);border-radius:11px;padding:21px 22px;margin-bottom:17px}
+.p-cab{display:flex;gap:11px;align-items:baseline;margin-bottom:13px}
+.p-num{font-family:var(--mono);font-size:12px;color:var(--ink-faint);padding-top:2px}
+.enun{font-size:16.5px;line-height:1.5;font-weight:500}
+.aviso{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:1.1px;color:var(--azul);background:#EAF0F8;border-radius:4px;padding:3px 8px;margin-bottom:11px}
+.ops{display:flex;flex-direction:column;gap:8px}
+.op{display:flex;gap:11px;align-items:flex-start;border:1px solid var(--rule);border-radius:8px;padding:11px 13px;cursor:pointer;background:var(--white);text-align:left;font:inherit;color:inherit;line-height:1.45;transition:border-color .18s,background .18s}
+.op:hover:not(.bloqueada){border-color:var(--carbon-2)}
+.op .letra{font-family:var(--mono);font-size:12.5px;color:var(--ink-faint);padding-top:2px;min-width:14px}
+.op.marcada{border-color:var(--azul);background:#F4F7FC}
+.op.marcada .letra{color:var(--azul)}
+.op.ok{border-color:var(--ok);background:var(--ok-claro)}
+.op.ok .letra{color:var(--ok)}
+.op.mal{border-color:var(--mal);background:var(--mal-claro)}
+.op.mal .letra{color:var(--mal)}
+.op.bloqueada{cursor:default}
+.comprobar{margin-top:11px;font-family:var(--sans);font-size:13.5px;font-weight:500;color:#fff;background:var(--carbon);border:0;border-radius:7px;padding:9px 17px;cursor:pointer}
+.comprobar:hover{background:var(--carbon-2)}
+.comprobar:disabled{background:var(--rule);color:var(--ink-faint);cursor:default}
+.retro{margin-top:13px;padding:12px 14px;border-radius:8px;font-size:14.5px;line-height:1.5}
+.retro b{font-weight:600;display:block;margin-bottom:3px}
+.retro.ok{background:var(--ok-claro);color:#1E4B37;border-left:3px solid var(--ok)}
+.retro.mal{background:var(--mal-claro);color:#6E1519;border-left:3px solid var(--mal)}
+
+.nav{display:flex;justify-content:space-between;gap:12px;margin-top:26px}
+.nav button{font-family:var(--sans);font-size:14px;font-weight:500;border-radius:8px;padding:11px 20px;cursor:pointer;border:1px solid var(--carbon);background:var(--white);color:var(--carbon)}
+.nav button:hover{background:#F0EFEC}
+.nav .avanzar{background:var(--carbon);color:#fff}
+.nav .avanzar:hover{background:var(--carbon-2)}
+.nav button[hidden]{display:none}
+
+/* ── RESUMEN ── */
+#resumen{display:none;background:var(--white);border:1px solid var(--rule);border-top:4px solid var(--farol);border-radius:11px;padding:30px 26px;margin-top:8px}
+#resumen.visible{display:block}
+#resumen h2{font-family:var(--serif);font-size:26px;font-weight:600}
+.nota{font-family:var(--mono);font-size:40px;font-weight:500;margin:14px 0 4px;color:var(--carbon)}
+.nota span{font-size:19px;color:var(--ink-faint)}
+.veredicto{font-size:16px;color:var(--ink-soft);max-width:60ch}
+.repasar{margin-top:22px;background:var(--farol-claro);border-left:3px solid var(--farol);border-radius:0 8px 8px 0;padding:16px 18px}
+.repasar h3{font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:.3px;margin-bottom:9px}
+.repasar ul{margin:0;padding-left:19px;font-size:14.5px;line-height:1.75;color:var(--ink-soft)}
+.pie{max-width:880px;margin:0 auto;padding:0 28px 46px;font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+@media(max-width:620px){
+  .head{padding:26px 20px 24px}
+  .barra-in,.pestanas,main,.pie{padding-left:18px;padding-right:18px}
+  .pest span{display:none}
+  .p{padding:18px 16px}
+}
+</style>
+</head>
+<body>
+
+<header class="head">
+  <div class="head-in">
+    <p class="curso">2.º Bachillerato · Historia de España · Bloque B1</p>
+    <h1>El reinado de Carlos IV<br>y la Guerra de la Independencia</h1>
+    <p>Comprueba lo que has entendido del tema. Elige una opción y recibirás la corrección al instante, con la respuesta correcta y el porqué.</p>
+    <div class="datos">
+      <span><strong>30</strong> preguntas</span>
+      <span><strong>5</strong> bloques</span>
+      <span><strong>1788-1814</strong></span>
+    </div>
+  </div>
+</header>
+
+<div class="barra">
+  <div class="barra-in">
+    <div class="pista"><div class="relleno" id="relleno"></div></div>
+    <p class="marcador"><b id="respondidas">0</b>/30 respondidas · <b id="aciertos">0</b> aciertos</p>
+    <button class="reinicio" id="reinicio">Empezar de nuevo</button>
+  </div>
+  <div class="pestanas" role="tablist" id="pestanas"></div>
+</div>
+
+<main>
+  <div id="bloques"></div>
+  <section id="resumen" aria-live="polite">
+    <h2>Resultado</h2>
+    <p class="nota"><span id="nAciertos">0</span> <span>de 30</span></p>
+    <p class="veredicto" id="veredicto"></p>
+    <div class="repasar" id="repasar"></div>
+    <div class="nav" style="justify-content:flex-start">
+      <button id="otraVez">Repetir el cuestionario</button>
+    </div>
+  </section>
+</main>
+
+<p class="pie">Elaborado a partir del tema T1 del Bloque B1. Colegio El Valle.</p>
+
+<script>
+const BLOQUES = [
+  {t:"Antecedentes: Carlos IV y la política exterior", r:"1788-1807"},
+  {t:"La crisis de 1808", r:"Fontainebleau, Aranjuez y Bayona"},
+  {t:"José I, el Estatuto de Bayona y el 2 de mayo", r:"1808"},
+  {t:"Las Juntas y la naturaleza del conflicto", r:"1808-1810"},
+  {t:"Las fases de la guerra", r:"1808-1814"}
+];
+
+const PREGUNTAS = [
+/* BLOQUE 1 */
+{b:0,e:"El reinado de Carlos IV (1788-1808) se caracteriza porque el monarca…",
+ o:["mantuvo íntegro el despotismo ilustrado de su padre, Carlos III",
+    "se alejó del despotismo ilustrado de su padre y gobernó junto a su valido Manuel Godoy, quien realmente ejercía el poder",
+    "gobernó personalmente, sin validos, apoyado en las Cortes",
+    "delegó el poder en el conde de Floridablanca durante todo el reinado"],
+ ok:[1], x:"Carlos IV se apartó de la línea de Carlos III y el poder efectivo lo ejerció su valido, Godoy.",
+ tema:"el gobierno de Carlos IV y el valimiento de Godoy"},
+
+{b:0,e:"¿Por qué el estallido de la Revolución francesa en 1789 creó una alarmante preocupación en España?",
+ o:["Por la cercanía geográfica y por el parentesco entre los monarcas de ambos países",
+    "Porque Francia bloqueó de inmediato el comercio con las colonias americanas",
+    "Porque los revolucionarios franceses reclamaban territorios fronterizos",
+    "Porque Carlos IV había firmado ya una alianza con Inglaterra"],
+ ok:[0], x:"La frontera común y el lazo familiar entre los Borbones de ambos países hacían temer el contagio revolucionario.",
+ tema:"el impacto de la Revolución francesa de 1789 en España"},
+
+{b:0,e:"Durante la fase de neutralidad (1789-1792), ¿qué política se siguió ante la Revolución francesa?",
+ o:["Se declaró la guerra a Francia para frenar el contagio revolucionario",
+    "Se firmó una alianza con Francia contra Inglaterra",
+    "Carlos IV mantuvo como valido a Floridablanca, que tomó medidas represivas contra la propaganda revolucionaria: una política de aislamiento",
+    "Se convocaron Cortes para aprobar reformas de signo liberal"],
+ ok:[2], x:"Floridablanca respondió con el aislamiento y la represión de la propaganda, sin entrar aún en guerra.",
+ tema:"la fase de neutralidad y Floridablanca"},
+
+{b:0,doble:true,e:"Señala las dos afirmaciones correctas sobre la fase de guerra (1793-1795).",
+ o:["En marzo de 1793 España declaró la guerra a Francia",
+    "La guerra terminó con la victoria española y la anexión de territorios franceses",
+    "El conflicto se cerró con la Paz de Basilea en 1795, tras la derrota española",
+    "Godoy fue apartado del valimiento al firmarse la paz"],
+ ok:[0,2], x:"Godoy declaró la guerra en marzo de 1793 y España fue derrotada: de ahí la Paz de Basilea (1795). Godoy siguió siendo valido desde 1792 hasta 1808.",
+ tema:"la fase de guerra y la Paz de Basilea"},
+
+{b:0,e:"¿Qué consecuencia tuvo para España el acercamiento a Francia tras la Paz de Basilea?",
+ o:["Se restablecieron los Pactos de Familia y se firmó el primer Tratado de San Ildefonso, lo que implicaba enfrentarse a Inglaterra",
+    "España recuperó la neutralidad ante todas las potencias europeas",
+    "Francia devolvió a España los territorios perdidos en la guerra",
+    "Se firmó el Tratado de Fontainebleau contra Portugal"],
+ ok:[0], x:"Basilea restableció los Pactos de Familia y llevó al primer Tratado de San Ildefonso: aliarse con Francia significaba guerra con Inglaterra.",
+ tema:"los Pactos de Familia y el Tratado de San Ildefonso"},
+
+{b:0,e:"¿Qué supuso para España la batalla de Trafalgar (1805)?",
+ o:["La independencia inmediata de los virreinatos americanos",
+    "La pérdida de su hegemonía marítima: se hundió la flota y perdió la posibilidad de contacto con las colonias americanas",
+    "El fin de la alianza con Francia y el regreso a la neutralidad",
+    "La caída de Godoy y la subida al trono de Fernando VII"],
+ ok:[1], x:"Con la flota hundida, España quedó sin hegemonía marítima y sin comunicación con América.",
+ tema:"la batalla de Trafalgar (1805)"},
+
+/* BLOQUE 2 */
+{b:1,e:"El Tratado de Fontainebleau (1807), firmado entre Napoleón, el rey y Godoy, autorizaba…",
+ o:["el reparto de las colonias americanas entre Francia y España",
+    "la entrada de las tropas francesas en España con el objetivo de conquistar y repartir Portugal",
+    "la cesión inmediata de la corona española a José Bonaparte",
+    "el envío de tropas españolas al frente ruso"],
+ ok:[1], x:"El tratado abría el paso de las tropas francesas hacia Portugal; Napoleón aprovechó ese paso para asentarse e invadir la Península.",
+ tema:"el Tratado de Fontainebleau (1807)"},
+
+{b:1,e:"¿Por qué Portugal era el objetivo de ese acuerdo?",
+ o:["Porque reclamaba territorios fronterizos a España",
+    "Porque se había aliado con Rusia contra Napoleón",
+    "Porque era aliado de Inglaterra y el único país que no respetaba el Bloqueo Continental",
+    "Porque se negaba a reconocer a Fernando VII como rey"],
+ ok:[2], x:"Portugal, aliado inglés, incumplía el Bloqueo Continental impuesto por Napoleón.",
+ tema:"Portugal y el Bloqueo Continental"},
+
+{b:1,e:"Napoleón aprovechó el paso hacia Portugal para asentarse e invadir la Península Ibérica. ¿Cuál fue la respuesta en España?",
+ o:["La aceptación general, por tratarse de un ejército aliado según lo pactado",
+    "Una oleada de protestas por parte de la Iglesia, la nobleza y el pueblo",
+    "La formación inmediata de la Junta Suprema Central",
+    "La convocatoria de Cortes por parte de Godoy"],
+ ok:[1], x:"Lo pactado era un simple paso hacia Portugal; el asentamiento de las tropas provocó el rechazo de los tres grupos.",
+ tema:"la reacción ante la invasión francesa de 1807-1808"},
+
+{b:1,e:"¿Qué ocurrió en el motín de Aranjuez (marzo de 1808)?",
+ o:["El pueblo de Madrid se levantó contra las tropas de Murat",
+    "Los delegados de las Juntas se reunieron para formar la Junta Suprema Central",
+    "Los partidarios del príncipe Fernando asaltaron el palacio de Godoy e impidieron la huida de la familia real: cayó Godoy y Carlos IV abdicó en Fernando VII",
+    "Napoleón obligó a Carlos IV a ceder sus derechos al trono"],
+ ok:[2], x:"El motín frustró la huida hacia América, derribó a Godoy y forzó la abdicación de Carlos IV en su hijo.",
+ tema:"el motín de Aranjuez (1808)"},
+
+{b:1,e:"¿Qué llevó a los dos monarcas hasta Bayona?",
+ o:["Carlos IV pidió ayuda a Napoleón para que le restableciera en el trono y Napoleón, que no reconocía a Fernando VII, los llamó a Bayona para dirimir el problema sucesorio",
+    "Un acuerdo de las Juntas provinciales para resolver la sucesión",
+    "La necesidad de negociar la paz con Inglaterra tras Trafalgar",
+    "La firma del Tratado de Valençay"],
+ ok:[0], x:"Napoleón no reconoció la autoridad de Fernando VII y convocó a padre e hijo con la excusa de arbitrar la sucesión.",
+ tema:"la crisis sucesoria de 1808"},
+
+{b:1,e:"En las Abdicaciones de Bayona (abril de 1808), ¿cómo se produjo la cesión de la corona?",
+ o:["Fernando VII cedió directamente la corona a José Bonaparte",
+    "Carlos IV abdicó de nuevo en Fernando VII y este renunció ante las Cortes",
+    "Napoleón se proclamó él mismo rey de España",
+    "Napoleón presionó a Fernando VII para que devolviera los derechos a su padre; Carlos IV los cedió a Napoleón y este, a su hermano José Bonaparte"],
+ ok:[3], x:"Fernando claudicó, Carlos IV cedió sus derechos a Napoleón y Napoleón los traspasó a José Bonaparte.",
+ tema:"las Abdicaciones de Bayona"},
+
+/* BLOQUE 3 */
+{b:2,e:"El Estatuto de Bayona, firmado por José Bonaparte, era…",
+ o:["la primera Constitución aprobada por unas Cortes españolas",
+    "una especie de Constitución —una carta otorgada— que ofrecía un carácter liberal a la formación del nuevo régimen",
+    "un decreto que restablecía plenamente el Antiguo Régimen",
+    "el tratado que devolvía la corona a Fernando VII"],
+ ok:[1], x:"No nace de unas Cortes, sino que lo concede el monarca: por eso se habla de carta otorgada.",
+ tema:"el Estatuto de Bayona"},
+
+{b:2,e:"¿Qué pretendía el nuevo régimen de José I con la ayuda de los ilustrados?",
+ o:["Restaurar el despotismo ilustrado de Carlos III",
+    "Devolver todo el poder a las Juntas provinciales",
+    "Eliminar el Antiguo Régimen y aplicar las teorías liberales de la Revolución francesa",
+    "Convocar unas Cortes en Cádiz para redactar una Constitución"],
+ ok:[2], x:"Los ilustrados que apoyaron a José I esperaban desmontar el Antiguo Régimen por vía reformista, sin revolución.",
+ tema:"el programa reformista de José I"},
+
+{b:2,e:"¿Qué relación tiene el 2 de mayo de 1808 con el inicio de la guerra?",
+ o:["Es la fecha de las Abdicaciones de Bayona",
+    "Es el día en que se constituyó la Junta Suprema Central",
+    "Es la fecha de la derrota de Bailén",
+    "Madrid, tomada por Murat, se amotinó y la dura represión de las tropas francesas dio inicio a la Guerra de la Independencia"],
+ ok:[3], x:"Murat ocupó Madrid aprovechando el vacío de poder; el motín del 2 de mayo y su represión abrieron la guerra.",
+ tema:"el 2 de mayo de 1808 y el inicio de la guerra"},
+
+{b:2,e:"¿Quiénes eran los afrancesados?",
+ o:["Los guerrilleros regulados por la Junta Central",
+    "Los partidarios de José I: no solo serviles y oportunistas, sino también ilustrados y viejos reformistas que pretendían una modernización pacífica y gradual de España",
+    "Los liberales que se reunieron en las Cortes de Cádiz",
+    "Los soldados franceses que desertaron del ejército de Napoleón"],
+ ok:[1], x:"Aceptaron el Estatuto de Bayona como texto por el que regirse y confiaban en una reforma sin revoluciones.",
+ tema:"los afrancesados"},
+
+{b:2,e:"¿Qué efecto tuvieron las abdicaciones de Bayona sobre el gobierno del territorio?",
+ o:["Se reconoció de forma general a José I como rey y se mantuvo la administración",
+    "El ejército español se disolvió y entregó las armas",
+    "Crearon un vacío de poder y la ruptura del territorio español, lo que llevó a formar Juntas provinciales en las regiones no ocupadas",
+    "Carlos IV convocó Cortes para resolver la situación"],
+ ok:[2], x:"Sin un rey reconocido, el territorio se fragmentó y cada región libre se dotó de su propia Junta.",
+ tema:"el vacío de poder y la ruptura del territorio"},
+
+{b:2,doble:true,e:"Los antifranceses de la resistencia se dividían en dos secciones. Señala las dos correctas.",
+ o:["Una pretendía luchar contra Napoleón y volver al absolutismo",
+    "Otra, formada por rebeldes nacionalistas, aceptaba la monarquía de Fernando VII pero quería acabar con el Antiguo Régimen e implantar el liberalismo",
+    "Una defendía la proclamación de una república y la abolición de la monarquía",
+    "Otra aceptaba el Estatuto de Bayona como texto constitucional"],
+ ok:[0,1], x:"Bajo la unidad frente al invasor convivían absolutistas y liberales. Aceptar el Estatuto de Bayona es propio de los afrancesados, no de la resistencia.",
+ tema:"las dos secciones de los antifranceses"},
+
+/* BLOQUE 4 */
+{b:3,e:"¿Cómo legitimaron su poder las Juntas provinciales?",
+ o:["En nombre del rey ausente, Fernando VII, el Deseado, asumiendo la soberanía del territorio nacional",
+    "En nombre de la regencia nombrada por Napoleón",
+    "En el Estatuto de Bayona",
+    "En la Constitución de 1812"],
+ ok:[0], x:"Surgen en las regiones no ocupadas y actúan en nombre del rey ausente: la clave para entender después el golpe fernandino de 1814.",
+ tema:"el origen y la legitimidad de las Juntas provinciales"},
+
+{b:3,e:"Las Juntas se fundamentaban en…",
+ o:["el mantenimiento de la división provincial heredada",
+    "la superación de la división provincial y el establecimiento de un gobierno nacional unitario",
+    "la colaboración con el ejército francés para evitar represalias",
+    "la restauración del régimen señorial"],
+ ok:[1], x:"Buscaban unificar la resistencia en un gobierno nacional, no perpetuar la fragmentación del territorio.",
+ tema:"los fundamentos de las Juntas"},
+
+{b:3,e:"¿Qué hizo la Junta Suprema Central en enero de 1810?",
+ o:["Aprobar el Estatuto de Bayona",
+    "Firmar el Tratado de Valençay",
+    "Convocar Cortes, autodisolverse y traspasar sus poderes a una Regencia de cinco miembros hasta la apertura de las Cortes",
+    "Disolver las guerrillas por indisciplinadas"],
+ ok:[2], x:"Las Cortes se abrirían en septiembre de ese mismo año; hasta entonces gobernó una Regencia de cinco miembros.",
+ tema:"la Junta Suprema Central y la Regencia"},
+
+{b:3,doble:true,e:"La guerra supuso un doble conflicto. Señala las dos correctas.",
+ o:["Un conflicto civil entre los españoles: patriotas contra afrancesados",
+    "Un conflicto dinástico entre partidarios de Carlos María Isidro y de Isabel",
+    "Un conflicto internacional: enfrentamiento entre Francia y Gran Bretaña en suelo español",
+    "Un conflicto colonial entre España y Portugal por la frontera"],
+ ok:[0,2], x:"Al componente civil y al internacional se suma además el ideológico: liberalismo frente a Antiguo Régimen.",
+ tema:"el carácter doble de la guerra"},
+
+{b:3,e:"¿Cuál era la finalidad de las guerrillas?",
+ o:["Conquistar y dominar territorio en nombre de las Juntas",
+    "Atacar constantemente a los franceses para evitar que pudieran controlar el territorio",
+    "Sustituir al ejército regular en las batallas campales",
+    "Defender las plazas fuertes del norte peninsular"],
+ ok:[1], x:"Surgieron de forma espontánea como embrión del nuevo ejército y pronto fueron reguladas por la Junta Central.",
+ tema:"la función de las guerrillas"},
+
+{b:3,doble:true,e:"Señala las dos afirmaciones correctas sobre la táctica de las guerrillas.",
+ o:["Atacaban por sorpresa a pequeñas guarniciones, caravanas de abastecimiento y soldados rezagados",
+    "Se enfrentaban al ejército francés en batallas campales para recuperar ciudades",
+    "Aprovechaban el conocimiento del terreno y la dispersión del grupo guerrillero entre la población civil",
+    "Actuaban al margen de toda autoridad, sin coordinación con la Junta Central"],
+ ok:[0,2], x:"Elemento sorpresa, ataques rápidos y terreno conocido eran sus bazas. Y pronto quedaron reguladas por la Junta Central.",
+ tema:"la táctica de las guerrillas"},
+
+/* BLOQUE 5 */
+{b:4,e:"¿Con qué se encontró Francia en la primera fase de la guerra (mayo-noviembre de 1808)?",
+ o:["Con una ocupación rápida y sin resistencia hasta llegar a Cádiz",
+    "Con la oposición exclusiva del ejército regular español",
+    "Con la intervención de Rusia en apoyo de las Juntas",
+    "Con la inesperada resistencia de los españoles, como en Girona o Zaragoza, mientras el acuerdo con las tropas británicas llevaba a estas a expulsar a los franceses de Portugal"],
+ ok:[3], x:"La resistencia de las ciudades sitiadas y la ayuda británica desde Portugal frenaron el avance francés desde el principio.",
+ tema:"la resistencia de 1808 y el apoyo británico"},
+
+{b:4,e:"¿Qué consecuencia inmediata tuvo la derrota de Bailén (julio de 1808)?",
+ o:["Napoleón devolvió la corona a Fernando VII",
+    "Obligó al ejército invasor y a José I a evacuar Madrid; en octubre de 1808 la presencia francesa quedaba limitada al norte de la Península",
+    "Provocó la disolución de las Juntas provinciales",
+    "Permitió a Wellington entrar en Madrid"],
+ ok:[1], x:"Fue la primera derrota de Napoleón en tierra y dejó a Francia replegada al norte peninsular.",
+ tema:"la derrota de Bailén (1808)"},
+
+{b:4,e:"¿Qué ocurrió en la fase de reacción francesa (noviembre de 1808-1812)?",
+ o:["El ejército francés fue expulsado de Portugal por las tropas británicas",
+    "Se firmó el Tratado de Fontainebleau",
+    "Napoleón entró en España y el avance fue tan contundente que José Bonaparte volvía a la capital en enero de 1809",
+    "Wellington venció en Arapiles y liberó Andalucía"],
+ ok:[2], x:"Napoleón vino en persona a poner remedio a las primeras derrotas y restableció el dominio francés.",
+ tema:"la reacción francesa de 1808-1809"},
+
+{b:4,e:"Tras la conquista de Andalucía por Soult y la rendición de Sevilla (1 de febrero de 1810)…",
+ o:["la Junta Central se trasladó a Cádiz, único rincón del sur libre de la ocupación francesa",
+    "la Junta Central se disolvió y sus miembros huyeron a Inglaterra",
+    "José I trasladó su corte a Sevilla",
+    "las guerrillas desaparecieron en el sur peninsular"],
+ ok:[0], x:"Sevilla cayó y el gobierno patriota se refugió en Cádiz, el único punto del sur que siguió libre.",
+ tema:"Soult en Andalucía y el traslado a Cádiz"},
+
+{b:4,e:"¿Por qué la primavera de 1812 marca un giro definitivo en la guerra?",
+ o:["Porque Fernando VII regresó a España y se puso al frente del ejército",
+    "Porque los franceses conquistaron Cádiz y disolvieron las Cortes",
+    "Porque la Junta Central recuperó el poder y disolvió la Regencia",
+    "Porque Napoleón necesitaba cada vez más tropas en el frente ruso; tras vencer en Arapiles (julio de 1812), Wellington llegó a Madrid y José I abandonó la capital"],
+ ok:[3], x:"La retirada de tropas hacia Rusia allanó el camino: Arapiles obligó a José I a dejar Madrid y a Soult a levantar el sitio de Cádiz.",
+ tema:"el giro de 1812 y la batalla de Arapiles"},
+
+{b:4,e:"¿Cómo terminó la guerra?",
+ o:["Con la victoria de Bailén y la retirada voluntaria de los franceses",
+    "Con la derrota francesa definitiva en San Marcial (Vitoria, primavera de 1813) y el Tratado de Valençay (diciembre de 1813), por el que Napoleón devolvió la corona a Fernando VII",
+    "Con la Constitución de 1812 y la huida de José I a Francia",
+    "Con la firma del Tratado de Fontainebleau"],
+ ok:[1], x:"San Marcial la cerró militarmente y Valençay la cerró diplomáticamente, restaurando a Fernando VII.",
+ tema:"San Marcial y el Tratado de Valençay"}
+];
+
+const LETRAS = ['a','b','c','d'];
+const estado = PREGUNTAS.map(() => ({resuelta:false, acierto:false, marcadas:[]}));
+let activo = 0;
+
+const elPest = document.getElementById('pestanas');
+const elBloques = document.getElementById('bloques');
+
+/* ── Construcción ── */
+BLOQUES.forEach((bl, i) => {
+  const t = document.createElement('button');
+  t.className = 'pest'; t.type = 'button'; t.setAttribute('role','tab');
+  t.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+  t.innerHTML = '<b>' + (i+1) + '</b><span>' + bl.r + '</span>';
+  t.addEventListener('click', () => irA(i));
+  elPest.appendChild(t);
+
+  const sec = document.createElement('section');
+  sec.className = 'bloque'; sec.hidden = i !== 0;
+  sec.innerHTML = '<div class="bloque-cab"><p class="n">Bloque ' + (i+1) + ' de 5</p><h2>' + bl.t + '</h2></div>';
+  elBloques.appendChild(sec);
+});
+
+PREGUNTAS.forEach((p, idx) => {
+  const sec = elBloques.children[p.b];
+  const card = document.createElement('article');
+  card.className = 'p'; card.id = 'p' + idx;
+
+  const cab = document.createElement('div');
+  cab.className = 'p-cab';
+  cab.innerHTML = '<span class="p-num">' + (idx+1) + '</span><p class="enun">' + p.e + '</p>';
+  card.appendChild(cab);
+
+  if (p.doble) {
+    const av = document.createElement('p');
+    av.className = 'aviso'; av.textContent = 'Doble respuesta: marca las dos opciones';
+    card.appendChild(av);
+  }
+
+  const ops = document.createElement('div');
+  ops.className = 'ops';
+  p.o.forEach((texto, j) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'op';
+    b.innerHTML = '<span class="letra">' + LETRAS[j] + '</span><span>' + texto + '</span>';
+    b.addEventListener('click', () => elegir(idx, j));
+    ops.appendChild(b);
+  });
+  card.appendChild(ops);
+
+  if (p.doble) {
+    const btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'comprobar'; btn.textContent = 'Comprobar respuesta';
+    btn.disabled = true;
+    btn.addEventListener('click', () => corregir(idx));
+    card.appendChild(btn);
+  }
+
+  const r = document.createElement('div');
+  r.className = 'retro'; r.hidden = true;
+  card.appendChild(r);
+  sec.appendChild(card);
+});
+
+BLOQUES.forEach((bl, i) => {
+  const sec = elBloques.children[i];
+  const nav = document.createElement('div');
+  nav.className = 'nav';
+  const atras = document.createElement('button');
+  atras.type = 'button'; atras.textContent = 'Bloque anterior';
+  atras.hidden = i === 0;
+  atras.addEventListener('click', () => irA(i-1));
+  const alante = document.createElement('button');
+  alante.type = 'button'; alante.className = 'avanzar';
+  alante.textContent = i === BLOQUES.length - 1 ? 'Ver resultado' : 'Siguiente bloque';
+  alante.addEventListener('click', () => i === BLOQUES.length - 1 ? verResultado() : irA(i+1));
+  nav.appendChild(atras); nav.appendChild(alante);
+  sec.appendChild(nav);
+});
+
+/* ── Interacción ── */
+function elegir(idx, j) {
+  const e = estado[idx];
+  if (e.resuelta) return;
+  const p = PREGUNTAS[idx];
+  const card = document.getElementById('p' + idx);
+  const botones = card.querySelectorAll('.op');
+
+  if (!p.doble) {
+    e.marcadas = [j];
+    corregir(idx);
+    return;
+  }
+  const pos = e.marcadas.indexOf(j);
+  if (pos >= 0) e.marcadas.splice(pos, 1);
+  else if (e.marcadas.length < 2) e.marcadas.push(j);
+  botones.forEach((b, k) => b.classList.toggle('marcada', e.marcadas.indexOf(k) >= 0));
+  card.querySelector('.comprobar').disabled = e.marcadas.length !== 2;
+}
+
+function corregir(idx) {
+  const e = estado[idx];
+  if (e.resuelta) return;
+  const p = PREGUNTAS[idx];
+  const card = document.getElementById('p' + idx);
+  const botones = card.querySelectorAll('.op');
+
+  const acierto = e.marcadas.length === p.ok.length && p.ok.every(k => e.marcadas.indexOf(k) >= 0);
+  e.resuelta = true; e.acierto = acierto;
+
+  botones.forEach((b, k) => {
+    b.classList.remove('marcada');
+    b.classList.add('bloqueada');
+    b.disabled = true;
+    if (p.ok.indexOf(k) >= 0) b.classList.add('ok');
+    else if (e.marcadas.indexOf(k) >= 0) b.classList.add('mal');
+  });
+  if (p.doble) card.querySelector('.comprobar').remove();
+
+  const r = card.querySelector('.retro');
+  const correctas = p.ok.map(k => LETRAS[k]).join(' y ');
+  r.hidden = false;
+  r.className = 'retro ' + (acierto ? 'ok' : 'mal');
+  r.innerHTML = '<b>' + (acierto ? 'Correcto.' : 'No es la respuesta.') + '</b>' +
+                (acierto ? '' : 'La ' + (p.ok.length > 1 ? 'respuesta correcta son las opciones ' : 'respuesta correcta es la opción ') + correctas + '. ') + p.x;
+
+  actualizar();
+}
+
+function actualizar() {
+  const hechas = estado.filter(e => e.resuelta).length;
+  const bien = estado.filter(e => e.acierto).length;
+  document.getElementById('respondidas').textContent = hechas;
+  document.getElementById('aciertos').textContent = bien;
+  document.getElementById('relleno').style.width = (hechas / PREGUNTAS.length * 100) + '%';
+  BLOQUES.forEach((bl, i) => {
+    const total = PREGUNTAS.filter(p => p.b === i).length;
+    const listas = PREGUNTAS.filter((p, k) => p.b === i && estado[k].resuelta).length;
+    elPest.children[i].classList.toggle('hecho', listas === total);
+  });
+}
+
+function irA(i) {
+  activo = i;
+  Array.from(elBloques.children).forEach((s, k) => { s.hidden = k !== i; });
+  Array.from(elPest.children).forEach((t, k) => t.setAttribute('aria-selected', k === i ? 'true' : 'false'));
+  document.getElementById('resumen').classList.remove('visible');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function verResultado() {
+  const bien = estado.filter(e => e.acierto).length;
+  const sin = estado.filter(e => !e.resuelta).length;
+  document.getElementById('nAciertos').textContent = bien;
+
+  let msg;
+  if (bien >= 28) msg = 'Dominas el tema. Estás en condiciones de desarrollarlo por escrito en el examen.';
+  else if (bien >= 23) msg = 'Muy buen nivel. Solo te faltan matices de detalle.';
+  else if (bien >= 19) msg = 'Comprensión sólida, pero conviene repasar los puntos fallados antes de redactar el tema.';
+  else if (bien >= 13) msg = 'Base aceptable: necesitas una segunda lectura del tema, sobre todo de la cronología.';
+  else msg = 'Vuelve al tema con calma antes de repetir el cuestionario: falta asentar los hechos básicos.';
+  if (sin > 0) msg += ' Te quedan ' + sin + ' preguntas sin responder.';
+  document.getElementById('veredicto').textContent = msg;
+
+  const fallos = PREGUNTAS.filter((p, i) => estado[i].resuelta && !estado[i].acierto).map(p => p.tema);
+  const caja = document.getElementById('repasar');
+  if (fallos.length === 0 && sin === 0) {
+    caja.innerHTML = '<h3>Qué repasar</h3><p style="font-size:14.5px;color:var(--ink-soft)">No has fallado ninguna pregunta: el tema está asentado.</p>';
+  } else if (fallos.length === 0) {
+    caja.innerHTML = '<h3>Qué repasar</h3><p style="font-size:14.5px;color:var(--ink-soft)">De momento no has fallado nada. Termina las preguntas pendientes para tener el resultado completo.</p>';
+  } else {
+    caja.innerHTML = '<h3>Conviene repasar</h3><ul>' + fallos.map(f => '<li>' + f + '</li>').join('') + '</ul>';
+  }
+
+  Array.from(elBloques.children).forEach(s => { s.hidden = true; });
+  document.getElementById('resumen').classList.add('visible');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+document.getElementById('otraVez').addEventListener('click', reiniciar);
+document.getElementById('reinicio').addEventListener('click', reiniciar);
+
+function reiniciar() {
+  location.reload();
+}
+
+actualizar();
+</script>
+</body>
+</html>

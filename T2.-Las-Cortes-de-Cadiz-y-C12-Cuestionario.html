@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T2. Las Cortes de Cádiz. La Constitución de 1812 — Cuestionario</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#1B1A17;
+  --ink-soft:#57544E;
+  --ink-faint:#94908A;
+  --paper:#F7F7F5;
+  --white:#FFFFFF;
+  --rule:#E3E1DB;
+
+  --mar:#1C3D5A;           /* azul atlántico de la bahía */
+  --mar-2:#2E567A;
+  --oro:#A8812C;           /* dorado del frontispicio de la Pepa */
+  --oro-claro:#FAF3E2;
+  --ok:#2D6A4F;
+  --ok-claro:#E9F4EE;
+  --mal:#9B2226;
+  --mal-claro:#FBECEC;
+
+  --sans:'IBM Plex Sans',-apple-system,'Segoe UI',Arial,sans-serif;
+  --serif:'Playfair Display',Georgia,serif;
+  --mono:'IBM Plex Mono',ui-monospace,Consolas,monospace;
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+html{scroll-behavior:smooth;scroll-padding-top:120px}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);font-size:16px;line-height:1.6;-webkit-text-size-adjust:100%}
+:focus-visible{outline:2.5px solid var(--oro);outline-offset:2px}
+
+/* ── CABECERA ── */
+.head{background:linear-gradient(140deg,#12293D 0%,#24557C 55%,#12293D 100%);color:#fff;padding:34px 28px 30px;border-bottom:3px solid var(--oro)}
+.head-in{max-width:880px;margin:0 auto}
+.head .curso{font-family:var(--mono);font-size:11px;letter-spacing:1.6px;color:rgba(255,255,255,.5)}
+.head h1{font-family:var(--serif);font-weight:700;font-size:clamp(25px,4.4vw,38px);line-height:1.12;margin:10px 0 8px}
+.head p{color:rgba(255,255,255,.68);font-size:14.5px;max-width:62ch}
+.head .datos{display:flex;gap:26px;flex-wrap:wrap;margin-top:18px;font-family:var(--mono);font-size:11.5px;color:rgba(255,255,255,.55)}
+.head .datos strong{color:#E2B95C;font-size:13px;font-weight:500}
+
+/* ── BARRA FIJA ── */
+.barra{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.97);border-bottom:1px solid var(--rule);backdrop-filter:blur(6px)}
+.barra-in{max-width:880px;margin:0 auto;padding:11px 28px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.pista{flex:1;min-width:150px;height:7px;background:var(--rule);border-radius:4px;overflow:hidden}
+.relleno{height:100%;width:0;background:linear-gradient(90deg,var(--mar),var(--oro));transition:width .35s ease}
+.marcador{font-family:var(--mono);font-size:12.5px;white-space:nowrap}
+.marcador b{font-weight:500}
+.reinicio{font-family:var(--mono);font-size:11px;color:var(--ink-faint);background:none;border:1px solid var(--rule);border-radius:5px;padding:5px 11px;cursor:pointer}
+.reinicio:hover{color:var(--ink);border-color:var(--ink-soft)}
+
+/* ── PESTAÑAS DE BLOQUE ── */
+.pestanas{max-width:880px;margin:0 auto;padding:0 28px 11px;display:flex;gap:7px;overflow-x:auto}
+.pest{flex:1;min-width:58px;background:none;border:1px solid var(--rule);border-radius:7px;padding:7px 6px 8px;cursor:pointer;font-family:var(--sans);text-align:center;color:var(--ink-faint);transition:border-color .2s,color .2s}
+.pest b{display:block;font-family:var(--mono);font-size:13px;font-weight:500;line-height:1.3}
+.pest span{display:block;font-size:10px;letter-spacing:.3px}
+.pest:hover{border-color:var(--ink-soft);color:var(--ink-soft)}
+.pest[aria-selected="true"]{background:var(--mar);border-color:var(--mar);color:#fff}
+.pest[aria-selected="true"] span{color:rgba(255,255,255,.65)}
+.pest.hecho:not([aria-selected="true"]){border-color:var(--ok);color:var(--ok)}
+
+/* ── CUERPO ── */
+main{max-width:880px;margin:0 auto;padding:30px 28px 70px}
+.bloque[hidden]{display:none}
+.bloque-cab{border-left:3px solid var(--oro);padding-left:15px;margin-bottom:26px}
+.bloque-cab .n{font-family:var(--mono);font-size:11px;letter-spacing:1.4px;color:var(--oro)}
+.bloque-cab h2{font-family:var(--serif);font-size:24px;font-weight:600;line-height:1.25;margin-top:5px}
+
+.p{background:var(--white);border:1px solid var(--rule);border-radius:11px;padding:21px 22px;margin-bottom:17px}
+.p-cab{display:flex;gap:11px;align-items:baseline;margin-bottom:13px}
+.p-num{font-family:var(--mono);font-size:12px;color:var(--ink-faint);padding-top:2px}
+.enun{font-size:16.5px;line-height:1.5;font-weight:500}
+.aviso{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:1.1px;color:var(--mar);background:#E9EFF5;border-radius:4px;padding:3px 8px;margin-bottom:11px}
+.ops{display:flex;flex-direction:column;gap:8px}
+.op{display:flex;gap:11px;align-items:flex-start;border:1px solid var(--rule);border-radius:8px;padding:11px 13px;cursor:pointer;background:var(--white);text-align:left;font:inherit;color:inherit;line-height:1.45;transition:border-color .18s,background .18s}
+.op:hover:not(.bloqueada){border-color:var(--mar-2)}
+.op .letra{font-family:var(--mono);font-size:12.5px;color:var(--ink-faint);padding-top:2px;min-width:14px}
+.op.marcada{border-color:var(--mar);background:#F1F5F9}
+.op.marcada .letra{color:var(--mar)}
+.op.ok{border-color:var(--ok);background:var(--ok-claro)}
+.op.ok .letra{color:var(--ok)}
+.op.mal{border-color:var(--mal);background:var(--mal-claro)}
+.op.mal .letra{color:var(--mal)}
+.op.bloqueada{cursor:default}
+.comprobar{margin-top:11px;font-family:var(--sans);font-size:13.5px;font-weight:500;color:#fff;background:var(--mar);border:0;border-radius:7px;padding:9px 17px;cursor:pointer}
+.comprobar:hover{background:var(--mar-2)}
+.comprobar:disabled{background:var(--rule);color:var(--ink-faint);cursor:default}
+.retro{margin-top:13px;padding:12px 14px;border-radius:8px;font-size:14.5px;line-height:1.5}
+.retro b{font-weight:600;display:block;margin-bottom:3px}
+.retro.ok{background:var(--ok-claro);color:#1E4B37;border-left:3px solid var(--ok)}
+.retro.mal{background:var(--mal-claro);color:#6E1519;border-left:3px solid var(--mal)}
+
+.nav{display:flex;justify-content:space-between;gap:12px;margin-top:26px}
+.nav button{font-family:var(--sans);font-size:14px;font-weight:500;border-radius:8px;padding:11px 20px;cursor:pointer;border:1px solid var(--mar);background:var(--white);color:var(--mar)}
+.nav button:hover{background:#EEF3F7}
+.nav .avanzar{background:var(--mar);color:#fff}
+.nav .avanzar:hover{background:var(--mar-2)}
+.nav button[hidden]{display:none}
+
+/* ── RESUMEN ── */
+#resumen{display:none;background:var(--white);border:1px solid var(--rule);border-top:4px solid var(--oro);border-radius:11px;padding:30px 26px;margin-top:8px}
+#resumen.visible{display:block}
+#resumen h2{font-family:var(--serif);font-size:26px;font-weight:600}
+.nota{font-family:var(--mono);font-size:40px;font-weight:500;margin:14px 0 4px;color:var(--mar)}
+.nota span{font-size:19px;color:var(--ink-faint)}
+.veredicto{font-size:16px;color:var(--ink-soft);max-width:60ch}
+.repasar{margin-top:22px;background:var(--oro-claro);border-left:3px solid var(--oro);border-radius:0 8px 8px 0;padding:16px 18px}
+.repasar h3{font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:.3px;margin-bottom:9px}
+.repasar ul{margin:0;padding-left:19px;font-size:14.5px;line-height:1.75;color:var(--ink-soft)}
+.pie{max-width:880px;margin:0 auto;padding:0 28px 46px;font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+@media(max-width:620px){
+  .head{padding:26px 20px 24px}
+  .barra-in,.pestanas,main,.pie{padding-left:18px;padding-right:18px}
+  .pest span{display:none}
+  .p{padding:18px 16px}
+}
+</style>
+</head>
+<body>
+
+<header class="head">
+  <div class="head-in">
+    <p class="curso">2.º Bachillerato · Historia de España · Bloque B1</p>
+    <h1>Las Cortes de Cádiz<br>y la Constitución de 1812</h1>
+    <p>Comprueba lo que has entendido del tema. Elige una opción y recibirás la corrección al instante, con la respuesta correcta y el porqué.</p>
+    <div class="datos">
+      <span><strong>30</strong> preguntas</span>
+      <span><strong>5</strong> bloques</span>
+      <span><strong>1808-1814</strong></span>
+    </div>
+  </div>
+</header>
+
+<div class="barra">
+  <div class="barra-in">
+    <div class="pista"><div class="relleno" id="relleno"></div></div>
+    <p class="marcador"><b id="respondidas">0</b>/30 respondidas · <b id="aciertos">0</b> aciertos</p>
+    <button class="reinicio" id="reinicio">Empezar de nuevo</button>
+  </div>
+  <div class="pestanas" role="tablist" id="pestanas"></div>
+</div>
+
+<main>
+  <div id="bloques"></div>
+  <section id="resumen" aria-live="polite">
+    <h2>Resultado</h2>
+    <p class="nota"><span id="nAciertos">0</span> <span>de 30</span></p>
+    <p class="veredicto" id="veredicto"></p>
+    <div class="repasar" id="repasar"></div>
+    <div class="nav" style="justify-content:flex-start">
+      <button id="otraVez">Repetir el cuestionario</button>
+    </div>
+  </section>
+</main>
+
+<p class="pie">Elaborado a partir del tema T2 del Bloque B1. Colegio El Valle.</p>
+
+<script>
+const BLOQUES = [
+  {t:"De Bayona al Estatuto", r:"1808"},
+  {t:"La organización de la resistencia: las Juntas", r:"Las Juntas"},
+  {t:"De la Junta Central a la convocatoria de Cortes", r:"1810"},
+  {t:"Las Cortes de Cádiz: composición y obra legislativa", r:"1810-1813"},
+  {t:"La Constitución de 1812", r:"La Pepa"}
+];
+
+const PREGUNTAS = [
+/* BLOQUE 1 */
+{b:0,doble:true,e:"El motín de Aranjuez produjo dos efectos. Señala los dos correctos.",
+ o:["La caída del ministro Godoy",
+    "La convocatoria de Cortes en Cádiz",
+    "La abdicación de Carlos IV a favor de su hijo Fernando VII",
+    "La aprobación del Estatuto de Bayona"],
+ ok:[0,2], x:"El motín derribó al valido y forzó el cambio de rey: ese es el punto de partida de toda la crisis de 1808.",
+ tema:"los dos efectos del motín de Aranjuez"},
+
+{b:0,e:"¿Por qué convocó Napoleón a Carlos IV y a Fernando a la ciudad de Bayona?",
+ o:["Porque las Juntas provinciales se lo habían pedido",
+    "Porque no le pasó desapercibido el síntoma de debilidad de la monarquía española que revelaba el motín",
+    "Porque quería negociar con ellos la paz con Inglaterra",
+    "Porque pretendía coronar a Fernando VII como rey aliado"],
+ ok:[1], x:"La crisis dinástica mostró a Napoleón una monarquía débil; Bayona fue la ocasión para intervenir.",
+ tema:"el motivo de la convocatoria de Bayona"},
+
+{b:0,e:"En Bayona se convocó una asamblea de notables del Antiguo Régimen. ¿Quiénes la formaban y para qué?",
+ o:["Nobles, eclesiásticos y funcionarios —los llamados afrancesados— para que debatiesen una Carta Otorgada",
+    "Los delegados de las Juntas provinciales, para elegir un gobierno de resistencia",
+    "Diputados elegidos por sufragio, para redactar una Constitución",
+    "Los miembros del Consejo de Regencia, para organizar la guerra"],
+ ok:[0], x:"Fue una asamblea de notables designada, no una cámara elegida: de ahí que el resultado sea una carta otorgada.",
+ tema:"la asamblea de notables de Bayona y los afrancesados"},
+
+{b:0,e:"¿Qué era el Estatuto de Bayona?",
+ o:["Un tratado militar entre Francia y España",
+    "La primera Constitución española, aprobada por unas Cortes",
+    "Una ley fundamental de reformismo moderado que reconocía algunos derechos individuales y libertades económicas, pero otorgaba amplísimos poderes al rey",
+    "Un decreto que restablecía los privilegios de la nobleza y el clero"],
+ ok:[2], x:"Reformismo moderado y poder regio casi ilimitado: esa es la combinación que define una carta otorgada.",
+ tema:"el contenido del Estatuto de Bayona"},
+
+{b:0,e:"¿Cómo actuó José Bonaparte como rey de España?",
+ o:["Hizo meritorios intentos de ganarse a los españoles, a pesar de las continuas injerencias de Napoleón",
+    "Gobernó sin interferencia alguna de su hermano Napoleón",
+    "Renunció al trono a los pocos meses de llegar",
+    "Se negó a aplicar el Estatuto de Bayona"],
+ ok:[0], x:"El tema subraya ese doble condicionante: voluntad de atraerse al país y dependencia constante de Napoleón.",
+ tema:"el gobierno de José I"},
+
+{b:0,e:"¿Cómo vivió la mayoría de los españoles la cesión de la soberanía hecha en Bayona?",
+ o:["Como un acuerdo aceptable, por haberse hecho conforme a derecho",
+    "Con indiferencia, al tratarse de un asunto de la Corte",
+    "Como una imposición, pese a ser jurídicamente legal, y consideraron a su soberano preso de los franceses",
+    "Como el paso previo necesario para convocar unas Cortes"],
+ ok:[2], x:"Legalidad formal y legitimidad percibida se separan: de esa fractura nace el alzamiento de 1808.",
+ tema:"la legalidad de la cesión frente a su percepción popular"},
+
+/* BLOQUE 2 */
+{b:1,e:"¿Por qué no fue posible recurrir a instituciones del Antiguo Régimen como el Consejo de Castilla o la Junta de Gobierno?",
+ o:["Porque habían sido disueltas por Carlos IV antes de marchar a Bayona",
+    "Porque ambos organismos reconocieron a José como legítimo rey",
+    "Porque sus miembros se habían exiliado a América",
+    "Porque solo tenían competencias judiciales"],
+ ok:[1], x:"Las viejas instituciones quedaron deslegitimadas ante los patriotas al aceptar al rey impuesto.",
+ tema:"la deslegitimación de las instituciones del Antiguo Régimen"},
+
+{b:1,e:"¿Qué supuso el alzamiento nacional de 1808 desde el punto de vista político?",
+ o:["Los españoles asumieron la soberanía nacional y formaron sus propios órganos de gobierno, rompiendo con el Antiguo Régimen",
+    "El restablecimiento de los Pactos de Familia con Francia",
+    "La aceptación del Estatuto de Bayona como texto de gobierno",
+    "La convocatoria inmediata de la Constitución de 1812"],
+ ok:[0], x:"Por eso el tema habla de revolución política: la soberanía pasa del rey a la nación.",
+ tema:"el alzamiento de 1808 como revolución política"},
+
+{b:1,doble:true,e:"Señala las dos afirmaciones correctas sobre los tipos de Juntas.",
+ o:["En las Juntas locales fueron las propias autoridades locales las que se hicieron con el poder y organizaron la resistencia",
+    "En las Juntas provinciales supremas la población se organizaba, elegía por votación a sus miembros y nombraba comités para armar a los ciudadanos",
+    "Todas las Juntas fueron nombradas por el Consejo de Regencia",
+    "Las Juntas provinciales fueron designadas por José I para administrar el territorio"],
+ ok:[0,1], x:"Dos vías distintas: continuidad de las autoridades en unos casos, elección popular en otros.",
+ tema:"la diferencia entre Juntas locales y provinciales supremas"},
+
+{b:1,e:"¿Por qué las Juntas provinciales supremas suponen una novedad histórica?",
+ o:["Porque fue la primera vez que el pueblo español asumía la soberanía y elegía a sus gobernantes",
+    "Porque sustituyeron definitivamente a los ayuntamientos",
+    "Porque incorporaron por primera vez a representantes americanos",
+    "Porque funcionaban bajo la autoridad del Consejo de Castilla"],
+ ok:[0], x:"La elección de los miembros por votación es el hecho inédito que marca el arranque del liberalismo español.",
+ tema:"la novedad de la elección popular en las Juntas"},
+
+{b:1,e:"¿Cómo y dónde se constituyó la Junta Suprema Central Gubernativa?",
+ o:["En Cádiz, por decisión del Consejo de Regencia",
+    "En Sevilla, por acuerdo de los generales del ejército",
+    "En Aranjuez, formada por delegados de las Juntas provinciales, entre los que destacaba por su influencia Jovellanos",
+    "En Madrid, convocada por las autoridades afrancesadas"],
+ ok:[2], x:"Las Juntas actuaban al principio por separado; la Central las unificó, con Jovellanos como figura de peso.",
+ tema:"la constitución de la Junta Suprema Central y el papel de Jovellanos"},
+
+{b:1,e:"¿Qué garantizaba la elección de Floridablanca como presidente de la Junta Central?",
+ o:["Una política moderada en las reformas, por haber sido ministro de Carlos III y Carlos IV",
+    "La ruptura inmediata con el Antiguo Régimen",
+    "El apoyo del ejército británico a la resistencia",
+    "La redacción rápida de una Constitución liberal"],
+ ok:[0], x:"Su trayectoria como ministro ilustrado inclinaba la Junta hacia la prudencia reformista, no hacia la ruptura.",
+ tema:"la presidencia de Floridablanca y el tono moderado de la Junta"},
+
+/* BLOQUE 3 */
+{b:2,doble:true,e:"La Junta Suprema Central debía encargarse de dos asuntos. Señala los dos correctos.",
+ o:["Redactar y promulgar la Constitución de 1812",
+    "Organizar la resistencia: mando militar, estrategia y fondos",
+    "Negociar la paz con Napoleón a cambio del regreso de Fernando VII",
+    "Gobernar el país ante el vacío de poder creado"],
+ ok:[1,3], x:"Hacer la guerra y gobernar a la vez: esa doble tarea explica su desgaste y su posterior disolución.",
+ tema:"las dos funciones de la Junta Suprema Central"},
+
+{b:2,e:"¿Qué ocurrió con la Junta Suprema Central en 1810?",
+ o:["Trasladó su sede a Sevilla y se mantuvo allí hasta el final de la guerra",
+    "Fue disuelta por José I tras la toma de Andalucía",
+    "Ante el avance francés se refugió en Cádiz, donde se convocan Cortes",
+    "Entregó el poder directamente a Fernando VII"],
+ ok:[2], x:"Había actuado como gobierno provisional desde los primeros meses de la guerra; el avance francés la empuja hasta Cádiz.",
+ tema:"el repliegue de la Junta Central a Cádiz en 1810"},
+
+{b:2,e:"¿Sobre qué surgieron las diferencias a la hora de convocar las Cortes?",
+ o:["Sobre si debían reunirse por representación de los tres estamentos —clero, nobleza y pueblo llano— o como una asamblea nacional de todo el pueblo",
+    "Sobre si debían celebrarse en Cádiz o en Sevilla",
+    "Sobre si debía presidirlas el rey o la Regencia",
+    "Sobre si debían admitirse diputados americanos"],
+ ok:[0], x:"Es la cuestión de fondo: Cortes del Antiguo Régimen o Cortes de la nación soberana.",
+ tema:"estamentos o asamblea nacional: la forma de convocar las Cortes"},
+
+{b:2,e:"¿Qué defendían los llamados jovellanistas?",
+ o:["La vuelta íntegra al absolutismo monárquico",
+    "La promulgación de una constitución que rompiese con el régimen anterior",
+    "La aceptación del Estatuto de Bayona",
+    "Un compromiso entre la nación y el rey a través de unas cortes estamentales"],
+ ok:[3], x:"Ocupaban el centro: ni absolutismo puro ni ruptura constitucional, sino pacto por la vía estamental.",
+ tema:"la posición de los jovellanistas"},
+
+{b:2,e:"¿Qué corriente ideológica era mayoritaria y qué defendía?",
+ o:["Los absolutistas, que pedían el regreso sin condiciones de Fernando VII",
+    "Los liberales, que defendían la promulgación de una constitución que rompiese con el régimen anterior",
+    "Los afrancesados, que defendían el Estatuto de Bayona",
+    "Los jovellanistas, que defendían unas cortes estamentales"],
+ ok:[1], x:"Situados a la izquierda de absolutistas y jovellanistas, los liberales eran mayoría y marcaron el rumbo de Cádiz.",
+ tema:"el predominio de la corriente liberal"},
+
+{b:2,e:"¿Cómo terminó la Junta Suprema Central?",
+ o:["Dividida y aislada en Cádiz, decidió autodisolverse y entregó el Gobierno a un Consejo de Regencia",
+    "Fue disuelta por las Cortes en su primera sesión",
+    "Se transformó directamente en las Cortes de Cádiz",
+    "Siguió gobernando hasta el regreso de Fernando VII"],
+ ok:[0], x:"La Regencia continuó la convocatoria de Cortes que la Junta había puesto en marcha.",
+ tema:"la autodisolución de la Junta y el Consejo de Regencia"},
+
+/* BLOQUE 4 */
+{b:3,e:"¿Cuándo se celebró la apertura de las Cortes y qué posiciones predominaban entre sus diputados?",
+ o:["El 19 de marzo de 1812, con predominio de los absolutistas",
+    "El 24 de septiembre de 1810, con predominio de quienes defendían posiciones ilustradas o claramente liberales",
+    "En enero de 1810, con predominio de los jovellanistas",
+    "En mayo de 1814, con predominio de los afrancesados"],
+ ok:[1], x:"Ideologías muy variadas, pero con mayoría ilustrada y liberal: por eso las reformas salieron adelante.",
+ tema:"la apertura de las Cortes el 24 de septiembre de 1810"},
+
+{b:3,e:"¿Cómo evolucionó el número de diputados reunidos en Cádiz?",
+ o:["De 104 en la primera sesión a 223 en septiembre de 1813",
+    "De 223 en la primera sesión a 104 en 1813",
+    "Se mantuvo fijo en 384 diputados",
+    "Nunca superó el centenar durante toda la guerra"],
+ ok:[0], x:"Muchos sufrieron penalidades para llegar; allí donde el territorio estaba ocupado, los diputados se eligieron entre los ilustrados exiliados en Cádiz.",
+ tema:"el número y la elección de los diputados"},
+
+{b:3,e:"Socialmente, ¿de dónde procedía la mayoría de los diputados?",
+ o:["De la alta nobleza terrateniente",
+    "Del campesinado y los gremios artesanos",
+    "De las capas medias urbanas: funcionarios, abogados, comerciantes y profesionales",
+    "Del alto mando militar"],
+ ok:[2], x:"Junto a esas capas medias hubo una destacada presencia de eclesiásticos y algunos miembros de la aristocracia.",
+ tema:"la composición social de las Cortes"},
+
+{b:3,e:"¿Por qué las reformas resultaron más avanzadas de lo previsto inicialmente?",
+ o:["Porque Fernando VII lo exigió desde su cautiverio en Francia",
+    "Por el ambiente revolucionario y patriótico de Cádiz, símbolo de la resistencia al invasor",
+    "Porque los absolutistas se negaron a acudir a las sesiones",
+    "Porque el ejército británico impuso condiciones políticas"],
+ ok:[1], x:"La ciudad sitiada y libre, centro del comercio y de la resistencia, radicalizó el clima de las sesiones.",
+ tema:"el ambiente de Cádiz y la radicalización de las reformas"},
+
+{b:3,doble:true,e:"Señala las dos medidas que corresponden a la labor legislativa de las Cortes.",
+ o:["La eliminación del mayorazgo, declarándose así la libre propiedad",
+    "El reconocimiento de la libertad religiosa para todos los cultos",
+    "La supresión de los gremios, estableciéndose la libertad de trabajo",
+    "El restablecimiento del Tribunal de la Inquisición"],
+ ok:[0,2], x:"A estas se suman la abolición del régimen jurisdiccional (1811), la libertad de imprenta salvo en cuestiones religiosas, la desaparición de la Inquisición y la desamortización de bienes de los afrancesados y de parte de las tierras municipales.",
+ tema:"la obra legislativa de las Cortes de Cádiz"},
+
+{b:3,e:"¿Qué ocurrió en la práctica con toda esa labor legislativa?",
+ o:["Se aplicó con rapidez en todo el territorio nacional",
+    "Fue derogada por las propias Cortes antes de 1812",
+    "Todas estas medidas no fueron realmente aplicadas a causa de la guerra",
+    "Solo se aplicó en los territorios ocupados por los franceses"],
+ ok:[2], x:"La legislación de Cádiz fue sobre todo un programa: la guerra impidió llevarla a la práctica.",
+ tema:"la aplicación real de la obra legislativa"},
+
+/* BLOQUE 5 */
+{b:4,e:"Identifica la Constitución de Cádiz.",
+ o:["Aprobada el 24 de septiembre de 1810, con 10 títulos y 104 artículos",
+    "Aprobada el 19 de marzo de 1812, apodada la Pepa, primera Constitución de nuestro país, con 10 títulos y 384 artículos",
+    "Aprobada en mayo de 1814, con 384 títulos y 10 artículos",
+    "Aprobada en 1808 en Bayona, con 10 títulos y 384 artículos"],
+ ok:[1], x:"El apodo viene del día de su aprobación, San José. Es un texto largo que fija los principios de la ideología liberal.",
+ tema:"la fecha, el apodo y la extensión de la Constitución de 1812"},
+
+{b:4,e:"¿Qué principio recoge el artículo 3 de la Constitución y cómo se concretó en las Cortes?",
+ o:["La soberanía reside esencialmente en la Nación; las Cortes la representan y son unicamerales",
+    "La soberanía reside en el rey, que la comparte con las Cortes en dos cámaras",
+    "La soberanía reside en los ayuntamientos elegidos popularmente",
+    "La soberanía reside en la Regencia mientras dure la ausencia del rey"],
+ ok:[0], x:"Soberanía nacional y cámara única: la ruptura más clara con la representación estamental del Antiguo Régimen.",
+ tema:"la soberanía nacional y las Cortes unicamerales"},
+
+{b:4,e:"¿Qué forma de Estado y qué reparto de poderes establece el texto?",
+ o:["Una república parlamentaria con un presidente electo",
+    "Una monarquía absoluta con el rey como único legislador",
+    "Una monarquía moderada hereditaria, con el legislativo en las Cortes con el rey, el ejecutivo en el rey y el judicial en los tribunales de justicia",
+    "Una monarquía en la que el rey ejerce a la vez el poder ejecutivo y el judicial"],
+ ok:[2], x:"El rey conserva el ejecutivo y participa en el legislativo, pero deja de concentrar todo el poder.",
+ tema:"la monarquía moderada hereditaria y la división de poderes"},
+
+{b:4,e:"¿Cómo regula la Constitución el derecho de voto y la igualdad jurídica?",
+ o:["Sufragio censitario para los mayores contribuyentes e igualdad plena ante la ley",
+    "Sufragio universal para varones mayores de 25 años e igualdad jurídica para todos los ciudadanos, excepto eclesiásticos y militares",
+    "Sufragio universal masculino y femenino a partir de los 21 años",
+    "Voto reservado a los diputados de las Juntas provinciales"],
+ ok:[1], x:"Es un sufragio amplio para la época, pero la igualdad queda limitada por los fueros que conservan clero y ejército.",
+ tema:"el sufragio y los límites de la igualdad jurídica"},
+
+{b:4,e:"¿Cuál de estas afirmaciones recoge la Constitución de 1812?",
+ o:["La libertad de cultos y la separación entre la Iglesia y el Estado",
+    "La supresión del ejército permanente",
+    "Un Estado confesional: la religión católica como única del Estado, prohibiendo el ejercicio de cualquier otra",
+    "El nombramiento real de los alcaldes de cada municipio"],
+ ok:[2], x:"Junto a la confesionalidad, el texto mantiene un ejército permanente bajo las Cortes y crea una Milicia Nacional, divide el Estado en provincias y establece la elección popular de los alcaldes.",
+ tema:"la confesionalidad del Estado y las demás disposiciones del texto"},
+
+{b:4,e:"¿Qué recorrido tuvo la Constitución de 1812 después de aprobarse?",
+ o:["Estuvo vigente de forma ininterrumpida hasta 1876",
+    "Dejó de tener vigencia al regresar Fernando VII en 1814 y fue restablecida entre 1820-1823 y de agosto de 1836 a junio de 1837",
+    "Nunca llegó a entrar en vigor en ningún momento",
+    "Fue sustituida en 1814 por el Estatuto de Bayona"],
+ ok:[1], x:"Pese a su corta vigencia, fue referente de todos los textos constitucionales españoles del siglo XIX y de otras constituciones europeas y, sobre todo, americanas.",
+ tema:"la vigencia y el legado de la Constitución de 1812"}
+];
+
+const LETRAS = ['a','b','c','d'];
+const estado = PREGUNTAS.map(() => ({resuelta:false, acierto:false, marcadas:[]}));
+
+const elPest = document.getElementById('pestanas');
+const elBloques = document.getElementById('bloques');
+
+/* ── Construcción ── */
+BLOQUES.forEach((bl, i) => {
+  const t = document.createElement('button');
+  t.className = 'pest'; t.type = 'button'; t.setAttribute('role','tab');
+  t.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+  t.innerHTML = '<b>' + (i+1) + '</b><span>' + bl.r + '</span>';
+  t.addEventListener('click', () => irA(i));
+  elPest.appendChild(t);
+
+  const sec = document.createElement('section');
+  sec.className = 'bloque'; sec.hidden = i !== 0;
+  sec.innerHTML = '<div class="bloque-cab"><p class="n">Bloque ' + (i+1) + ' de 5</p><h2>' + bl.t + '</h2></div>';
+  elBloques.appendChild(sec);
+});
+
+PREGUNTAS.forEach((p, idx) => {
+  const sec = elBloques.children[p.b];
+  const card = document.createElement('article');
+  card.className = 'p'; card.id = 'p' + idx;
+
+  const cab = document.createElement('div');
+  cab.className = 'p-cab';
+  cab.innerHTML = '<span class="p-num">' + (idx+1) + '</span><p class="enun">' + p.e + '</p>';
+  card.appendChild(cab);
+
+  if (p.doble) {
+    const av = document.createElement('p');
+    av.className = 'aviso'; av.textContent = 'Doble respuesta: marca las dos opciones';
+    card.appendChild(av);
+  }
+
+  const ops = document.createElement('div');
+  ops.className = 'ops';
+  p.o.forEach((texto, j) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'op';
+    b.innerHTML = '<span class="letra">' + LETRAS[j] + '</span><span>' + texto + '</span>';
+    b.addEventListener('click', () => elegir(idx, j));
+    ops.appendChild(b);
+  });
+  card.appendChild(ops);
+
+  if (p.doble) {
+    const btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'comprobar'; btn.textContent = 'Comprobar respuesta';
+    btn.disabled = true;
+    btn.addEventListener('click', () => corregir(idx));
+    card.appendChild(btn);
+  }
+
+  const r = document.createElement('div');
+  r.className = 'retro'; r.hidden = true;
+  card.appendChild(r);
+  sec.appendChild(card);
+});
+
+BLOQUES.forEach((bl, i) => {
+  const sec = elBloques.children[i];
+  const nav = document.createElement('div');
+  nav.className = 'nav';
+  const atras = document.createElement('button');
+  atras.type = 'button'; atras.textContent = 'Bloque anterior';
+  atras.hidden = i === 0;
+  atras.addEventListener('click', () => irA(i-1));
+  const alante = document.createElement('button');
+  alante.type = 'button'; alante.className = 'avanzar';
+  alante.textContent = i === BLOQUES.length - 1 ? 'Ver resultado' : 'Siguiente bloque';
+  alante.addEventListener('click', () => i === BLOQUES.length - 1 ? verResultado() : irA(i+1));
+  nav.appendChild(atras); nav.appendChild(alante);
+  sec.appendChild(nav);
+});
+
+/* ── Interacción ── */
+function elegir(idx, j) {
+  const e = estado[idx];
+  if (e.resuelta) return;
+  const p = PREGUNTAS[idx];
+  const card = document.getElementById('p' + idx);
+  const botones = card.querySelectorAll('.op');
+
+  if (!p.doble) {
+    e.marcadas = [j];
+    corregir(idx);
+    return;
+  }
+  const pos = e.marcadas.indexOf(j);
+  if (pos >= 0) e.marcadas.splice(pos, 1);
+  else if (e.marcadas.length < 2) e.marcadas.push(j);
+  botones.forEach((b, k) => b.classList.toggle('marcada', e.marcadas.indexOf(k) >= 0));
+  card.querySelector('.comprobar').disabled = e.marcadas.length !== 2;
+}
+
+function corregir(idx) {
+  const e = estado[idx];
+  if (e.resuelta) return;
+  const p = PREGUNTAS[idx];
+  const card = document.getElementById('p' + idx);
+  const botones = card.querySelectorAll('.op');
+
+  const acierto = e.marcadas.length === p.ok.length && p.ok.every(k => e.marcadas.indexOf(k) >= 0);
+  e.resuelta = true; e.acierto = acierto;
+
+  botones.forEach((b, k) => {
+    b.classList.remove('marcada');
+    b.classList.add('bloqueada');
+    b.disabled = true;
+    if (p.ok.indexOf(k) >= 0) b.classList.add('ok');
+    else if (e.marcadas.indexOf(k) >= 0) b.classList.add('mal');
+  });
+  if (p.doble) card.querySelector('.comprobar').remove();
+
+  const r = card.querySelector('.retro');
+  const correctas = p.ok.map(k => LETRAS[k]).join(' y ');
+  r.hidden = false;
+  r.className = 'retro ' + (acierto ? 'ok' : 'mal');
+  r.innerHTML = '<b>' + (acierto ? 'Correcto.' : 'No es la respuesta.') + '</b>' +
+                (acierto ? '' : 'La ' + (p.ok.length > 1 ? 'respuesta correcta son las opciones ' : 'respuesta correcta es la opción ') + correctas + '. ') + p.x;
+
+  actualizar();
+}
+
+function actualizar() {
+  const hechas = estado.filter(e => e.resuelta).length;
+  const bien = estado.filter(e => e.acierto).length;
+  document.getElementById('respondidas').textContent = hechas;
+  document.getElementById('aciertos').textContent = bien;
+  document.getElementById('relleno').style.width = (hechas / PREGUNTAS.length * 100) + '%';
+  BLOQUES.forEach((bl, i) => {
+    const total = PREGUNTAS.filter(p => p.b === i).length;
+    const listas = PREGUNTAS.filter((p, k) => p.b === i && estado[k].resuelta).length;
+    elPest.children[i].classList.toggle('hecho', listas === total);
+  });
+}
+
+function irA(i) {
+  Array.from(elBloques.children).forEach((s, k) => { s.hidden = k !== i; });
+  Array.from(elPest.children).forEach((t, k) => t.setAttribute('aria-selected', k === i ? 'true' : 'false'));
+  document.getElementById('resumen').classList.remove('visible');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function verResultado() {
+  const bien = estado.filter(e => e.acierto).length;
+  const sin = estado.filter(e => !e.resuelta).length;
+  document.getElementById('nAciertos').textContent = bien;
+
+  let msg;
+  if (bien >= 28) msg = 'Dominas el tema. Estás en condiciones de desarrollarlo por escrito en el examen.';
+  else if (bien >= 23) msg = 'Muy buen nivel. Solo te faltan matices de detalle.';
+  else if (bien >= 19) msg = 'Comprensión sólida, pero conviene repasar los puntos fallados antes de redactar el tema.';
+  else if (bien >= 13) msg = 'Base aceptable: necesitas una segunda lectura del tema, sobre todo del articulado de la Constitución.';
+  else msg = 'Vuelve al tema con calma antes de repetir el cuestionario: falta asentar los hechos básicos.';
+  if (sin > 0) msg += ' Te quedan ' + sin + ' preguntas sin responder.';
+  document.getElementById('veredicto').textContent = msg;
+
+  const fallos = PREGUNTAS.filter((p, i) => estado[i].resuelta && !estado[i].acierto).map(p => p.tema);
+  const caja = document.getElementById('repasar');
+  if (fallos.length === 0 && sin === 0) {
+    caja.innerHTML = '<h3>Qué repasar</h3><p style="font-size:14.5px;color:var(--ink-soft)">No has fallado ninguna pregunta: el tema está asentado.</p>';
+  } else if (fallos.length === 0) {
+    caja.innerHTML = '<h3>Qué repasar</h3><p style="font-size:14.5px;color:var(--ink-soft)">De momento no has fallado nada. Termina las preguntas pendientes para tener el resultado completo.</p>';
+  } else {
+    caja.innerHTML = '<h3>Conviene repasar</h3><ul>' + fallos.map(f => '<li>' + f + '</li>').join('') + '</ul>';
+  }
+
+  Array.from(elBloques.children).forEach(s => { s.hidden = true; });
+  document.getElementById('resumen').classList.add('visible');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+document.getElementById('otraVez').addEventListener('click', reiniciar);
+document.getElementById('reinicio').addEventListener('click', reiniciar);
+
+function reiniciar() {
+  location.reload();
+}
+
+actualizar();
+</script>
+</body>
+</html>
