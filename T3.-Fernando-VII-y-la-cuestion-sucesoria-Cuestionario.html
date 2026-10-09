@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T3. El reinado de Fernando VII. La cuestión sucesoria — Cuestionario</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#1B1A17;
+  --ink-soft:#57544E;
+  --ink-faint:#94908A;
+  --paper:#F7F7F5;
+  --white:#FFFFFF;
+  --rule:#E3E1DB;
+
+  --granate:#6B2230;       /* púrpura de la Restauración */
+  --granate-2:#8A3144;
+  --ocre:#9C6B2F;          /* oro viejo de los uniformes */
+  --ocre-claro:#F9F2E6;
+  --ok:#2D6A4F;
+  --ok-claro:#E9F4EE;
+  --mal:#9B2226;
+  --mal-claro:#FBECEC;
+
+  --sans:'IBM Plex Sans',-apple-system,'Segoe UI',Arial,sans-serif;
+  --serif:'Playfair Display',Georgia,serif;
+  --mono:'IBM Plex Mono',ui-monospace,Consolas,monospace;
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+html{scroll-behavior:smooth;scroll-padding-top:120px}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);font-size:16px;line-height:1.6;-webkit-text-size-adjust:100%}
+:focus-visible{outline:2.5px solid var(--ocre);outline-offset:2px}
+
+/* ── CABECERA ── */
+.head{background:linear-gradient(140deg,#43121D 0%,#7A2838 55%,#43121D 100%);color:#fff;padding:34px 28px 30px;border-bottom:3px solid var(--ocre)}
+.head-in{max-width:880px;margin:0 auto}
+.head .curso{font-family:var(--mono);font-size:11px;letter-spacing:1.6px;color:rgba(255,255,255,.5)}
+.head h1{font-family:var(--serif);font-weight:700;font-size:clamp(25px,4.4vw,38px);line-height:1.12;margin:10px 0 8px}
+.head p{color:rgba(255,255,255,.68);font-size:14.5px;max-width:62ch}
+.head .datos{display:flex;gap:26px;flex-wrap:wrap;margin-top:18px;font-family:var(--mono);font-size:11.5px;color:rgba(255,255,255,.55)}
+.head .datos strong{color:#DDB06A;font-size:13px;font-weight:500}
+
+/* ── BARRA FIJA ── */
+.barra{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.97);border-bottom:1px solid var(--rule);backdrop-filter:blur(6px)}
+.barra-in{max-width:880px;margin:0 auto;padding:11px 28px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.pista{flex:1;min-width:150px;height:7px;background:var(--rule);border-radius:4px;overflow:hidden}
+.relleno{height:100%;width:0;background:linear-gradient(90deg,var(--granate),var(--ocre));transition:width .35s ease}
+.marcador{font-family:var(--mono);font-size:12.5px;white-space:nowrap}
+.marcador b{font-weight:500}
+.reinicio{font-family:var(--mono);font-size:11px;color:var(--ink-faint);background:none;border:1px solid var(--rule);border-radius:5px;padding:5px 11px;cursor:pointer}
+.reinicio:hover{color:var(--ink);border-color:var(--ink-soft)}
+
+/* ── PESTAÑAS DE BLOQUE ── */
+.pestanas{max-width:880px;margin:0 auto;padding:0 28px 11px;display:flex;gap:7px;overflow-x:auto}
+.pest{flex:1;min-width:58px;background:none;border:1px solid var(--rule);border-radius:7px;padding:7px 6px 8px;cursor:pointer;font-family:var(--sans);text-align:center;color:var(--ink-faint);transition:border-color .2s,color .2s}
+.pest b{display:block;font-family:var(--mono);font-size:13px;font-weight:500;line-height:1.3}
+.pest span{display:block;font-size:10px;letter-spacing:.3px}
+.pest:hover{border-color:var(--ink-soft);color:var(--ink-soft)}
+.pest[aria-selected="true"]{background:var(--granate);border-color:var(--granate);color:#fff}
+.pest[aria-selected="true"] span{color:rgba(255,255,255,.65)}
+.pest.hecho:not([aria-selected="true"]){border-color:var(--ok);color:var(--ok)}
+
+/* ── CUERPO ── */
+main{max-width:880px;margin:0 auto;padding:30px 28px 70px}
+.bloque[hidden]{display:none}
+.bloque-cab{border-left:3px solid var(--ocre);padding-left:15px;margin-bottom:26px}
+.bloque-cab .n{font-family:var(--mono);font-size:11px;letter-spacing:1.4px;color:var(--ocre)}
+.bloque-cab h2{font-family:var(--serif);font-size:24px;font-weight:600;line-height:1.25;margin-top:5px}
+
+.p{background:var(--white);border:1px solid var(--rule);border-radius:11px;padding:21px 22px;margin-bottom:17px}
+.p-cab{display:flex;gap:11px;align-items:baseline;margin-bottom:13px}
+.p-num{font-family:var(--mono);font-size:12px;color:var(--ink-faint);padding-top:2px}
+.enun{font-size:16.5px;line-height:1.5;font-weight:500}
+.aviso{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:1.1px;color:var(--granate);background:#F6ECEE;border-radius:4px;padding:3px 8px;margin-bottom:11px}
+.ops{display:flex;flex-direction:column;gap:8px}
+.op{display:flex;gap:11px;align-items:flex-start;border:1px solid var(--rule);border-radius:8px;padding:11px 13px;cursor:pointer;background:var(--white);text-align:left;font:inherit;color:inherit;line-height:1.45;transition:border-color .18s,background .18s}
+.op:hover:not(.bloqueada){border-color:var(--granate-2)}
+.op .letra{font-family:var(--mono);font-size:12.5px;color:var(--ink-faint);padding-top:2px;min-width:14px}
+.op.marcada{border-color:var(--granate);background:#FAF2F4}
+.op.marcada .letra{color:var(--granate)}
+.op.ok{border-color:var(--ok);background:var(--ok-claro)}
+.op.ok .letra{color:var(--ok)}
+.op.mal{border-color:var(--mal);background:var(--mal-claro)}
+.op.mal .letra{color:var(--mal)}
+.op.bloqueada{cursor:default}
+.comprobar{margin-top:11px;font-family:var(--sans);font-size:13.5px;font-weight:500;color:#fff;background:var(--granate);border:0;border-radius:7px;padding:9px 17px;cursor:pointer}
+.comprobar:hover{background:var(--granate-2)}
+.comprobar:disabled{background:var(--rule);color:var(--ink-faint);cursor:default}
+.retro{margin-top:13px;padding:12px 14px;border-radius:8px;font-size:14.5px;line-height:1.5}
+.retro b{font-weight:600;display:block;margin-bottom:3px}
+.retro.ok{background:var(--ok-claro);color:#1E4B37;border-left:3px solid var(--ok)}
+.retro.mal{background:var(--mal-claro);color:#6E1519;border-left:3px solid var(--mal)}
+
+.nav{display:flex;justify-content:space-between;gap:12px;margin-top:26px}
+.nav button{font-family:var(--sans);font-size:14px;font-weight:500;border-radius:8px;padding:11px 20px;cursor:pointer;border:1px solid var(--granate);background:var(--white);color:var(--granate)}
+.nav button:hover{background:#F6EFF1}
+.nav .avanzar{background:var(--granate);color:#fff}
+.nav .avanzar:hover{background:var(--granate-2)}
+.nav button[hidden]{display:none}
+
+/* ── RESUMEN ── */
+#resumen{display:none;background:var(--white);border:1px solid var(--rule);border-top:4px solid var(--ocre);border-radius:11px;padding:30px 26px;margin-top:8px}
+#resumen.visible{display:block}
+#resumen h2{font-family:var(--serif);font-size:26px;font-weight:600}
+.nota{font-family:var(--mono);font-size:40px;font-weight:500;margin:14px 0 4px;color:var(--granate)}
+.nota span{font-size:19px;color:var(--ink-faint)}
+.veredicto{font-size:16px;color:var(--ink-soft);max-width:60ch}
+.repasar{margin-top:22px;background:var(--ocre-claro);border-left:3px solid var(--ocre);border-radius:0 8px 8px 0;padding:16px 18px}
+.repasar h3{font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:.3px;margin-bottom:9px}
+.repasar ul{margin:0;padding-left:19px;font-size:14.5px;line-height:1.75;color:var(--ink-soft)}
+.pie{max-width:880px;margin:0 auto;padding:0 28px 46px;font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+@media(max-width:620px){
+  .head{padding:26px 20px 24px}
+  .barra-in,.pestanas,main,.pie{padding-left:18px;padding-right:18px}
+  .pest span{display:none}
+  .p{padding:18px 16px}
+}
+</style>
+</head>
+<body>
+
+<header class="head">
+  <div class="head-in">
+    <p class="curso">2.º Bachillerato · Historia de España · Bloque B1</p>
+    <h1>El reinado de Fernando VII<br>y la cuestión sucesoria</h1>
+    <p>Comprueba lo que has entendido del tema. Elige una opción y recibirás la corrección al instante, con la respuesta correcta y el porqué.</p>
+    <div class="datos">
+      <span><strong>30</strong> preguntas</span>
+      <span><strong>5</strong> bloques</span>
+      <span><strong>1814-1833</strong></span>
+    </div>
+  </div>
+</header>
+
+<div class="barra">
+  <div class="barra-in">
+    <div class="pista"><div class="relleno" id="relleno"></div></div>
+    <p class="marcador"><b id="respondidas">0</b>/30 respondidas · <b id="aciertos">0</b> aciertos</p>
+    <button class="reinicio" id="reinicio">Empezar de nuevo</button>
+  </div>
+  <div class="pestanas" role="tablist" id="pestanas"></div>
+</div>
+
+<main>
+  <div id="bloques"></div>
+  <section id="resumen" aria-live="polite">
+    <h2>Resultado</h2>
+    <p class="nota"><span id="nAciertos">0</span> <span>de 30</span></p>
+    <p class="veredicto" id="veredicto"></p>
+    <div class="repasar" id="repasar"></div>
+    <div class="nav" style="justify-content:flex-start">
+      <button id="otraVez">Repetir el cuestionario</button>
+    </div>
+  </section>
+</main>
+
+<p class="pie">Elaborado a partir del tema T3 del Bloque B1. Colegio El Valle.</p>
+
+<script>
+const BLOQUES = [
+  {t:"La Restauración y el golpe fernandino", r:"1814"},
+  {t:"El Sexenio Absolutista", r:"1814-1820"},
+  {t:"El Trienio Liberal", r:"1820-1823"},
+  {t:"División del liberalismo y fin del Trienio", r:"1822-1823"},
+  {t:"La Década Ominosa y la cuestión sucesoria", r:"1823-1833"}
+];
+
+const PREGUNTAS = [
+/* BLOQUE 1 */
+{b:0,e:"¿Qué se proponían las grandes potencias en el Congreso de Viena (1814-15)?",
+ o:["Reorganizar el mapa de Europa restableciendo los regímenes absolutistas destruidos por las ideas revolucionarias francesas",
+    "Extender los principios liberales de la Revolución francesa a toda Europa",
+    "Repartirse las colonias americanas emancipadas",
+    "Crear una alianza militar contra Inglaterra"],
+ ok:[0], x:"La Restauración europea es el marco que explica el regreso del absolutismo en España.",
+ tema:"el Congreso de Viena y la Restauración europea"},
+
+{b:0,e:"¿Qué permitió el regreso de Fernando VII a España?",
+ o:["La Constitución de 1812, que lo llamaba al trono",
+    "El tratado de Valençay (1813), por el que Napoleón le devolvió la corona",
+    "Una votación de las Cortes de Cádiz en 1814",
+    "El Manifiesto de los Persas"],
+ ok:[1], x:"Su llegada supuso el fin de las reformas liberales de Cádiz y el restablecimiento de la monarquía absoluta entre 1814 y 1820.",
+ tema:"el tratado de Valençay y el regreso del rey"},
+
+{b:0,e:"¿Qué hizo el rey al llegar a España en 1814, en lugar de dirigirse a Madrid como exigía la junta de gobierno gaditana?",
+ o:["Embarcó hacia América para asegurar las colonias",
+    "Convocó inmediatamente nuevas Cortes en Valencia",
+    "Recorrió diversas provincias españolas para valorar el estado de ánimo de los españoles",
+    "Se retiró a Aranjuez a la espera de los acontecimientos"],
+ ok:[2], x:"Ese recorrido le sirvió para medir sus apoyos antes de decidir qué hacer con la Constitución.",
+ tema:"el regreso de Fernando VII y su recorrido por las provincias"},
+
+{b:0,e:"¿Qué expresaba el grito de «Vivan las Caenas» con que fue recibido el rey?",
+ o:["La exigencia popular de que jurase la Constitución de 1812",
+    "La protesta de los liberales ante el regreso del monarca",
+    "El rechazo campesino a los nuevos impuestos",
+    "La idea de que el regreso del rey ponía fin a todas las desgracias y males causados por la costosa guerra contra los franceses"],
+ ok:[3], x:"Buena parte de la población identificaba la guerra con el desastre y al rey con la vuelta al orden anterior.",
+ tema:"el significado del grito «Vivan las Caenas»"},
+
+{b:0,doble:true,e:"Señala las dos afirmaciones correctas sobre el Manifiesto de los Persas.",
+ o:["Fue firmado por 69 diputados de las Cortes el 12 de abril de 1814",
+    "Pedían al rey la supresión de la Constitución de 1812 y de todos los decretos aprobados por las Cortes",
+    "Lo redactaron los liberales exaltados seguidores de Riego",
+    "Proclamaba la soberanía nacional y la división de poderes"],
+ ok:[0,1], x:"Lo entregaron diputados realistas tras la llegada del rey a Valencia: su objetivo era la vuelta al Antiguo Régimen absolutista.",
+ tema:"el Manifiesto de los Persas"},
+
+{b:0,e:"¿Qué fue el Real Decreto de Valencia del 4 de mayo de 1814?",
+ o:["El golpe de estado fernandino: anulaba todas las reformas aprobadas en las Cortes de Cádiz, incluida la Constitución de 1812",
+    "El decreto por el que el rey juraba la Constitución de 1812",
+    "La convocatoria de unas nuevas Cortes estamentales",
+    "El texto que reconocía la independencia de las colonias americanas"],
+ ok:[0], x:"Desde ese decreto arranca un proceso de represión de las ideas liberales y de persecución de los políticos de esa ideología.",
+ tema:"el Real Decreto de Valencia y el golpe fernandino"},
+
+/* BLOQUE 2 */
+{b:1,e:"¿Qué medidas en materia religiosa incluyó el Real Decreto de 1814?",
+ o:["La eliminación de la Inquisición y la expulsión de los jesuitas",
+    "La reimplantación de la Inquisición y el regreso de los jesuitas, expulsados por Carlos III",
+    "La proclamación de la libertad de cultos",
+    "La desamortización de los bienes del clero regular"],
+ ok:[1], x:"El decreto restituyó las instituciones del Antiguo Régimen que Cádiz había desmontado.",
+ tema:"la Inquisición y los jesuitas en el decreto de 1814"},
+
+{b:1,e:"¿Qué ocurrió con el régimen fiscal y con la Mesta tras el decreto?",
+ o:["Se mantuvo el sistema fiscal diseñado en Cádiz y se disolvió la Mesta",
+    "Se implantó un impuesto único sobre la renta y la Mesta pasó a depender de las Cortes",
+    "Se volvió al régimen fiscal absolutista, con los privilegios feudales de los señores, y se devolvieron a la Mesta sus privilegios",
+    "Se suprimieron todos los privilegios estamentales en materia fiscal"],
+ ok:[2], x:"Junto a ello se eliminó la libertad de prensa y se volvió al sistema jurídico absolutista.",
+ tema:"la vuelta al régimen fiscal absolutista y los privilegios de la Mesta"},
+
+{b:1,e:"¿Cuál fue la consecuencia política de fondo de la restauración absolutista?",
+ o:["Los españoles dejaban de ser ciudadanos, como reconocía la primera Constitución, para volver a ser súbditos",
+    "Se mantuvieron los derechos individuales reconocidos en 1812",
+    "Las Cortes pasaron a compartir el poder legislativo con el rey",
+    "Se amplió el sufragio a todos los varones mayores de 25 años"],
+ ok:[0], x:"Ciudadano frente a súbdito: ese es el cambio de estatus que resume el retroceso de 1814.",
+ tema:"de ciudadanos a súbditos"},
+
+{b:1,e:"¿Cómo gobernó Fernando VII entre 1814 y 1820?",
+ o:["Con un gabinete estable y un programa reformista definido",
+    "Bajo los preceptos del absolutismo, de forma errática y con numerosos cambios de ministros",
+    "Compartiendo el poder con una Regencia designada por las Cortes",
+    "Delegando el gobierno en el duque de Angulema"],
+ ok:[1], x:"La inestabilidad gubernamental es uno de los rasgos que definen el sexenio.",
+ tema:"la inestabilidad del gobierno en el sexenio absolutista"},
+
+{b:1,e:"¿Qué factores explican la quiebra financiera del Estado tras la guerra?",
+ o:["Únicamente el coste de mantener el ejército en América",
+    "La desamortización de las tierras de la Iglesia y la caída de la recaudación",
+    "El exceso de gasto en obras públicas e industria",
+    "La destrucción de ciudades, caminos, fábricas, agricultura y ganadería, la pérdida del mercado americano y la política inmovilista del rey"],
+ ok:[3], x:"La pérdida del mercado americano venía de atrás, desde Trafalgar; el inmovilismo del rey retrasó aún más el desarrollo industrial.",
+ tema:"las causas de la quiebra financiera del Estado"},
+
+{b:1,e:"¿Cómo respondieron los liberales a la represión del sexenio?",
+ o:["Reuniéndose en asociaciones clandestinas y sociedades secretas y promoviendo pronunciamientos fallidos, como los de Espoz y Mina en Pamplona, Díaz Porlier en La Coruña o Lacy en Barcelona",
+    "Exiliándose en bloque a América sin presentar resistencia",
+    "Pactando con el rey la convocatoria de Cortes estamentales",
+    "Apoyando la candidatura de don Carlos al trono"],
+ ok:[0], x:"El descontento se extendía entre campesinos, burgueses, obreros y militares: el pronunciamiento se convierte en el instrumento político del liberalismo.",
+ tema:"la conspiración liberal y los pronunciamientos fallidos"},
+
+/* BLOQUE 3 */
+{b:2,e:"¿Dónde y en qué circunstancias se produjo el pronunciamiento de Riego?",
+ o:["En Madrid, al frente de la Milicia Nacional",
+    "En Cabezas de San Juan (Sevilla), sublevando a las tropas acantonadas para sofocar los problemas americanos, a favor de la Constitución de 1812",
+    "En Urgel, creando un gobierno alternativo al de Madrid",
+    "En Cádiz, durante el sitio francés de la ciudad"],
+ ok:[1], x:"Tras el pronunciamiento se produjo una reacción en cadena de otras guarniciones peninsulares.",
+ tema:"el pronunciamiento de Riego en Cabezas de San Juan"},
+
+{b:2,e:"¿Qué hizo Fernando VII el 9 de marzo de 1820?",
+ o:["Juró el régimen constitucional, es decir, aceptó un Gobierno liberal que recuperase las reformas iniciadas por el gobierno gaditano",
+    "Publicó la Pragmática Sanción",
+    "Disolvió las Cortes y restableció la Inquisición",
+    "Pidió la intervención de la Santa Alianza"],
+ ok:[0], x:"El juramento fue forzado por las circunstancias: desde el primer momento el rey conspiró contra el régimen que acababa de jurar.",
+ tema:"el juramento de la Constitución el 9 de marzo de 1820"},
+
+{b:2,e:"¿En qué contexto europeo se inscribe el Trienio Liberal español?",
+ o:["En el de las revoluciones liberales de 1820 en Europa",
+    "En el de las revoluciones de 1848",
+    "En el de la unificación de Italia y Alemania",
+    "En el de las guerras napoleónicas"],
+ ok:[0], x:"España no es un caso aislado: el ciclo revolucionario de 1820 recorre varios países europeos.",
+ tema:"el Trienio y las revoluciones liberales de 1820"},
+
+{b:2,doble:true,e:"Señala las dos medidas aprobadas durante el Trienio Liberal.",
+ o:["La supresión de los señoríos",
+    "La devolución a la Mesta de sus privilegios",
+    "La abolición de los gremios",
+    "El restablecimiento del Tribunal de la Inquisición"],
+ ok:[0,2], x:"El gobierno liberal restauró gran parte de las reformas de Cádiz, empezando por el restablecimiento de la propia Constitución de 1812.",
+ tema:"las reformas del Trienio Liberal"},
+
+{b:2,e:"¿Por qué el gobierno del Trienio adoptó una política claramente anticlerical?",
+ o:["Porque pretendía implantar la libertad de cultos en España",
+    "Porque la Iglesia había apoyado el pronunciamiento de Riego",
+    "Porque buscaba debilitar a una institución contraria al desmantelamiento del Antiguo Régimen",
+    "Porque el papado había reconocido a don Carlos como heredero"],
+ ok:[2], x:"Se eliminó la Inquisición, se expulsó a los jesuitas desamortizando sus bienes y se redujo el diezmo. El enfrentamiento con la Iglesia será un elemento clave de la revolución liberal española.",
+ tema:"el anticlericalismo del Trienio y el choque con la Iglesia"},
+
+{b:2,e:"Además de las reformas fiscales y militares, ¿qué institución armada se reconstruyó durante el Trienio?",
+ o:["La Milicia Nacional, dentro de la modernización política y administrativa iniciada en Cádiz",
+    "El Tribunal de la Inquisición",
+    "Las partidas guerrilleras realistas",
+    "La Guardia Real como cuerpo de élite del rey"],
+ ok:[0], x:"La Milicia Nacional, nacida en la Constitución de 1812, es el brazo armado del Estado liberal frente a la reacción absolutista.",
+ tema:"la reconstrucción de la Milicia Nacional"},
+
+/* BLOQUE 4 */
+{b:3,e:"¿Qué defendían los doceañistas?",
+ o:["La vuelta al absolutismo sin condiciones",
+    "El sufragio universal masculino y la Constitución del 12 en su versión más radical",
+    "El mantenimiento literal de la Constitución de 1812 sin ninguna reforma",
+    "Una reforma de la Constitución de 1812, en la que habían participado, para limitar la soberanía nacional mediante el sufragio censitario"],
+ ok:[3], x:"Argüelles, Calatrava o Martínez de la Rosa encabezan esta corriente, que a partir de 1833 serán los moderados.",
+ tema:"los doceañistas y el sufragio censitario"},
+
+{b:3,e:"¿Qué caracterizaba a los veinteañistas o exaltados?",
+ o:["Eran jóvenes seguidores de Riego que defendían la Constitución del 12 en su versión más radical y el sufragio universal masculino",
+    "Eran antiguos diputados de Cádiz partidarios de limitar la soberanía nacional",
+    "Eran absolutistas moderados dispuestos a colaborar con el rey",
+    "Eran partidarios de don Carlos y del absolutismo más radical"],
+ ok:[0], x:"Mendizábal y Alcalá Galiano son sus nombres destacados: a partir de 1833 serán los progresistas.",
+ tema:"los veinteañistas o exaltados"},
+
+{b:3,e:"¿Qué consecuencia a largo plazo tuvo esta división entre liberales?",
+ o:["La desaparición del liberalismo como fuerza política",
+    "La fractura del liberalismo español entre moderados y progresistas",
+    "La unión de los liberales con los absolutistas moderados",
+    "El abandono definitivo de la Constitución de 1812 como referente"],
+ ok:[1], x:"Esa fractura marcará toda la política española del siglo XIX, desde la regencia de María Cristina en adelante.",
+ tema:"la fractura entre moderados y progresistas"},
+
+{b:3,e:"¿Cómo actuó Fernando VII durante el Trienio frente al gobierno liberal?",
+ o:["Colaboró lealmente con el gobierno que había jurado",
+    "Se retiró de la vida política hasta 1823",
+    "Paralizó cuantas leyes pudo recurriendo al derecho de veto que le otorgaba la Constitución y conspiró buscando la intervención de las potencias absolutistas",
+    "Encabezó personalmente las partidas realistas en Cataluña"],
+ ok:[2], x:"Había aceptado el régimen forzado por las circunstancias; además alentó pronunciamientos y sublevaciones absolutistas.",
+ tema:"la oposición de la monarquía durante el Trienio"},
+
+{b:3,doble:true,e:"Señala las dos afirmaciones correctas sobre la contrarrevolución realista.",
+ o:["Se concretó en partidas de campesinos muy influenciados por la Iglesia en Navarra, País Vasco, Aragón y Cataluña",
+    "La oposición absolutista creó en 1822 la Regencia de Urgel, un gobierno alternativo al liberal de Madrid",
+    "Fue dirigida por los veinteañistas seguidores de Riego",
+    "Se organizó desde la Milicia Nacional de las grandes ciudades"],
+ ok:[0,1], x:"Urgel, cerca de la frontera francesa, se convierte en el símbolo de un poder absolutista paralelo dentro de España.",
+ tema:"la contrarrevolución realista y la Regencia de Urgel"},
+
+{b:3,e:"¿Cómo terminó el Trienio Liberal?",
+ o:["Con la renuncia voluntaria del gobierno liberal ante la crisis económica",
+    "Con la victoria de los exaltados sobre los doceañistas y la proclamación de una república",
+    "Con la decisión de la Santa Alianza en el Congreso de Verona (1822) de intervenir militarmente y el envío de los Cien Mil Hijos de San Luis, al mando del duque de Angulema, que restauraron a Fernando VII como monarca absoluto",
+    "Con un acuerdo entre Fernando VII y las Cortes para reformar la Constitución"],
+ ok:[2], x:"Francia, Prusia e Inglaterra respaldaron la expedición; Angulema era primo del propio Fernando VII.",
+ tema:"el Congreso de Verona y los Cien Mil Hijos de San Luis"},
+
+/* BLOQUE 5 */
+{b:4,e:"¿Qué hizo Fernando VII en 1823, al recuperar el poder absoluto?",
+ o:["Publicó un decreto que anulaba toda la labor legislativa del Trienio y reanudó la represión de los primeros años del reinado",
+    "Mantuvo en vigor las reformas del Trienio para no irritar a las potencias",
+    "Convocó Cortes estamentales para legitimar su poder",
+    "Abdicó en su hermano don Carlos"],
+ ok:[0], x:"La represión se materializó en ejecuciones sumarias —Riego, el Empecinado, Torrijos, Mariana Pineda— y en el exilio a Francia, como el de Goya, y a Gran Bretaña.",
+ tema:"la anulación de la obra del Trienio y la represión de 1823"},
+
+{b:4,e:"¿En qué se diferenció la vuelta al absolutismo de 1823 de la de 1814?",
+ o:["En que esta vez el rey juró de nuevo la Constitución de 1812",
+    "En que el absolutismo se restableció solo parcialmente, introduciendo mejoras para lograr la colaboración de antiguos ilustrados y liberales moderados",
+    "En que se devolvió el poder a las Juntas provinciales",
+    "En que se mantuvo la Milicia Nacional como garantía del orden"],
+ ok:[1], x:"Era evidente que había que introducir cambios para sostener el Antiguo Régimen: de ahí la creación del Consejo de Ministros (1823) y del Ministerio de Fomento (1832).",
+ tema:"el reformismo moderado de la Década Ominosa"},
+
+{b:4,doble:true,e:"Señala las dos medidas económicas de la Década Ominosa.",
+ o:["Una política de autarquía: limitar al máximo las importaciones mediante aranceles y favorecer las exportaciones",
+    "La desamortización de las tierras de la Iglesia",
+    "La elaboración, por primera vez, de unos Presupuestos Generales del Estado",
+    "La supresión de la Bolsa de Madrid y del Banco Real de San Fernando"],
+ ok:[0,2], x:"A ello se sumaron medidas de liberalización: el código de Comercio, el Banco Real de San Fernando y la creación de la Bolsa de Madrid (1831).",
+ tema:"la política económica de la Década Ominosa"},
+
+{b:4,e:"¿Quiénes eran los realistas puros, «ultras» o «apostólicos»?",
+ o:["Los liberales moderados que aceptaron colaborar con el rey",
+    "Los antiguos ilustrados incorporados al gobierno tras 1823",
+    "Los militares exiliados en Gran Bretaña",
+    "Los partidarios del absolutismo más radical, que acabaron apoyando la candidatura al trono de don Carlos, hermano del rey"],
+ ok:[3], x:"La tímida moderación del rey los empujó a radicalizarse: desde 1826 don Carlos conspiraba abiertamente por la Corona.",
+ tema:"los realistas puros o apostólicos y don Carlos"},
+
+{b:4,e:"¿Qué estableció la Pragmática Sanción de 1830?",
+ o:["Anulaba la Ley Sálica, restableciendo el derecho de sucesión tradicional de la monarquía castellana, de modo que las mujeres podían reinar y don Carlos quedaba excluido del trono",
+    "Confirmaba la Ley Sálica y reconocía a don Carlos como heredero",
+    "Restablecía la Constitución de 1812",
+    "Creaba la regencia de María Cristina en vida del rey"],
+ ok:[0], x:"Fernando VII no había tenido descendencia de sus tres matrimonios anteriores; en 1829 casó con su sobrina María Cristina de Borbón-Dos Sicilias. La Pragmática supuso el triunfo de los liberales frente a los realistas.",
+ tema:"la Pragmática Sanción de 1830 y la Ley Sálica"},
+
+{b:4,e:"¿Qué ocurrió al morir Fernando VII en 1833?",
+ o:["Don Carlos fue proclamado rey con el nombre de Carlos V sin oposición",
+    "Se restableció de inmediato la Constitución de 1812",
+    "Se inició la regencia de María Cristina y estalló el conflicto sucesorio con la primera Guerra Carlista",
+    "Las Cortes designaron un Consejo de Regencia de cinco miembros"],
+ ok:[2], x:"El conflicto enfrentaba a los absolutistas más intransigentes, agrupados en torno a don Carlos, con los liberales y realistas moderados que apoyaban a la futura Isabel II y a su madre.",
+ tema:"la muerte del rey, la regencia y la primera Guerra Carlista"}
+];
+
+const LETRAS = ['a','b','c','d'];
+const estado = PREGUNTAS.map(() => ({resuelta:false, acierto:false, marcadas:[]}));
+
+const elPest = document.getElementById('pestanas');
+const elBloques = document.getElementById('bloques');
+
+/* ── Construcción ── */
+BLOQUES.forEach((bl, i) => {
+  const t = document.createElement('button');
+  t.className = 'pest'; t.type = 'button'; t.setAttribute('role','tab');
+  t.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+  t.innerHTML = '<b>' + (i+1) + '</b><span>' + bl.r + '</span>';
+  t.addEventListener('click', () => irA(i));
+  elPest.appendChild(t);
+
+  const sec = document.createElement('section');
+  sec.className = 'bloque'; sec.hidden = i !== 0;
+  sec.innerHTML = '<div class="bloque-cab"><p class="n">Bloque ' + (i+1) + ' de 5</p><h2>' + bl.t + '</h2></div>';
+  elBloques.appendChild(sec);
+});
+
+PREGUNTAS.forEach((p, idx) => {
+  const sec = elBloques.children[p.b];
+  const card = document.createElement('article');
+  card.className = 'p'; card.id = 'p' + idx;
+
+  const cab = document.createElement('div');
+  cab.className = 'p-cab';
+  cab.innerHTML = '<span class="p-num">' + (idx+1) + '</span><p class="enun">' + p.e + '</p>';
+  card.appendChild(cab);
+
+  if (p.doble) {
+    const av = document.createElement('p');
+    av.className = 'aviso'; av.textContent = 'Doble respuesta: marca las dos opciones';
+    card.appendChild(av);
+  }
+
+  const ops = document.createElement('div');
+  ops.className = 'ops';
+  p.o.forEach((texto, j) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'op';
+    b.innerHTML = '<span class="letra">' + LETRAS[j] + '</span><span>' + texto + '</span>';
+    b.addEventListener('click', () => elegir(idx, j));
+    ops.appendChild(b);
+  });
+  card.appendChild(ops);
+
+  if (p.doble) {
+    const btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'comprobar'; btn.textContent = 'Comprobar respuesta';
+    btn.disabled = true;
+    btn.addEventListener('click', () => corregir(idx));
+    card.appendChild(btn);
+  }
+
+  const r = document.createElement('div');
+  r.className = 'retro'; r.hidden = true;
+  card.appendChild(r);
+  sec.appendChild(card);
+});
+
+BLOQUES.forEach((bl, i) => {
+  const sec = elBloques.children[i];
+  const nav = document.createElement('div');
+  nav.className = 'nav';
+  const atras = document.createElement('button');
+  atras.type = 'button'; atras.textContent = 'Bloque anterior';
+  atras.hidden = i === 0;
+  atras.addEventListener('click', () => irA(i-1));
+  const alante = document.createElement('button');
+  alante.type = 'button'; alante.className = 'avanzar';
+  alante.textContent = i === BLOQUES.length - 1 ? 'Ver resultado' : 'Siguiente bloque';
+  alante.addEventListener('click', () => i === BLOQUES.length - 1 ? verResultado() : irA(i+1));
+  nav.appendChild(atras); nav.appendChild(alante);
+  sec.appendChild(nav);
+});
+
+/* ── Interacción ── */
+function elegir(idx, j) {
+  const e = estado[idx];
+  if (e.resuelta) return;
+  const p = PREGUNTAS[idx];
+  const card = document.getElementById('p' + idx);
+  const botones = card.querySelectorAll('.op');
+
+  if (!p.doble) {
+    e.marcadas = [j];
+    corregir(idx);
+    return;
+  }
+  const pos = e.marcadas.indexOf(j);
+  if (pos >= 0) e.marcadas.splice(pos, 1);
+  else if (e.marcadas.length < 2) e.marcadas.push(j);
+  botones.forEach((b, k) => b.classList.toggle('marcada', e.marcadas.indexOf(k) >= 0));
+  card.querySelector('.comprobar').disabled = e.marcadas.length !== 2;
+}
+
+function corregir(idx) {
+  const e = estado[idx];
+  if (e.resuelta) return;
+  const p = PREGUNTAS[idx];
+  const card = document.getElementById('p' + idx);
+  const botones = card.querySelectorAll('.op');
+
+  const acierto = e.marcadas.length === p.ok.length && p.ok.every(k => e.marcadas.indexOf(k) >= 0);
+  e.resuelta = true; e.acierto = acierto;
+
+  botones.forEach((b, k) => {
+    b.classList.remove('marcada');
+    b.classList.add('bloqueada');
+    b.disabled = true;
+    if (p.ok.indexOf(k) >= 0) b.classList.add('ok');
+    else if (e.marcadas.indexOf(k) >= 0) b.classList.add('mal');
+  });
+  if (p.doble) card.querySelector('.comprobar').remove();
+
+  const r = card.querySelector('.retro');
+  const correctas = p.ok.map(k => LETRAS[k]).join(' y ');
+  r.hidden = false;
+  r.className = 'retro ' + (acierto ? 'ok' : 'mal');
+  r.innerHTML = '<b>' + (acierto ? 'Correcto.' : 'No es la respuesta.') + '</b>' +
+                (acierto ? '' : 'La ' + (p.ok.length > 1 ? 'respuesta correcta son las opciones ' : 'respuesta correcta es la opción ') + correctas + '. ') + p.x;
+
+  actualizar();
+}
+
+function actualizar() {
+  const hechas = estado.filter(e => e.resuelta).length;
+  const bien = estado.filter(e => e.acierto).length;
+  document.getElementById('respondidas').textContent = hechas;
+  document.getElementById('aciertos').textContent = bien;
+  document.getElementById('relleno').style.width = (hechas / PREGUNTAS.length * 100) + '%';
+  BLOQUES.forEach((bl, i) => {
+    const total = PREGUNTAS.filter(p => p.b === i).length;
+    const listas = PREGUNTAS.filter((p, k) => p.b === i && estado[k].resuelta).length;
+    elPest.children[i].classList.toggle('hecho', listas === total);
+  });
+}
+
+function irA(i) {
+  Array.from(elBloques.children).forEach((s, k) => { s.hidden = k !== i; });
+  Array.from(elPest.children).forEach((t, k) => t.setAttribute('aria-selected', k === i ? 'true' : 'false'));
+  document.getElementById('resumen').classList.remove('visible');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function verResultado() {
+  const bien = estado.filter(e => e.acierto).length;
+  const sin = estado.filter(e => !e.resuelta).length;
+  document.getElementById('nAciertos').textContent = bien;
+
+  let msg;
+  if (bien >= 28) msg = 'Dominas el tema. Estás en condiciones de desarrollarlo por escrito en el examen.';
+  else if (bien >= 23) msg = 'Muy buen nivel. Solo te faltan matices de detalle.';
+  else if (bien >= 19) msg = 'Comprensión sólida, pero conviene repasar los puntos fallados antes de redactar el tema.';
+  else if (bien >= 13) msg = 'Base aceptable: necesitas una segunda lectura del tema, sobre todo de las tres etapas del reinado.';
+  else msg = 'Vuelve al tema con calma antes de repetir el cuestionario: falta asentar los hechos básicos.';
+  if (sin > 0) msg += ' Te quedan ' + sin + ' preguntas sin responder.';
+  document.getElementById('veredicto').textContent = msg;
+
+  const fallos = PREGUNTAS.filter((p, i) => estado[i].resuelta && !estado[i].acierto).map(p => p.tema);
+  const caja = document.getElementById('repasar');
+  if (fallos.length === 0 && sin === 0) {
+    caja.innerHTML = '<h3>Qué repasar</h3><p style="font-size:14.5px;color:var(--ink-soft)">No has fallado ninguna pregunta: el tema está asentado.</p>';
+  } else if (fallos.length === 0) {
+    caja.innerHTML = '<h3>Qué repasar</h3><p style="font-size:14.5px;color:var(--ink-soft)">De momento no has fallado nada. Termina las preguntas pendientes para tener el resultado completo.</p>';
+  } else {
+    caja.innerHTML = '<h3>Conviene repasar</h3><ul>' + fallos.map(f => '<li>' + f + '</li>').join('') + '</ul>';
+  }
+
+  Array.from(elBloques.children).forEach(s => { s.hidden = true; });
+  document.getElementById('resumen').classList.add('visible');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+document.getElementById('otraVez').addEventListener('click', reiniciar);
+document.getElementById('reinicio').addEventListener('click', reiniciar);
+
+function reiniciar() {
+  location.reload();
+}
+
+actualizar();
+</script>
+</body>
+</html>

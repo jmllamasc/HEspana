@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T3. El reinado de Fernando VII: la cuestión sucesoria · Practica con huecos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --fondo:#170f12;
+  --panel:#231519;
+  --panel2:#2c191f;
+  --tinta:#f1e8e9;
+  --suave:#c0a4a8;
+  --oro:#d9a441;
+  --acento:#b4555c;
+  --ok:#5bb183;
+  --mal:#e0756d;
+  --linea:rgba(192,164,168,.22);
+  --sombra:0 10px 30px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-padding-top:150px}
+body{
+  background:
+    radial-gradient(900px 500px at 12% -8%, rgba(180,85,92,.20), transparent 60%),
+    radial-gradient(700px 420px at 96% 4%, rgba(217,164,65,.12), transparent 60%),
+    var(--fondo);
+  color:var(--tinta);
+  font-family:'Inter',system-ui,sans-serif;
+  line-height:1.6;
+  padding-bottom:80px;
+}
+header{max-width:900px;margin:0 auto;padding:48px 22px 26px}
+.cejilla{
+  font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--oro);margin-bottom:12px;
+}
+h1{
+  font-family:'Fraunces',Georgia,serif;font-weight:600;line-height:1.15;
+  font-size:clamp(1.8rem,4.4vw,2.7rem);letter-spacing:-.01em;
+}
+h1 em{font-style:italic;color:var(--oro)}
+.entradilla{color:var(--suave);margin-top:14px;max-width:62ch;font-size:1.02rem}
+.datos{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.datos span{
+  font-family:'JetBrains Mono',monospace;font-size:.76rem;color:var(--suave);
+  border:1px solid var(--linea);border-radius:999px;padding:5px 12px;
+}
+.datos b{color:var(--tinta)}
+
+.barra{position:sticky;top:0;z-index:30;background:rgba(23,15,18,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--linea)}
+.barra-in{max-width:900px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.pista{flex:1 1 200px;height:7px;background:rgba(192,164,168,.16);border-radius:999px;overflow:hidden;min-width:140px}
+.relleno{height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--acento),var(--oro));transition:width .35s ease}
+.marcador{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--suave);white-space:nowrap}
+.marcador b{color:var(--tinta)}
+.botones{display:flex;gap:8px;flex-wrap:wrap}
+button{
+  font-family:'Inter',sans-serif;font-size:.84rem;font-weight:600;cursor:pointer;
+  border-radius:8px;padding:8px 14px;border:1px solid var(--linea);
+  background:transparent;color:var(--tinta);transition:all .18s ease;
+}
+button:hover{border-color:var(--acento);color:#fff}
+#comprobar{background:var(--acento);border-color:var(--acento);color:#190d10}
+#comprobar:hover{background:#c96a70}
+#soluciones:hover{border-color:var(--oro);color:var(--oro)}
+
+main{max-width:900px;margin:0 auto;padding:30px 22px 0}
+.apartado{
+  background:linear-gradient(180deg,var(--panel),rgba(35,21,25,.6));
+  border:1px solid var(--linea);border-radius:14px;
+  padding:24px 26px;margin-bottom:22px;box-shadow:var(--sombra);
+}
+.apartado h2{
+  font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:1.3rem;
+  display:flex;align-items:center;gap:12px;margin-bottom:6px;letter-spacing:-.01em;
+}
+.letra{
+  font-family:'JetBrains Mono',monospace;font-size:.82rem;font-weight:600;
+  width:30px;height:30px;flex:0 0 30px;border-radius:8px;display:grid;place-items:center;
+  background:rgba(217,164,65,.16);color:var(--oro);border:1px solid rgba(217,164,65,.35);
+}
+.crono{font-family:'JetBrains Mono',monospace;font-size:.74rem;color:var(--suave);margin:0 0 16px 42px}
+.esquema ul{list-style:none;margin:0;padding:0}
+.esquema > ul > li{
+  border-left:2px solid rgba(180,85,92,.45);padding-left:16px;margin:14px 0 14px 8px;
+}
+.esquema li{margin:7px 0}
+.esquema li ul{padding-left:18px;border-left:1px dashed rgba(192,164,168,.2);margin-top:6px}
+.esquema li ul li{color:var(--suave);font-size:.95rem}
+.esquema li ul li ul li{font-size:.9rem}
+.esquema b{color:var(--tinta);font-weight:600}
+.esquema i{color:var(--oro);font-style:italic}
+.flecha{font-family:'JetBrains Mono',monospace;color:var(--acento);padding:0 2px}
+
+.hueco{display:inline-flex;align-items:baseline;gap:6px;white-space:nowrap}
+input.h{
+  font-family:'JetBrains Mono',monospace;font-size:.86rem;color:var(--tinta);
+  background:rgba(180,85,92,.10);border:none;border-bottom:2px dotted var(--acento);
+  padding:2px 6px;border-radius:4px 4px 0 0;outline:none;min-width:70px;
+  transition:all .18s ease;
+}
+input.h::placeholder{color:rgba(192,164,168,.6);font-style:italic;font-size:.78rem}
+input.h:focus{background:rgba(180,85,92,.20);border-bottom-color:var(--oro)}
+input.h.bien{color:var(--ok);border-bottom:2px solid var(--ok);background:rgba(91,177,131,.12)}
+input.h.mal{color:var(--mal);border-bottom:2px solid var(--mal);background:rgba(224,117,109,.12)}
+input.h.revelado{color:var(--oro);border-bottom:2px solid var(--oro);background:rgba(217,164,65,.12)}
+.sol{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--mal);display:none}
+.sol.ver{display:inline}
+
+#resultado{display:none;max-width:900px;margin:10px auto 0;padding:0 22px}
+#resultado.ver{display:block}
+.tarjeta{
+  background:linear-gradient(180deg,var(--panel2),var(--panel));
+  border:1px solid rgba(217,164,65,.35);border-radius:14px;padding:28px;text-align:center;
+  box-shadow:var(--sombra);
+}
+.tarjeta h2{font-family:'Fraunces',serif;font-size:1.2rem;margin-bottom:10px}
+.nota{font-family:'JetBrains Mono',monospace;font-size:2.4rem;font-weight:600;color:var(--oro);line-height:1.1}
+.nota small{font-size:1rem;color:var(--suave);font-weight:400}
+.veredicto{color:var(--tinta);margin:12px auto 0;max-width:56ch}
+.lema{
+  margin-top:18px;padding-top:16px;border-top:1px solid var(--linea);
+  font-family:'Fraunces',serif;font-style:italic;color:var(--oro);font-size:1rem;
+}
+.pie{
+  max-width:900px;margin:34px auto 0;padding:0 22px;
+  font-family:'JetBrains Mono',monospace;font-size:.74rem;color:rgba(192,164,168,.65);text-align:center;
+}
+@media(max-width:620px){
+  header{padding-top:32px}
+  .apartado{padding:20px 16px}
+  .esquema li ul{padding-left:12px}
+  .barra-in{gap:10px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <p class="cejilla">Bloque B1 · La crisis del Antiguo Régimen (1788-1833)</p>
+  <h1>T3. El reinado de Fernando VII: <em>la cuestión sucesoria</em></h1>
+  <p class="entradilla">El esquema completo del tema, con los datos clave en blanco. Escribe en cada hueco y pulsa <b>Comprobar</b>: verde si aciertas, rojo con la solución si fallas. Se toleran tildes y mayúsculas.</p>
+  <div class="datos">
+    <span><b id="chipHuecos">0</b> huecos</span>
+    <span><b>5</b> apartados</span>
+    <span><b>1814-1833</b></span>
+  </div>
+</header>
+
+<div class="barra">
+  <div class="barra-in">
+    <div class="pista"><div class="relleno" id="relleno"></div></div>
+    <p class="marcador"><b id="rellenados">0</b>/<span id="total">0</span> rellenados · <b id="aciertos">0</b> aciertos</p>
+    <div class="botones">
+      <button id="comprobar">Comprobar</button>
+      <button id="soluciones">Ver soluciones</button>
+      <button id="reiniciar">Reiniciar</button>
+    </div>
+  </div>
+</div>
+
+<main>
+<div id="esquema">
+
+  <section class="apartado">
+    <h2><span class="letra">A</span> La Restauración del absolutismo y las tres etapas</h2>
+    <p class="crono">1813-1833</p>
+    <div class="esquema">
+      <ul>
+        <li>Tras las <b>Guerras Napoleónicas</b> <span class="flecha">→</span> periodo de <b>Restauración del Absolutismo</b>
+          <ul>
+            <li>Congreso de {{Viena|¿ciudad?}} ({{1814-1815;1814 1815|¿años?}}) <span class="flecha">→</span> restablecer el absolutismo en Europa</li>
+            <li>En España: tras el <b>Tratado de {{Valençay;Valencay|¿tratado?}}</b> (diciembre de {{1813|¿año?}}), Fernando VII pone fin a las reformas liberales y restablece la <b>Monarquía absoluta</b></li>
+          </ul>
+        </li>
+        <li>Durante los <b>20 años</b> de reinado se distinguen <b>tres etapas</b>:
+          <ul>
+            <li><b>1.</b> {{Sexenio Absolutista|¿etapa?}} ({{1814-1820;1814-20;1814 1820|¿años?}}) <span class="flecha">→</span> resolver los problemas con los instrumentos del <b>Antiguo Régimen</b>; inestabilidad del gobierno y alzamiento de la oposición liberal</li>
+            <li><b>2.</b> {{Trienio Liberal;Trienio Constitucional|¿etapa?}} ({{1820-1823;1820-23;1820 1823|¿años?}}) <span class="flecha">→</span> resolver los problemas con los instrumentos del <b>liberalismo</b>; programa reformista, división del liberalismo y oposición absolutista</li>
+            <li><b>3.</b> {{Década Ominosa;Decada Ominosa|¿etapa?}} ({{1823-1833;1823-33;1823 1833|¿años?}}) <span class="flecha">→</span> imposible volver al absolutismo puro <span class="flecha">⟶</span> <b>reformismo moderado</b>, represión de los liberales y, a su muerte, paso al liberalismo</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="apartado">
+    <h2><span class="letra">B</span> El Sexenio Absolutista</h2>
+    <p class="crono">1814-1820</p>
+    <div class="esquema">
+      <ul>
+        <li><b>Fernando VII regresa a España</b> ({{1814|¿año?}}) recorriendo varias ciudades para valorar los ánimos
+          <ul>
+            <li>Es recibido por los absolutistas al grito de <i>"¡Vivan las {{caenas;cadenas|¿qué?}}!"</i></li>
+            <li>Un grupo realista le entrega el <b>Manifiesto de los {{Persas|¿documento?}}</b> el {{18 de abril de 1814;18-04-1814|¿fecha?}} en {{Valencia|¿ciudad?}}
+              <ul>
+                <li>Firmado por {{69;sesenta y nueve|¿cuántos?}} diputados que piden la supresión de las Cortes y de la Constitución <span class="flecha">→</span> <b>vuelta al Antiguo Régimen</b></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><b>Golpe de Estado fernandino</b> <span class="flecha">→</span> el {{4 de mayo de 1814;4-05-1814|¿fecha?}} anula las reformas de las Cortes de Cádiz y la <b>Constitución de 1812</b>
+          <ul>
+            <li>Anulación del poder <b>legislativo</b></li>
+            <li>Medidas del real decreto: eliminación de la libertad de {{prensa;imprenta|¿libertad?}}; reimplantación de la {{Inquisición;Inquisicion|¿tribunal?}}; regreso de los {{jesuitas|¿orden?}} (expulsados por <b>Carlos III</b>); vuelta al <b>régimen fiscal absolutista</b> con los privilegios feudales de los señores; devolución de sus privilegios a la {{Mesta|¿institución?}}; vuelta al <b>sistema jurídico absolutista</b></li>
+            <li><span class="flecha">⟶</span> los españoles dejan de ser <b>ciudadanos</b> para volver a ser {{súbditos;subditos|¿condición?}}</li>
+          </ul>
+        </li>
+        <li><b>Situación económica muy mala</b> por la guerra <span class="flecha">→</span> <b>quiebra financiera</b> del Estado
+          <ul>
+            <li>Destrucción de ciudades, fábricas y calzadas, agricultura y ganadería</li>
+            <li>Pérdida del mercado {{americano|¿cuál?}} desde {{Trafalgar|¿batalla?}} (1805)</li>
+            <li>Gran retraso del desarrollo <b>industrial</b> por las medidas absolutistas</li>
+          </ul>
+        </li>
+        <li><b>Gran descontento</b> de campesinos, obreros, burgueses y militares
+          <ul>
+            <li>Respuesta liberal: asociaciones clandestinas, <b>sociedades secretas</b>, conspiraciones y {{pronunciamientos|¿tipo de golpe?}} militares</li>
+            <li>Militares que se pronuncian: {{Espoz y Mina|¿militar?}} (Pamplona), <b>Díaz Porlier</b> ({{La Coruña|¿ciudad?}}) y {{Lacy|¿militar?}} (Barcelona)</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="apartado">
+    <h2><span class="letra">C</span> El Trienio Liberal o Constitucional</h2>
+    <p class="crono">1820-1823</p>
+    <div class="esquema">
+      <ul>
+        <li>Insurrección del general {{Riego|¿militar?}} con las tropas acantonadas en {{Cabezas de San Juan|¿localidad?}} ({{Sevilla|¿provincia?}}), destinadas a sofocar los problemas americanos, <b>a favor de la C12</b>
+          <ul>
+            <li>Reacción en cadena de otros regimientos <span class="flecha">⟶</span> Fernando VII se ve obligado a <b>jurar la Constitución</b> el {{9 de marzo de 1820;9-03-1820|¿fecha?}}</li>
+            <li>Se forman un <b>gobierno liberal</b> y un <b>régimen constitucional</b></li>
+          </ul>
+        </li>
+        <li><b>Restauración de gran parte de las reformas de Cádiz:</b>
+          <ul>
+            <li>Restablecimiento de la <b>Constitución de 1812</b></li>
+            <li>Abolición de los {{gremios|¿institución?}} y supresión de los {{señoríos;senorios|¿institución?}}</li>
+            <li>Eliminación de la <b>Inquisición</b> y expulsión de los {{jesuitas|¿orden?}} con desamortización de sus bienes</li>
+            <li>Disminución del {{diezmo|¿impuesto?}} y nuevas formas fiscales y del ejército</li>
+            <li>Reconstrucción de la <b>{{Milicia Nacional|¿cuerpo?}}</b></li>
+          </ul>
+        </li>
+        <li>Las medidas debilitan a la <b>Iglesia</b> y los privilegios del Antiguo Régimen <span class="flecha">⟶</span> el <b>enfrentamiento con la Iglesia</b> es elemento clave de la revolución liberal española</li>
+        <li><b>Fractura entre los liberales:</b>
+          <ul>
+            <li><b>1.</b> {{Moderados|¿grupo?}} o {{doceañistas;doceanistas|¿apodo?}} (moderados a partir de 1833) <span class="flecha">→</span> monárquicos; pretenden modificar la C12 por radical; tendencia elitista (burguesía-nobleza); sufragio {{censitario|¿tipo?}}</li>
+            <li><b>2.</b> {{Exaltados|¿grupo?}} o {{veinteañistas;veinteanistas|¿apodo?}} (progresistas a partir de 1833) <span class="flecha">→</span> quieren acabar con el Antiguo Régimen; monarquía con <b>soberanía nacional</b>; defienden la C12; sufragio {{universal|¿tipo?}}</li>
+          </ul>
+        </li>
+        <li>Fernando VII utiliza el derecho de {{veto|¿derecho?}} que permitía la C12 <span class="flecha">⟶</span> conspira contra los gobiernos liberales
+          <ul>
+            <li>Alienta pronunciamientos y sublevaciones absolutistas (<b>Guardia Real</b>)</li>
+            <li>{{Regencia de Urgel|¿gobierno?}} ({{1822|¿año?}}) <span class="flecha">→</span> gobierno contrarrevolucionario realista paralelo, en Lérida</li>
+            <li>Partidas de campesinos apoyadas por la Iglesia en <b>Navarra, País Vasco, Cataluña y Aragón</b></li>
+          </ul>
+        </li>
+        <li><b>Fin del Trienio:</b> Congreso de {{Verona|¿ciudad?}} (1822) <span class="flecha">→</span> la <b>{{Santa Alianza|¿alianza?}}</b> acuerda la intervención
+          <ul>
+            <li>Llegada de los <b>{{Cien Mil Hijos de San Luis|¿ejército?}}</b> <span class="flecha">⟶</span> restauran en el trono absoluto a Fernando VII</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="apartado">
+    <h2><span class="letra">D</span> La Década Ominosa</h2>
+    <p class="crono">1823-1833</p>
+    <div class="esquema">
+      <ul>
+        <li>Fernando VII <b>restaura el absolutismo</b>
+          <ul>
+            <li>Publicación del <b>Decreto de anulación</b> de toda la labor del <b>Trienio Liberal</b></li>
+            <li>Represión de los cabecillas con ejecuciones y exilios: <b>Riego</b> (1823), el {{Empecinado|¿guerrillero?}} (1825), {{Torrijos|¿militar?}} ({{1831|¿año?}}) y {{Mariana Pineda|¿personaje?}} (1831); exilio de {{Goya|¿pintor?}} a Francia</li>
+          </ul>
+        </li>
+        <li>Restablecimiento <b>solo parcial</b> del absolutismo, con reformas para lograr la colaboración de <b>ilustrados y liberales moderados</b>
+          <ul>
+            <li><b>Cambios públicos:</b> creación del {{Consejo de Ministros|¿órgano?}} (1823) y del Ministerio de {{Fomento|¿ministerio?}}</li>
+            <li><b>Cambios económicos:</b> autoabastecimiento, limitación de las importaciones, expropiaciones y <b>presupuestos generales</b></li>
+            <li>Aparecen la <b>{{Bolsa de Madrid|¿institución?}}</b>, el Banco de Comercio y el <b>Banco Real de {{San Fernando|¿nombre?}}</b></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="apartado">
+    <h2><span class="letra">E</span> La cuestión sucesoria y el final del reinado</h2>
+    <p class="crono">1830-1833</p>
+    <div class="esquema">
+      <ul>
+        <li><b>Radicalización de los absolutistas</b>: realistas puros, ultras o {{apostólicos;apostolicos|¿nombre?}} <span class="flecha">→</span> apoyan a <b>Don Carlos</b> como sucesor</li>
+        <li><b>Crisis sucesoria</b> por la falta de descendencia de las tres anteriores esposas del rey
+          <ul>
+            <li>Casamiento con su sobrina {{María Cristina de Borbón;Maria Cristina de Borbon;María Cristina|¿reina?}} para garantizar la descendencia</li>
+            <li>Proclamación de la <b>{{Pragmática Sanción;Pragmatica Sancion|¿norma?}}</b> ({{1830|¿año?}})</li>
+            <li><span class="flecha">⟶</span> anula la <b>{{Ley Sálica;Ley Salica|¿ley?}}</b>, vigente desde {{Felipe V|¿rey?}} (1700), que impedía reinar a las mujeres según la tradición francesa</li>
+            <li>Exclusión del trono de <b>{{Carlos María Isidro;Carlos Maria Isidro;Don Carlos María Isidro|¿infante?}}</b>, hermano de Fernando VII</li>
+          </ul>
+        </li>
+        <li><b>Conflicto entre realistas y liberales</b>
+          <ul>
+            <li>Los absolutistas apoyan a <b>Don Carlos</b></li>
+            <li>Los liberales y los realistas moderados apoyan a la futura reina {{Isabel;Isabel II|¿heredera?}}</li>
+          </ul>
+        </li>
+        <li><b>Muerte de Fernando VII</b> ({{1833|¿año?}})
+          <ul>
+            <li>Inicio de la <b>regencia de María Cristina</b></li>
+            <li>Estalla la <b>1.ª {{Guerra Carlista|¿guerra?}}</b> ({{1833-1840;1833 1840|¿años?}})</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+</div>
+</main>
+
+<div id="resultado">
+  <div class="tarjeta">
+    <h2>Resultado</h2>
+    <p class="nota"><span id="nAciertos">0</span> <small>de <span id="nTotal">0</span></small></p>
+    <p class="veredicto" id="veredicto"></p>
+    <p class="lema">1814 Persas y golpe absolutista · 1820 Riego y Constitución · 1823 Cien Mil Hijos de San Luis · 1830 Pragmática Sanción · 1833 guerra civil.</p>
+  </div>
+</div>
+
+<p class="pie">Elaborado a partir del mapa mental del T3 · Bloque B1 · Historia de España, 2.º de Bachillerato</p>
+
+<script>
+(function(){
+  const cont = document.getElementById('esquema');
+  const SOL = [];
+  let i = 0;
+
+  cont.innerHTML = cont.innerHTML.replace(/\{\{([^{}]+?)\}\}/g, function(m, cuerpo){
+    const partes = cuerpo.split('|');
+    const alts = partes[0].split(';').map(function(s){ return s.trim(); }).filter(Boolean);
+    const pista = (partes[1] || '…').trim();
+    SOL.push(alts);
+    const ancho = Math.max(7, Math.min(24, alts[0].length + 1));
+    const idx = i++;
+    return '<span class="hueco"><input class="h" data-i="' + idx + '" size="' + ancho +
+           '" autocomplete="off" spellcheck="false" placeholder="' + pista +
+           '" aria-label="' + pista + '"><span class="sol" id="sol-' + idx + '"></span></span>';
+  });
+
+  const campos = Array.prototype.slice.call(document.querySelectorAll('input.h'));
+  const total = campos.length;
+  document.getElementById('total').textContent = total;
+  document.getElementById('nTotal').textContent = total;
+  document.getElementById('chipHuecos').textContent = total;
+
+  function normaliza(s){
+    return (s || '')
+      .toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9 ]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function esCorrecto(idx, valor){
+    const v = normaliza(valor);
+    if (!v) return false;
+    return SOL[idx].some(function(a){ return normaliza(a) === v; });
+  }
+
+  function actualizaProgreso(){
+    const llenos = campos.filter(function(c){ return c.value.trim() !== ''; }).length;
+    document.getElementById('rellenados').textContent = llenos;
+    document.getElementById('relleno').style.width = (llenos / total * 100) + '%';
+  }
+
+  function comprobar(){
+    let bien = 0;
+    campos.forEach(function(c){
+      const idx = +c.dataset.i;
+      const sol = document.getElementById('sol-' + idx);
+      c.classList.remove('bien', 'mal', 'revelado');
+      sol.classList.remove('ver');
+      if (esCorrecto(idx, c.value)) {
+        c.classList.add('bien');
+        bien++;
+      } else {
+        c.classList.add('mal');
+        sol.textContent = '→ ' + SOL[idx][0];
+        sol.classList.add('ver');
+      }
+    });
+    document.getElementById('aciertos').textContent = bien;
+    muestraResultado(bien);
+  }
+
+  function muestraResultado(bien){
+    const pct = Math.round(bien / total * 100);
+    let txt;
+    if (pct === 100)      txt = 'Perfecto. Tienes las tres etapas del reinado con sus fechas, protagonistas y medidas. Listo para desarrollar el tema completo.';
+    else if (pct >= 85)   txt = 'Muy bien. Dominas el reinado; repasa solo los huecos en rojo y lo tienes cerrado.';
+    else if (pct >= 70)   txt = 'Buen nivel. Vigila las fechas y los nombres propios de cada etapa: son los datos que distinguen un tema bien escrito.';
+    else if (pct >= 50)   txt = 'Vas por el camino. Vuelve al mapa mental, fija primero las tres etapas con sus años y repite el ejercicio.';
+    else                  txt = 'Toca estudiar antes de practicar. Lee el tema y el mapa mental completo: empieza por separar bien Sexenio, Trienio y Década Ominosa.';
+    document.getElementById('nAciertos').textContent = bien;
+    document.getElementById('veredicto').textContent = txt;
+    const caja = document.getElementById('resultado');
+    caja.classList.add('ver');
+    if (caja.scrollIntoView) caja.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function verSoluciones(){
+    campos.forEach(function(c){
+      const idx = +c.dataset.i;
+      c.value = SOL[idx][0];
+      c.classList.remove('bien', 'mal');
+      c.classList.add('revelado');
+      document.getElementById('sol-' + idx).classList.remove('ver');
+    });
+    actualizaProgreso();
+    document.getElementById('resultado').classList.remove('ver');
+  }
+
+  function reiniciar(){
+    campos.forEach(function(c){
+      c.value = '';
+      c.classList.remove('bien', 'mal', 'revelado');
+      document.getElementById('sol-' + (+c.dataset.i)).classList.remove('ver');
+    });
+    document.getElementById('aciertos').textContent = '0';
+    actualizaProgreso();
+    document.getElementById('resultado').classList.remove('ver');
+    if (window.scrollTo) { try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch(e){} }
+  }
+
+  campos.forEach(function(c){
+    c.addEventListener('input', function(){
+      c.classList.remove('bien', 'mal', 'revelado');
+      document.getElementById('sol-' + (+c.dataset.i)).classList.remove('ver');
+      actualizaProgreso();
+    });
+    c.addEventListener('keydown', function(e){
+      if (e.key === 'Enter') { e.preventDefault(); comprobar(); }
+    });
+  });
+
+  document.getElementById('comprobar').addEventListener('click', comprobar);
+  document.getElementById('soluciones').addEventListener('click', verSoluciones);
+  document.getElementById('reiniciar').addEventListener('click', reiniciar);
+})();
+</script>
+</body>
+</html>
