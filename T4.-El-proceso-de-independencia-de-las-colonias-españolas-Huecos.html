@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T4. La independencia de las colonias americanas · Practica con huecos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --fondo:#0d1a17;
+  --panel:#13262125;
+  --panel:#132621;
+  --panel2:#173029;
+  --tinta:#e8f0ec;
+  --suave:#a2bcb2;
+  --oro:#d9a441;
+  --acento:#4fa387;
+  --ok:#5bb183;
+  --mal:#dd7068;
+  --linea:rgba(162,188,178,.22);
+  --sombra:0 10px 30px rgba(0,0,0,.38);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-padding-top:150px}
+body{
+  background:
+    radial-gradient(900px 500px at 12% -8%, rgba(79,163,135,.18), transparent 60%),
+    radial-gradient(700px 420px at 96% 4%, rgba(217,164,65,.12), transparent 60%),
+    var(--fondo);
+  color:var(--tinta);
+  font-family:'Inter',system-ui,sans-serif;
+  line-height:1.6;
+  padding-bottom:80px;
+}
+header{max-width:900px;margin:0 auto;padding:48px 22px 26px}
+.cejilla{
+  font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--oro);margin-bottom:12px;
+}
+h1{
+  font-family:'Fraunces',Georgia,serif;font-weight:600;line-height:1.15;
+  font-size:clamp(1.8rem,4.4vw,2.7rem);letter-spacing:-.01em;
+}
+h1 em{font-style:italic;color:var(--oro)}
+.entradilla{color:var(--suave);margin-top:14px;max-width:62ch;font-size:1.02rem}
+.datos{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.datos span{
+  font-family:'JetBrains Mono',monospace;font-size:.76rem;color:var(--suave);
+  border:1px solid var(--linea);border-radius:999px;padding:5px 12px;
+}
+.datos b{color:var(--tinta)}
+
+.barra{position:sticky;top:0;z-index:30;background:rgba(13,26,23,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--linea)}
+.barra-in{max-width:900px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.pista{flex:1 1 200px;height:7px;background:rgba(162,188,178,.16);border-radius:999px;overflow:hidden;min-width:140px}
+.relleno{height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--acento),var(--oro));transition:width .35s ease}
+.marcador{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--suave);white-space:nowrap}
+.marcador b{color:var(--tinta)}
+.botones{display:flex;gap:8px;flex-wrap:wrap}
+button{
+  font-family:'Inter',sans-serif;font-size:.84rem;font-weight:600;cursor:pointer;
+  border-radius:8px;padding:8px 14px;border:1px solid var(--linea);
+  background:transparent;color:var(--tinta);transition:all .18s ease;
+}
+button:hover{border-color:var(--acento);color:#fff}
+#comprobar{background:var(--acento);border-color:var(--acento);color:#0a1714}
+#comprobar:hover{background:#63b89b}
+#soluciones:hover{border-color:var(--oro);color:var(--oro)}
+
+main{max-width:900px;margin:0 auto;padding:30px 22px 0}
+.apartado{
+  background:linear-gradient(180deg,var(--panel),rgba(19,38,33,.6));
+  border:1px solid var(--linea);border-radius:14px;
+  padding:24px 26px;margin-bottom:22px;box-shadow:var(--sombra);
+}
+.apartado h2{
+  font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:1.3rem;
+  display:flex;align-items:center;gap:12px;margin-bottom:6px;letter-spacing:-.01em;
+}
+.letra{
+  font-family:'JetBrains Mono',monospace;font-size:.82rem;font-weight:600;
+  width:30px;height:30px;flex:0 0 30px;border-radius:8px;display:grid;place-items:center;
+  background:rgba(217,164,65,.16);color:var(--oro);border:1px solid rgba(217,164,65,.35);
+}
+.crono{font-family:'JetBrains Mono',monospace;font-size:.74rem;color:var(--suave);margin:0 0 16px 42px}
+.esquema ul{list-style:none;margin:0;padding:0}
+.esquema > ul > li{
+  border-left:2px solid rgba(79,163,135,.45);padding-left:16px;margin:14px 0 14px 8px;
+}
+.esquema li{margin:7px 0}
+.esquema li ul{padding-left:18px;border-left:1px dashed rgba(162,188,178,.2);margin-top:6px}
+.esquema li ul li{color:var(--suave);font-size:.95rem}
+.esquema li ul li ul li{font-size:.9rem}
+.esquema b{color:var(--tinta);font-weight:600}
+.esquema i{color:var(--oro);font-style:italic}
+.flecha{font-family:'JetBrains Mono',monospace;color:var(--acento);padding:0 2px}
+.cierre{
+  margin-top:4px;border:1px dashed rgba(217,164,65,.35);border-radius:10px;
+  padding:16px 18px;background:rgba(217,164,65,.05);
+}
+.cierre h3{font-family:'Fraunces',serif;font-size:.98rem;color:var(--oro);margin-bottom:8px}
+.cierre ul{list-style:none}
+.cierre li{font-family:'JetBrains Mono',monospace;font-size:.82rem;color:var(--suave);margin:4px 0}
+.cierre b{color:var(--tinta)}
+
+.hueco{display:inline-flex;align-items:baseline;gap:6px;white-space:nowrap}
+input.h{
+  font-family:'JetBrains Mono',monospace;font-size:.86rem;color:var(--tinta);
+  background:rgba(79,163,135,.10);border:none;border-bottom:2px dotted var(--acento);
+  padding:2px 6px;border-radius:4px 4px 0 0;outline:none;min-width:70px;
+  transition:all .18s ease;
+}
+input.h::placeholder{color:rgba(162,188,178,.6);font-style:italic;font-size:.78rem}
+input.h:focus{background:rgba(79,163,135,.20);border-bottom-color:var(--oro)}
+input.h.bien{color:var(--ok);border-bottom:2px solid var(--ok);background:rgba(91,177,131,.14)}
+input.h.mal{color:var(--mal);border-bottom:2px solid var(--mal);background:rgba(221,112,104,.12)}
+input.h.revelado{color:var(--oro);border-bottom:2px solid var(--oro);background:rgba(217,164,65,.12)}
+.sol{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--mal);display:none}
+.sol.ver{display:inline}
+
+#resultado{display:none;max-width:900px;margin:10px auto 0;padding:0 22px}
+#resultado.ver{display:block}
+.tarjeta{
+  background:linear-gradient(180deg,var(--panel2),var(--panel));
+  border:1px solid rgba(217,164,65,.35);border-radius:14px;padding:28px;text-align:center;
+  box-shadow:var(--sombra);
+}
+.tarjeta h2{font-family:'Fraunces',serif;font-size:1.2rem;margin-bottom:10px}
+.nota{font-family:'JetBrains Mono',monospace;font-size:2.4rem;font-weight:600;color:var(--oro);line-height:1.1}
+.nota small{font-size:1rem;color:var(--suave);font-weight:400}
+.veredicto{color:var(--tinta);margin:12px auto 0;max-width:56ch}
+.lema{
+  margin-top:18px;padding-top:16px;border-top:1px solid var(--linea);
+  font-family:'Fraunces',serif;font-style:italic;color:var(--oro);font-size:1rem;
+}
+.pie{
+  max-width:900px;margin:34px auto 0;padding:0 22px;
+  font-family:'JetBrains Mono',monospace;font-size:.74rem;color:rgba(162,188,178,.65);text-align:center;
+}
+@media(max-width:620px){
+  header{padding-top:32px}
+  .apartado{padding:20px 16px}
+  .esquema li ul{padding-left:12px}
+  .barra-in{gap:10px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <p class="cejilla">Bloque B1 · La crisis del Antiguo Régimen (1788-1833)</p>
+  <h1>T4. La independencia de las colonias americanas y el <em>legado español en América</em></h1>
+  <p class="entradilla">El esquema completo del tema, con los datos clave en blanco. Escribe en cada hueco y pulsa <b>Comprobar</b>: verde si aciertas, rojo con la solución si fallas. Se toleran tildes y mayúsculas.</p>
+  <div class="datos">
+    <span><b id="chipHuecos">0</b> huecos</span>
+    <span><b>6</b> apartados</span>
+    <span><b>1796-1824</b></span>
+  </div>
+</header>
+
+<div class="barra">
+  <div class="barra-in">
+    <div class="pista"><div class="relleno" id="relleno"></div></div>
+    <p class="marcador"><b id="rellenados">0</b>/<span id="total">0</span> rellenados · <b id="aciertos">0</b> aciertos</p>
+    <div class="botones">
+      <button id="comprobar">Comprobar</button>
+      <button id="soluciones">Ver soluciones</button>
+      <button id="reiniciar">Reiniciar</button>
+    </div>
+  </div>
+</div>
+
+<main>
+<div id="esquema">
+
+  <section class="apartado">
+    <h2><span class="letra">A</span> Contexto general</h2>
+    <p class="crono">1808-1833</p>
+    <div class="esquema">
+      <ul>
+        <li><b>Vacío de poder</b> en la Península tras la invasión francesa ({{1808|¿año?}}) <span class="flecha">⟶</span> <b>detonante inmediato</b> del proceso emancipador</li>
+        <li>Emancipación iniciada durante la <b>{{Guerra de la Independencia|¿guerra?}}</b> y culminada durante el reinado de {{Fernando VII|¿rey?}} ({{1814-1833;1814 1833|¿años?}})</li>
+        <li>Solo {{Cuba|¿isla?}} y {{Puerto Rico|¿isla?}} permanecen bajo dominio español hasta {{1898|¿año?}}</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="apartado">
+    <h2><span class="letra">B</span> Causas del independentismo</h2>
+    <p class="crono">Económicas · políticas · sociales · externas</p>
+    <div class="esquema">
+      <ul>
+        <li><b>Económicas</b>
+          <ul>
+            <li><b>{{Pacto colonial|¿término?}}</b> <span class="flecha">→</span> exclusividad comercial a favor de la {{metrópoli;metropoli|¿quién?}}, que limitaba la economía criolla
+              <ul>
+                <li>Las colonias suministran {{materias primas|¿qué?}} a la metrópoli <span class="flecha">↔</span> la metrópoli suministra <b>productos manufacturados</b> a las colonias</li>
+              </ul>
+            </li>
+            <li>Ruptura de las comunicaciones por la <b>guerra naval con {{Inglaterra|¿país?}}</b> ({{1796|¿año?}}) <span class="flecha">→</span> apertura temporal del comercio con países {{neutrales;neutros|¿cuáles?}}</li>
+          </ul>
+        </li>
+        <li><b>Políticas y administrativas</b>
+          <ul>
+            <li>Reformas borbónicas de <b>{{Carlos III|¿rey?}}</b> <span class="flecha">→</span> centralización y control de la administración colonial <span class="flecha">⟶</span> desplazamiento de los {{criollos|¿grupo?}} de los cargos políticos</li>
+            <li>Creación de nuevos <b>virreinatos</b>: {{Nueva Granada|¿virreinato?}} y {{Río de la Plata;Rio de la Plata|¿virreinato?}}</li>
+            <li>Creación de <b>capitanías generales</b>: Guatemala, {{Venezuela|¿capitanía?}}, Chile y La Habana</li>
+            <li>Creación en {{1764|¿año?}} de las <b>{{Intendencias|¿institución?}} Provinciales</b> como instrumento de control judicial, militar y tributario</li>
+          </ul>
+        </li>
+        <li><b>Sociales, culturales y religiosas</b>
+          <ul>
+            <li>Papel del <b>bajo clero</b> como motor de movilización social: {{Miguel Hidalgo|¿cura?}}, párroco de {{Dolores|¿localidad?}} (México), y <b>José María Morelos</b></li>
+            <li><b>Tensiones étnico-sociales</b> entre criollos, peninsulares, indígenas, {{mestizos|¿grupo?}} y afrodescendientes</li>
+          </ul>
+        </li>
+        <li><b>Influencias externas</b>
+          <ul>
+            <li>La <b>Revolución {{estadounidense;norteamericana|¿cuál?}}</b> y la difusión de ideas <b>liberales y constitucionales</b></li>
+            <li>Apoyo material y político de {{Reino Unido;Inglaterra;Gran Bretaña|¿país?}} y <b>Estados Unidos</b></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="apartado">
+    <h2><span class="letra">C</span> Primera etapa: juntas y alzamientos</h2>
+    <p class="crono">1810-1814</p>
+    <div class="esquema">
+      <ul>
+        <li>Formación de <b>juntas locales de autogobierno</b>, formadas por {{criollos|¿grupo?}}, que <b>rechazan</b> la representación de {{José I;Jose I|¿rey?}}</li>
+        <li>Desconfianza de la <b>{{Junta Suprema|¿órgano?}} española</b> hacia las juntas americanas
+          <ul>
+            <li>Se les concede una <b>mínima representación</b> en las Cortes españolas</li>
+            <li>A partir de {{1810|¿año?}} se declaran <b>independientes</b> y piden ayuda a <b>Inglaterra</b> y <b>EE. UU.</b></li>
+          </ul>
+        </li>
+        <li>Los rebeldes son conocidos como {{patriotas|¿bando?}} y los leales a España como {{realistas|¿bando?}}</li>
+        <li><b>México</b> <span class="flecha">→</span> se levanta con el <b>"{{Grito de Dolores|¿nombre?}}"</b> del cura <b>Hidalgo</b>
+          <ul>
+            <li>Movimiento con fuerte componente social e {{indígena;indigena|¿carácter?}}</li>
+            <li>Los criollos se atemorizan por ese carácter indigenista y <b>no lo respaldan</b> <span class="flecha">⟶</span> gran fracaso</li>
+          </ul>
+        </li>
+        <li><b>Focos principales:</b>
+          <ul>
+            <li>Nueva Granada <span class="flecha">→</span> con {{Simón Bolívar;Simon Bolivar;Bolívar|¿líder?}}</li>
+            <li>Virreinato de Río de la Plata <span class="flecha">→</span> con {{San Martín;San Martin|¿líder?}} y {{Sucre|¿líder?}}</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="apartado">
+    <h2><span class="letra">D</span> Segunda etapa: campañas y consumación</h2>
+    <p class="crono">1816-1824</p>
+    <div class="esquema">
+      <ul>
+        <li>Coincide con el <b>{{Sexenio Absolutista|¿etapa?}}</b> (1814-1820) <span class="flecha">→</span> Fernando VII envía <b>expediciones realistas</b> para recuperar el control del Imperio y recupera {{Nueva Granada|¿virreinato?}}</li>
+        <li>Tras el <b>Congreso de {{Tucumán;Tucuman|¿congreso?}}</b> ({{1816|¿año?}}) y la <b>Conferencia de {{Guayaquil|¿conferencia?}}</b> <span class="flecha">⟶</span> independencia de <b>Argentina, Chile, Colombia y Venezuela</b></li>
+        <li>Durante el <b>{{Trienio Liberal|¿etapa?}}</b> (1820-1823) <span class="flecha">→</span> nuevo <b>vacío de poder</b> y campañas decisivas al agravarse la debilidad de la metrópoli
+          <ul>
+            <li>{{José de San Martín;San Martín;Jose de San Martin|¿líder?}} <span class="flecha">→</span> el sur</li>
+            <li><b>Simón Bolívar</b> <span class="flecha">→</span> el norte <span class="flecha">⟶</span> se pierde el virreinato de {{Perú;Peru|¿virreinato?}}</li>
+            <li>{{Agustín de Iturbide;Agustin de Iturbide;Iturbide|¿líder?}} <span class="flecha">→</span> México, con el <b>{{Plan de Iguala|¿plan?}}</b> de {{1821|¿año?}}</li>
+          </ul>
+        </li>
+        <li><b>Batalla de {{Ayacucho|¿batalla?}}</b> ({{1824|¿año?}}) <span class="flecha">⟶</span> <b>derrota definitiva española</b> en el continente</li>
+        <li><b>Factores explicativos regionales</b>
+          <ul>
+            <li>Zonas de mayoría {{criolla|¿población?}} <span class="flecha">→</span> éxito independentista (Nueva Granada, Río de la Plata)</li>
+            <li>Regiones indígenas o esclavistas <span class="flecha">→</span> menor apoyo de las élites en {{Perú;Peru|¿territorio?}}, Cuba y Puerto Rico</li>
+          </ul>
+        </li>
+        <li><b>Características del proceso</b>
+          <ul>
+            <li><b>Heterogeneidad</b> de proyectos: republicanos, {{monárquicos;monarquicos|¿tipo?}} y {{caudillistas|¿tipo?}}</li>
+            <li>Predominio de las <b>élites criollas</b> <span class="flecha">⟶</span> limitación de los <b>cambios sociales</b></li>
+            <li>Gran protagonismo <b>militar</b> <span class="flecha">→</span> surgimiento de los {{caudillos|¿figura?}}</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="apartado">
+    <h2><span class="letra">E</span> Consecuencias y legado</h2>
+    <p class="crono">Desde 1824</p>
+    <div class="esquema">
+      <ul>
+        <li><b>Para España</b>
+          <ul>
+            <li>Pérdida del <b>imperio continental</b> <span class="flecha">⟶</span> declive económico y pérdida de {{ingresos|¿qué?}}</li>
+            <li>Retroceso <b>industrial y comercial</b></li>
+          </ul>
+        </li>
+        <li><b>Para las nuevas repúblicas</b>
+          <ul>
+            <li>{{Fragmentación;Fragmentacion|¿fenómeno?}} territorial <span class="flecha">→</span> estados <b>débiles e inestables</b></li>
+            <li>Persistencia de las <b>desigualdades sociales</b> de indígenas, mestizos y afrodescendientes</li>
+            <li>Sustitución del dominio español por una gran <b>dependencia económica</b> de {{Inglaterra;Gran Bretaña;Reino Unido|¿país?}} y EE. UU. <span class="flecha">⟶</span> {{neocolonialismo|¿término?}} que impide el desarrollo económico</li>
+            <li>Contexto internacional: <b>Doctrina {{Monroe|¿doctrina?}}</b> ({{1823|¿año?}}) <span class="flecha">→</span> <i>"América para los {{americanos|¿quiénes?}}"</i>: territorio preferente para EE. UU. y abandono progresivo de los intereses europeos</li>
+          </ul>
+        </li>
+        <li><b>Legado cultural e institucional</b>
+          <ul>
+            <li>Permanencia de la {{lengua|¿qué?}}, el <b>derecho</b> y las estructuras <b>eclesiásticas y administrativas</b></li>
+            <li>Persistencia de las <b>jerarquías raciales y sociales</b> heredadas del periodo colonial</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="apartado">
+    <h2><span class="letra">F</span> Protagonistas y cronología esencial</h2>
+    <p class="crono">1796-1824</p>
+    <div class="esquema">
+      <ul>
+        <li><b>Líderes independentistas</b>
+          <ul>
+            <li>{{Simón Bolívar;Simon Bolivar;Bolívar|¿líder?}} <span class="flecha">→</span> libertador del norte andino; proyecto {{unionista|¿proyecto?}}</li>
+            <li><b>José de San Martín</b> <span class="flecha">→</span> campañas del <b>sur</b> (Argentina, Chile, Perú)</li>
+            <li>{{Antonio José de Sucre;Sucre;Antonio Jose de Sucre|¿líder?}} <span class="flecha">→</span> victoria en <b>Ayacucho</b> (1824)</li>
+            <li><b>Miguel Hidalgo</b> y {{José María Morelos;Jose Maria Morelos;Morelos|¿líder?}} <span class="flecha">→</span> líderes populares en <b>México</b></li>
+            <li><b>Agustín de Iturbide</b> <span class="flecha">→</span> independencia mexicana (Plan de Iguala, 1821)</li>
+          </ul>
+        </li>
+        <li><b>Representantes realistas</b> <span class="flecha">→</span> {{Abascal|¿realista?}} y {{Morillo|¿realista?}}, campañas para mantener el dominio español</li>
+      </ul>
+      <div class="cierre">
+        <h3>Cronología esencial (para autocomprobarte)</h3>
+        <ul>
+          <li><b>1796</b> → guerra naval con Inglaterra; apertura del comercio con neutros</li>
+          <li><b>1808</b> → invasión francesa; crisis de legitimidad en América</li>
+          <li><b>1810-1814</b> → primeras juntas y alzamientos</li>
+          <li><b>1816</b> → Congreso de Tucumán; independencia de Argentina</li>
+          <li><b>1821</b> → Plan de Iguala; independencia de México</li>
+          <li><b>1823</b> → Doctrina Monroe</li>
+          <li><b>1824</b> → batalla de Ayacucho; fin del dominio español continental</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</div>
+</main>
+
+<div id="resultado">
+  <div class="tarjeta">
+    <h2>Resultado</h2>
+    <p class="nota"><span id="nAciertos">0</span> <small>de <span id="nTotal">0</span></small></p>
+    <p class="veredicto" id="veredicto"></p>
+    <p class="lema">1808 el vacío de poder abre el proceso · 1824 Ayacucho lo cierra · solo Cuba y Puerto Rico resisten hasta 1898.</p>
+  </div>
+</div>
+
+<p class="pie">Elaborado a partir del mapa mental del T4 · Bloque B1 · Historia de España, 2.º de Bachillerato</p>
+
+<script>
+(function(){
+  const cont = document.getElementById('esquema');
+  const SOL = [];
+  let i = 0;
+
+  cont.innerHTML = cont.innerHTML.replace(/\{\{([^{}]+?)\}\}/g, function(m, cuerpo){
+    const partes = cuerpo.split('|');
+    const alts = partes[0].split(';').map(function(s){ return s.trim(); }).filter(Boolean);
+    const pista = (partes[1] || '…').trim();
+    SOL.push(alts);
+    const ancho = Math.max(7, Math.min(24, alts[0].length + 1));
+    const idx = i++;
+    return '<span class="hueco"><input class="h" data-i="' + idx + '" size="' + ancho +
+           '" autocomplete="off" spellcheck="false" placeholder="' + pista +
+           '" aria-label="' + pista + '"><span class="sol" id="sol-' + idx + '"></span></span>';
+  });
+
+  const campos = Array.prototype.slice.call(document.querySelectorAll('input.h'));
+  const total = campos.length;
+  document.getElementById('total').textContent = total;
+  document.getElementById('nTotal').textContent = total;
+  document.getElementById('chipHuecos').textContent = total;
+
+  function normaliza(s){
+    return (s || '')
+      .toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9 ]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function esCorrecto(idx, valor){
+    const v = normaliza(valor);
+    if (!v) return false;
+    return SOL[idx].some(function(a){ return normaliza(a) === v; });
+  }
+
+  function actualizaProgreso(){
+    const llenos = campos.filter(function(c){ return c.value.trim() !== ''; }).length;
+    document.getElementById('rellenados').textContent = llenos;
+    document.getElementById('relleno').style.width = (llenos / total * 100) + '%';
+  }
+
+  function comprobar(){
+    let bien = 0;
+    campos.forEach(function(c){
+      const idx = +c.dataset.i;
+      const sol = document.getElementById('sol-' + idx);
+      c.classList.remove('bien', 'mal', 'revelado');
+      sol.classList.remove('ver');
+      if (esCorrecto(idx, c.value)) {
+        c.classList.add('bien');
+        bien++;
+      } else {
+        c.classList.add('mal');
+        sol.textContent = '→ ' + SOL[idx][0];
+        sol.classList.add('ver');
+      }
+    });
+    document.getElementById('aciertos').textContent = bien;
+    muestraResultado(bien);
+  }
+
+  function muestraResultado(bien){
+    const pct = Math.round(bien / total * 100);
+    let txt;
+    if (pct === 100)      txt = 'Perfecto. Tienes causas, etapas, protagonistas y consecuencias. Puedes desarrollar el tema entero sin apoyo.';
+    else if (pct >= 85)   txt = 'Muy bien. Dominas el proceso; repasa solo los huecos en rojo y lo tienes cerrado.';
+    else if (pct >= 70)   txt = 'Buen nivel. Vigila los nombres propios y los lugares: Tucumán, Guayaquil, Iguala y Ayacucho son los que ordenan el relato.';
+    else if (pct >= 50)   txt = 'Vas por el camino. Fija primero las dos etapas (1810-1814 y 1816-1824) y las cuatro causas, y repite el ejercicio.';
+    else                  txt = 'Toca estudiar antes de practicar. Lee el tema y el mapa mental completo: empieza por el vacío de poder de 1808 y el pacto colonial.';
+    document.getElementById('nAciertos').textContent = bien;
+    document.getElementById('veredicto').textContent = txt;
+    const caja = document.getElementById('resultado');
+    caja.classList.add('ver');
+    if (caja.scrollIntoView) caja.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function verSoluciones(){
+    campos.forEach(function(c){
+      const idx = +c.dataset.i;
+      c.value = SOL[idx][0];
+      c.classList.remove('bien', 'mal');
+      c.classList.add('revelado');
+      document.getElementById('sol-' + idx).classList.remove('ver');
+    });
+    actualizaProgreso();
+    document.getElementById('resultado').classList.remove('ver');
+  }
+
+  function reiniciar(){
+    campos.forEach(function(c){
+      c.value = '';
+      c.classList.remove('bien', 'mal', 'revelado');
+      document.getElementById('sol-' + (+c.dataset.i)).classList.remove('ver');
+    });
+    document.getElementById('aciertos').textContent = '0';
+    actualizaProgreso();
+    document.getElementById('resultado').classList.remove('ver');
+    if (window.scrollTo) { try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch(e){} }
+  }
+
+  campos.forEach(function(c){
+    c.addEventListener('input', function(){
+      c.classList.remove('bien', 'mal', 'revelado');
+      document.getElementById('sol-' + (+c.dataset.i)).classList.remove('ver');
+      actualizaProgreso();
+    });
+    c.addEventListener('keydown', function(e){
+      if (e.key === 'Enter') { e.preventDefault(); comprobar(); }
+    });
+  });
+
+  document.getElementById('comprobar').addEventListener('click', comprobar);
+  document.getElementById('soluciones').addEventListener('click', verSoluciones);
+  document.getElementById('reiniciar').addEventListener('click', reiniciar);
+})();
+</script>
+</body>
+</html>

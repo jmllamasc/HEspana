@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T4. La independencia de las colonias americanas — Cuestionario</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#1B1A17;
+  --ink-soft:#57544E;
+  --ink-faint:#94908A;
+  --paper:#F7F7F5;
+  --white:#FFFFFF;
+  --rule:#E3E1DB;
+
+  --selva:#1E5245;         /* verde de los virreinatos */
+  --selva-2:#2F6D5C;
+  --terra:#A3592C;         /* terracota andina */
+  --terra-claro:#FBF1E7;
+  --ok:#2D6A4F;
+  --ok-claro:#E9F4EE;
+  --mal:#9B2226;
+  --mal-claro:#FBECEC;
+
+  --sans:'IBM Plex Sans',-apple-system,'Segoe UI',Arial,sans-serif;
+  --serif:'Playfair Display',Georgia,serif;
+  --mono:'IBM Plex Mono',ui-monospace,Consolas,monospace;
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+html{scroll-behavior:smooth;scroll-padding-top:120px}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);font-size:16px;line-height:1.6;-webkit-text-size-adjust:100%}
+:focus-visible{outline:2.5px solid var(--terra);outline-offset:2px}
+
+/* ── CABECERA ── */
+.head{background:linear-gradient(140deg,#123429 0%,#25614F 55%,#123429 100%);color:#fff;padding:34px 28px 30px;border-bottom:3px solid var(--terra)}
+.head-in{max-width:880px;margin:0 auto}
+.head .curso{font-family:var(--mono);font-size:11px;letter-spacing:1.6px;color:rgba(255,255,255,.5)}
+.head h1{font-family:var(--serif);font-weight:700;font-size:clamp(25px,4.4vw,38px);line-height:1.12;margin:10px 0 8px}
+.head p{color:rgba(255,255,255,.68);font-size:14.5px;max-width:62ch}
+.head .datos{display:flex;gap:26px;flex-wrap:wrap;margin-top:18px;font-family:var(--mono);font-size:11.5px;color:rgba(255,255,255,.55)}
+.head .datos strong{color:#DD9B62;font-size:13px;font-weight:500}
+
+/* ── BARRA FIJA ── */
+.barra{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.97);border-bottom:1px solid var(--rule);backdrop-filter:blur(6px)}
+.barra-in{max-width:880px;margin:0 auto;padding:11px 28px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.pista{flex:1;min-width:150px;height:7px;background:var(--rule);border-radius:4px;overflow:hidden}
+.relleno{height:100%;width:0;background:linear-gradient(90deg,var(--selva),var(--terra));transition:width .35s ease}
+.marcador{font-family:var(--mono);font-size:12.5px;white-space:nowrap}
+.marcador b{font-weight:500}
+.reinicio{font-family:var(--mono);font-size:11px;color:var(--ink-faint);background:none;border:1px solid var(--rule);border-radius:5px;padding:5px 11px;cursor:pointer}
+.reinicio:hover{color:var(--ink);border-color:var(--ink-soft)}
+
+/* ── PESTAÑAS DE BLOQUE ── */
+.pestanas{max-width:880px;margin:0 auto;padding:0 28px 11px;display:flex;gap:7px;overflow-x:auto}
+.pest{flex:1;min-width:58px;background:none;border:1px solid var(--rule);border-radius:7px;padding:7px 6px 8px;cursor:pointer;font-family:var(--sans);text-align:center;color:var(--ink-faint);transition:border-color .2s,color .2s}
+.pest b{display:block;font-family:var(--mono);font-size:13px;font-weight:500;line-height:1.3}
+.pest span{display:block;font-size:10px;letter-spacing:.3px}
+.pest:hover{border-color:var(--ink-soft);color:var(--ink-soft)}
+.pest[aria-selected="true"]{background:var(--selva);border-color:var(--selva);color:#fff}
+.pest[aria-selected="true"] span{color:rgba(255,255,255,.65)}
+.pest.hecho:not([aria-selected="true"]){border-color:var(--ok);color:var(--ok)}
+
+/* ── CUERPO ── */
+main{max-width:880px;margin:0 auto;padding:30px 28px 70px}
+.bloque[hidden]{display:none}
+.bloque-cab{border-left:3px solid var(--terra);padding-left:15px;margin-bottom:26px}
+.bloque-cab .n{font-family:var(--mono);font-size:11px;letter-spacing:1.4px;color:var(--terra)}
+.bloque-cab h2{font-family:var(--serif);font-size:24px;font-weight:600;line-height:1.25;margin-top:5px}
+
+.p{background:var(--white);border:1px solid var(--rule);border-radius:11px;padding:21px 22px;margin-bottom:17px}
+.p-cab{display:flex;gap:11px;align-items:baseline;margin-bottom:13px}
+.p-num{font-family:var(--mono);font-size:12px;color:var(--ink-faint);padding-top:2px}
+.enun{font-size:16.5px;line-height:1.5;font-weight:500}
+.aviso{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:1.1px;color:var(--selva);background:#E8F1EE;border-radius:4px;padding:3px 8px;margin-bottom:11px}
+.ops{display:flex;flex-direction:column;gap:8px}
+.op{display:flex;gap:11px;align-items:flex-start;border:1px solid var(--rule);border-radius:8px;padding:11px 13px;cursor:pointer;background:var(--white);text-align:left;font:inherit;color:inherit;line-height:1.45;transition:border-color .18s,background .18s}
+.op:hover:not(.bloqueada){border-color:var(--selva-2)}
+.op .letra{font-family:var(--mono);font-size:12.5px;color:var(--ink-faint);padding-top:2px;min-width:14px}
+.op.marcada{border-color:var(--selva);background:#F0F6F4}
+.op.marcada .letra{color:var(--selva)}
+.op.ok{border-color:var(--ok);background:var(--ok-claro)}
+.op.ok .letra{color:var(--ok)}
+.op.mal{border-color:var(--mal);background:var(--mal-claro)}
+.op.mal .letra{color:var(--mal)}
+.op.bloqueada{cursor:default}
+.comprobar{margin-top:11px;font-family:var(--sans);font-size:13.5px;font-weight:500;color:#fff;background:var(--selva);border:0;border-radius:7px;padding:9px 17px;cursor:pointer}
+.comprobar:hover{background:var(--selva-2)}
+.comprobar:disabled{background:var(--rule);color:var(--ink-faint);cursor:default}
+.retro{margin-top:13px;padding:12px 14px;border-radius:8px;font-size:14.5px;line-height:1.5}
+.retro b{font-weight:600;display:block;margin-bottom:3px}
+.retro.ok{background:var(--ok-claro);color:#1E4B37;border-left:3px solid var(--ok)}
+.retro.mal{background:var(--mal-claro);color:#6E1519;border-left:3px solid var(--mal)}
+
+.nav{display:flex;justify-content:space-between;gap:12px;margin-top:26px}
+.nav button{font-family:var(--sans);font-size:14px;font-weight:500;border-radius:8px;padding:11px 20px;cursor:pointer;border:1px solid var(--selva);background:var(--white);color:var(--selva)}
+.nav button:hover{background:#EFF4F2}
+.nav .avanzar{background:var(--selva);color:#fff}
+.nav .avanzar:hover{background:var(--selva-2)}
+.nav button[hidden]{display:none}
+
+/* ── RESUMEN ── */
+#resumen{display:none;background:var(--white);border:1px solid var(--rule);border-top:4px solid var(--terra);border-radius:11px;padding:30px 26px;margin-top:8px}
+#resumen.visible{display:block}
+#resumen h2{font-family:var(--serif);font-size:26px;font-weight:600}
+.nota{font-family:var(--mono);font-size:40px;font-weight:500;margin:14px 0 4px;color:var(--selva)}
+.nota span{font-size:19px;color:var(--ink-faint)}
+.veredicto{font-size:16px;color:var(--ink-soft);max-width:60ch}
+.repasar{margin-top:22px;background:var(--terra-claro);border-left:3px solid var(--terra);border-radius:0 8px 8px 0;padding:16px 18px}
+.repasar h3{font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:.3px;margin-bottom:9px}
+.repasar ul{margin:0;padding-left:19px;font-size:14.5px;line-height:1.75;color:var(--ink-soft)}
+.pie{max-width:880px;margin:0 auto;padding:0 28px 46px;font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+@media(max-width:620px){
+  .head{padding:26px 20px 24px}
+  .barra-in,.pestanas,main,.pie{padding-left:18px;padding-right:18px}
+  .pest span{display:none}
+  .p{padding:18px 16px}
+}
+</style>
+</head>
+<body>
+
+<header class="head">
+  <div class="head-in">
+    <p class="curso">2.º Bachillerato · Historia de España · Bloque B1</p>
+    <h1>La independencia de<br>las colonias americanas</h1>
+    <p>Comprueba lo que has entendido del tema. Elige una opción y recibirás la corrección al instante, con la respuesta correcta y el porqué.</p>
+    <div class="datos">
+      <span><strong>30</strong> preguntas</span>
+      <span><strong>5</strong> bloques</span>
+      <span><strong>1808-1824</strong></span>
+    </div>
+  </div>
+</header>
+
+<div class="barra">
+  <div class="barra-in">
+    <div class="pista"><div class="relleno" id="relleno"></div></div>
+    <p class="marcador"><b id="respondidas">0</b>/30 respondidas · <b id="aciertos">0</b> aciertos</p>
+    <button class="reinicio" id="reinicio">Empezar de nuevo</button>
+  </div>
+  <div class="pestanas" role="tablist" id="pestanas"></div>
+</div>
+
+<main>
+  <div id="bloques"></div>
+  <section id="resumen" aria-live="polite">
+    <h2>Resultado</h2>
+    <p class="nota"><span id="nAciertos">0</span> <span>de 30</span></p>
+    <p class="veredicto" id="veredicto"></p>
+    <div class="repasar" id="repasar"></div>
+    <div class="nav" style="justify-content:flex-start">
+      <button id="otraVez">Repetir el cuestionario</button>
+    </div>
+  </section>
+</main>
+
+<p class="pie">Elaborado a partir del tema T4 del Bloque B1. Colegio El Valle.</p>
+
+<script>
+const BLOQUES = [
+  {t:"Factores del independentismo", r:"Causas"},
+  {t:"El estallido: la primera etapa", r:"1810-1814"},
+  {t:"Focos de rebelión y segunda etapa", r:"1816-1823"},
+  {t:"El desenlace y la pérdida del imperio", r:"1820-1824"},
+  {t:"Consecuencias para las nuevas repúblicas", r:"Balance"}
+];
+
+const PREGUNTAS = [
+/* BLOQUE 1 */
+{b:0,e:"¿En qué consistía el llamado pacto colonial, al que se oponían los criollos?",
+ o:["Las colonias suministran materias primas a la metrópoli y la metrópoli suministra a las colonias productos manufacturados",
+    "Las colonias se autoabastecen y comercian libremente con quien deseen",
+    "La metrópoli cede la administración de los virreinatos a las élites criollas",
+    "Las colonias pagan un tributo anual a cambio de autonomía política"],
+ ok:[0], x:"Ese control mercantil impedía a los criollos comerciar con los competidores anglosajones, que ofrecían mejores precios y calidades.",
+ tema:"el pacto colonial y la oposición al control mercantil"},
+
+{b:0,e:"¿Qué efecto tuvo la guerra naval contra Inglaterra de 1796?",
+ o:["Reforzó el monopolio comercial de la metrópoli sobre las colonias",
+    "Cortó las comunicaciones entre España y sus colonias y obligó al gobierno a dar plena libertad a estas para comerciar con los países neutrales",
+    "Provocó la pérdida inmediata del virreinato del Río de la Plata",
+    "Permitió a España recuperar la hegemonía marítima en el Atlántico"],
+ ok:[1], x:"Una vez probado el comercio libre con terceros, resultaba muy difícil volver al pacto colonial.",
+ tema:"la guerra naval de 1796 y la apertura comercial"},
+
+{b:0,doble:true,e:"Señala las dos afirmaciones correctas sobre el reformismo ilustrado de Carlos III en América.",
+ o:["Supuso un mayor control sobre la administración colonial, con el envío de funcionarios que desplazaban a los criollos de los puestos de influencia",
+    "Concedió el autogobierno a los cabildos controlados por criollos",
+    "Creó en 1764 las Intendencias Provinciales, que centralizaron prerrogativas judiciales, militares y tributarias",
+    "Suprimió los virreinatos existentes para simplificar la administración"],
+ ok:[0,2], x:"Más control desde Madrid y menos poder para los criollos: ahí está el agravio que alimenta el independentismo.",
+ tema:"el reformismo borbónico y el desplazamiento de los criollos"},
+
+{b:0,e:"¿Qué nueva organización territorial se añadió a los virreinatos de Nueva España y Perú?",
+ o:["Los virreinatos de Nueva Granada (1740) y del Río de la Plata (1776), además de cuatro Capitanías generales: Guatemala, Venezuela, Chile y La Habana",
+    "Un único virreinato general de las Indias con sede en La Habana",
+    "Las Intendencias Provinciales como sustitutas de los virreinatos",
+    "Dos capitanías generales: México y Lima"],
+ ok:[0], x:"Los virreinatos originales son del siglo XVI; los dos nuevos y las capitanías responden al afán centralizador del XVIII.",
+ tema:"los virreinatos y las capitanías generales"},
+
+{b:0,e:"¿Qué papel desempeñó la Iglesia americana en el proceso?",
+ o:["La jerarquía episcopal dirigió en bloque el movimiento independentista",
+    "Se mantuvo al margen de la política colonial",
+    "Apoyó sin fisuras a las autoridades virreinales",
+    "Los sectores del bajo clero fueron una cantera de líderes insurgentes y guerrilleros, con los púlpitos y los confesionarios al servicio de la revolución"],
+ ok:[3], x:"Miguel Hidalgo, párroco de Dolores (México), y José María Morelos son los ejemplos que recoge el tema.",
+ tema:"el bajo clero americano y los líderes insurgentes"},
+
+{b:0,e:"¿Cómo influyó la independencia de Estados Unidos respecto a Inglaterra?",
+ o:["Sirvió de estímulo y ejemplo a los independentistas americanos, que recibieron además ayuda material, económica y política",
+    "Fue vista con recelo por los criollos, que temían el expansionismo del norte",
+    "No tuvo ninguna repercusión en la América hispana",
+    "Llevó a Estados Unidos a apoyar militarmente a la metrópoli española"],
+ ok:[0], x:"El precedente norteamericano demostraba que una colonia podía vencer a su metrópoli europea.",
+ tema:"el ejemplo de la independencia de Estados Unidos"},
+
+/* BLOQUE 2 */
+{b:1,e:"¿Qué es la emancipación y en qué marco temporal se desarrolla?",
+ o:["La concesión pactada de autonomía administrativa, otorgada por Carlos IV",
+    "El corte de los lazos políticos con la metrópoli: se inició de forma repentina durante la Guerra de la Independencia y culminó en el reinado de Fernando VII (1814-1833)",
+    "La independencia económica de las colonias, lograda ya en el siglo XVIII",
+    "El reparto del imperio entre Gran Bretaña y Estados Unidos en 1898"],
+ ok:[1], x:"El proceso arranca con la crisis peninsular de 1808 y se consuma dentro del reinado de Fernando VII.",
+ tema:"el concepto de emancipación y su marco temporal"},
+
+{b:1,e:"¿Qué se formó en las colonias al estallar la guerra en la Península?",
+ o:["Juntas locales de autogobierno formadas por criollos, que controlaban el poder y rechazaban a los representantes de José I",
+    "Cabildos designados directamente por la Junta Suprema Central",
+    "Gobiernos militares nombrados por los virreyes",
+    "Asambleas de notables que aceptaron el Estatuto de Bayona"],
+ ok:[0], x:"Igual que en la Península surgen juntas, pero aquí son los criollos quienes controlan el poder.",
+ tema:"las juntas americanas de autogobierno"},
+
+{b:1,e:"Según el tema, ¿cuál fue la causa principal del inicio del proceso independentista?",
+ o:["La difusión de las ideas ilustradas entre las élites criollas",
+    "La presión comercial de Gran Bretaña sobre los puertos americanos",
+    "La derrota española en la batalla de Trafalgar",
+    "El vacío de poder derivado de la invasión francesa de la Península"],
+ ok:[3], x:"Los demás factores venían de lejos; el detonante es la desaparición del poder legítimo en la metrópoli.",
+ tema:"el vacío de poder como causa principal"},
+
+{b:1,e:"¿Qué fueron las llamadas juntas infieles?",
+ o:["Las juntas peninsulares que reconocieron a José I como rey",
+    "Las juntas americanas que desde 1810 se declararon independientes y pidieron ayuda a Inglaterra y a Estados Unidos",
+    "Las juntas que exigieron una representación igualitaria en las Cortes de Cádiz",
+    "Las juntas realistas organizadas por los virreyes"],
+ ok:[1], x:"La Junta Central desconfiaba de ellas y les concedió una escasa representación en las Cortes: ese agravio empujó la ruptura.",
+ tema:"las juntas infieles y la escasa representación en las Cortes"},
+
+{b:1,e:"¿Cómo se denominaba a cada uno de los dos bandos en América?",
+ o:["Afrancesados a los rebeldes y patriotas a los leales al rey",
+    "Doceañistas a los rebeldes y veinteañistas a los leales al rey",
+    "Patriotas a los rebeldes y realistas a los leales al rey",
+    "Criollos a los rebeldes y peninsulares a los leales al rey"],
+ ok:[2], x:"Cuidado con el vocabulario: en la Península patriotas son los que luchan contra Francia; en América, los independentistas.",
+ tema:"patriotas y realistas en América"},
+
+{b:1,doble:true,e:"Señala las dos afirmaciones correctas sobre el Grito de Dolores.",
+ o:["México fue el primer territorio en levantarse, con un movimiento liderado por el cura Hidalgo",
+    "Su carácter indigenista y social atemorizó a los criollos, que no lo respaldaron, lo que provocó su fracaso",
+    "Contó con el apoyo unánime de las élites criollas desde el primer momento",
+    "Proclamó la independencia definitiva de México en 1821"],
+ ok:[0,1], x:"Lo mismo ocurrió en otros territorios con mayoría indígena o esclava, como Perú, Cuba o Puerto Rico.",
+ tema:"el Grito de Dolores y el fracaso del movimiento de Hidalgo"},
+
+/* BLOQUE 3 */
+{b:2,e:"¿Dónde se consolidaron entre 1810 y 1814 los dos primeros focos de rebelión?",
+ o:["En Cuba y Puerto Rico, por su proximidad a Estados Unidos",
+    "En el virreinato de Nueva Granada, con Simón Bolívar, y en el del Río de la Plata, dirigido por los generales San Martín y Sucre",
+    "En Nueva España y Perú, los virreinatos más antiguos",
+    "En las cuatro capitanías generales creadas por Carlos III"],
+ ok:[1], x:"Se consolidaron justamente allí donde la población criolla era más numerosa.",
+ tema:"los focos de Nueva Granada y del Río de la Plata"},
+
+{b:2,e:"¿Por qué fracasaron los primeros levantamientos en territorios como Perú, Cuba o Puerto Rico?",
+ o:["Porque las tropas de Morillo los aplastaron antes de organizarse",
+    "Porque allí no existía población criolla",
+    "Porque Inglaterra retiró su apoyo a los insurgentes",
+    "Porque eran territorios con mayoría indígena o esclava y el carácter social del movimiento atemorizó a los criollos, que no lo respaldaron"],
+ ok:[3], x:"La independencia avanza donde los criollos la lideran; retrocede donde temen una revolución social.",
+ tema:"el freno criollo en los territorios de mayoría indígena o esclava"},
+
+{b:2,e:"¿Qué resultado tuvieron las expediciones de Abascal y Morillo enviadas por Fernando VII?",
+ o:["Recuperaron íntegramente el control del imperio americano",
+    "Fracasaron por completo sin llegar a desembarcar",
+    "Solo alcanzaron parcial y temporalmente su objetivo, recuperando Nueva Granada",
+    "Consiguieron pacificar el virreinato del Río de la Plata"],
+ ok:[2], x:"Coinciden con el sexenio absolutista (1814-1820): el esfuerzo militar fue grande, pero el resultado, efímero.",
+ tema:"las expediciones de Abascal y Morillo"},
+
+{b:2,e:"¿Qué se proclamó en la Conferencia de Tucumán?",
+ o:["La independencia de Argentina en 1816",
+    "La creación de la Gran Colombia",
+    "La independencia de México",
+    "El fin de las hostilidades con España"],
+ ok:[0], x:"Las expediciones españolas no impidieron que los independentistas aumentasen su coordinación y sus acuerdos.",
+ tema:"la Conferencia de Tucumán y la independencia de Argentina"},
+
+{b:2,e:"¿Quiénes se reunieron en la Conferencia de Guayaquil?",
+ o:["Iturbide y el virrey de Nueva España",
+    "Hidalgo y Morelos",
+    "Morillo y Abascal",
+    "Bolívar y San Martín"],
+ ok:[3], x:"Los dos grandes jefes militares de la independencia coordinan allí sus campañas.",
+ tema:"la Conferencia de Guayaquil entre Bolívar y San Martín"},
+
+{b:2,e:"¿Qué resultado tuvieron las grandes campañas militares de América del Sur?",
+ o:["La independencia de Argentina, Chile, Colombia y Venezuela, bajo el mando de Bolívar y San Martín",
+    "La recuperación española de todo el continente salvo el Río de la Plata",
+    "La independencia únicamente de México y Perú",
+    "Un armisticio que mantuvo los virreinatos bajo soberanía española"],
+ ok:[0], x:"En ellas se enfrentaron los cuerpos expedicionarios españoles contra los patriotas americanos.",
+ tema:"las campañas militares de América del Sur"},
+
+/* BLOQUE 4 */
+{b:3,e:"¿Cómo afectó el Trienio Liberal (1820-1823) al proceso americano?",
+ o:["Permitió a España concentrar todas sus tropas en América",
+    "Supuso un nuevo vacío de poder y más dificultades para el envío de tropas desde España, lo que aprovecharon los independentistas",
+    "Llevó a reconocer de inmediato la independencia de todas las colonias",
+    "Provocó el regreso de los virreyes a la Península"],
+ ok:[1], x:"Cada crisis política peninsular se traduce en un avance del independentismo al otro lado del Atlántico.",
+ tema:"el Trienio Liberal como nuevo vacío de poder"},
+
+{b:3,e:"¿Cómo se consumó la independencia de México en 1821?",
+ o:["Con la victoria militar de Morelos sobre las tropas virreinales",
+    "Con la retirada voluntaria del ejército español tras Ayacucho",
+    "Con el éxito del levantamiento popular iniciado en el Grito de Dolores",
+    "El virrey Agustín de Iturbide la proclamó tras un acuerdo con los insurgentes y las élites locales, el Plan de Iguala"],
+ ok:[3], x:"La independencia mexicana llega finalmente por un pacto entre las élites, no por el levantamiento popular de 1810.",
+ tema:"Iturbide y el Plan de Iguala"},
+
+{b:3,e:"¿Qué ocurrió en el virreinato del Perú?",
+ o:["Fue el único territorio continental que conservaba España y resultó atacado desde el norte por Bolívar y desde el sur por San Martín",
+    "Se independizó pacíficamente mediante un acuerdo con el virrey",
+    "Permaneció bajo soberanía española hasta 1898",
+    "Fue el primer virreinato en proclamar su independencia"],
+ ok:[0], x:"Perú era el último bastión realista: la tenaza de Bolívar y San Martín lo cerró por los dos extremos.",
+ tema:"el virreinato del Perú, último bastión español"},
+
+{b:3,e:"¿Qué supuso la batalla de Ayacucho (1824)?",
+ o:["La derrota definitiva de las tropas españolas y la consumación del triunfo de la independencia",
+    "Una victoria española que retrasó la emancipación una década",
+    "El inicio de las campañas de Bolívar en el norte",
+    "La firma de un tratado de paz entre España y las nuevas repúblicas"],
+ ok:[0], x:"Con Ayacucho se pierde el imperio colonial español en América continental.",
+ tema:"la batalla de Ayacucho (1824)"},
+
+{b:3,e:"Según el tema, ¿qué territorios conservó España tras la emancipación continental?",
+ o:["Ninguno: perdió todas sus posesiones americanas en 1824",
+    "El virreinato del Perú y las capitanías del Caribe",
+    "Cuba y Puerto Rico, hasta 1898",
+    "Nueva Granada y Guatemala"],
+ ok:[2], x:"Esas dos islas serán el escenario de la crisis finisecular que cierra el siglo XIX español.",
+ tema:"los territorios conservados hasta 1898"},
+
+{b:3,doble:true,e:"Señala las dos consecuencias de la independencia para España.",
+ o:["La confirmación de que era una potencia de segunda fila",
+    "Un aumento de los ingresos fiscales al suprimirse los gastos coloniales",
+    "La desaparición de los caudales de Indias y la reducción del comercio, lo que retrasó la industrialización",
+    "La conquista de nuevos mercados en el norte de África"],
+ ok:[0,2], x:"La repercusión económica fue mayor que la política: la Hacienda perdió una de sus fuentes principales de ingresos.",
+ tema:"las consecuencias de la independencia para España"},
+
+/* BLOQUE 5 */
+{b:4,e:"¿A qué condujeron los intereses de las burguesías comerciales y de los grandes terratenientes americanos?",
+ o:["A la creación de una federación estable de repúblicas",
+    "Al fraccionamiento en múltiples repúblicas, débiles e inestables, con formas de gobierno autoritarias",
+    "A la formación de monarquías constitucionales al modo europeo",
+    "Al mantenimiento de los antiguos límites virreinales"],
+ ok:[1], x:"La independencia política no trajo consigo estabilidad institucional.",
+ tema:"el fraccionamiento en repúblicas débiles e inestables"},
+
+{b:4,e:"¿Por qué el poder quedó en manos de caudillos militares?",
+ o:["Porque eran los únicos que podían mantener sometidas a las masas",
+    "Porque así lo exigían Gran Bretaña y Estados Unidos",
+    "Porque las constituciones americanas reservaban el gobierno al ejército",
+    "Porque los criollos se habían exiliado tras la guerra"],
+ ok:[0], x:"Caudillismo y violencia se convierten en rasgos estructurales de la política hispanoamericana del XIX.",
+ tema:"el caudillismo militar"},
+
+{b:4,e:"¿Qué ocurrió con las clases altas criollas y con el resto de la población?",
+ o:["Las élites criollas repartieron la tierra entre indios y mestizos",
+    "Las condiciones de vida de todos los grupos mejoraron con la independencia",
+    "Las clases altas criollas se identificaron con la nación, pero no promovieron el desarrollo, y las condiciones de vida de negros, indios y mestizos empeoraron",
+    "Las clases altas criollas perdieron todo su poder en favor de la población indígena"],
+ ok:[2], x:"Cambia quién manda, no cómo se reparte: la independencia fue política, no social.",
+ tema:"las élites criollas y el empeoramiento de las condiciones de vida"},
+
+{b:4,e:"¿Qué sucedió con el proyecto político de Bolívar?",
+ o:["Su sueño de crear unos Estados Unidos del Sur fracasó y pronto surgieron luchas fratricidas entre los países por cuestiones fronterizas",
+    "Logró constituir una federación duradera de repúblicas sudamericanas",
+    "Renunció a la unidad continental ya antes de Ayacucho",
+    "Se impuso como modelo en toda Hispanoamérica"],
+ ok:[0], x:"La unidad continental quedó como un proyecto frustrado, en contraste con el caso norteamericano.",
+ tema:"el fracaso del proyecto unitario de Bolívar"},
+
+{b:4,doble:true,e:"Señala las dos afirmaciones correctas sobre la independencia económica de los nuevos estados.",
+ o:["El dominio español fue sustituido por el de Gran Bretaña y Estados Unidos",
+    "Estas potencias llevaron a cabo un neocolonialismo brutal que impidió el desarrollo económico de la zona",
+    "Las nuevas repúblicas lograron una industrialización rápida y autónoma",
+    "España mantuvo el monopolio comercial con sus antiguas colonias"],
+ ok:[0,1], x:"La independencia política no supuso la independencia económica: cambió la metrópoli, no la dependencia.",
+ tema:"el neocolonialismo británico y norteamericano"},
+
+{b:4,e:"¿Qué proclamó el presidente Monroe en 1823?",
+ o:["«América para los americanos»: el continente sería territorio preferente de Estados Unidos y los europeos debían ir abandonando sus intereses en él",
+    "El reconocimiento de la soberanía española sobre Cuba y Puerto Rico",
+    "La creación de una alianza militar con la Santa Alianza europea",
+    "La neutralidad de Estados Unidos ante los conflictos del continente"],
+ ok:[0], x:"La doctrina Monroe convierte la retirada europea en la puerta de entrada de la influencia estadounidense.",
+ tema:"la doctrina Monroe de 1823"}
+];
+
+const LETRAS = ['a','b','c','d'];
+const estado = PREGUNTAS.map(() => ({resuelta:false, acierto:false, marcadas:[]}));
+
+const elPest = document.getElementById('pestanas');
+const elBloques = document.getElementById('bloques');
+
+/* ── Construcción ── */
+BLOQUES.forEach((bl, i) => {
+  const t = document.createElement('button');
+  t.className = 'pest'; t.type = 'button'; t.setAttribute('role','tab');
+  t.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+  t.innerHTML = '<b>' + (i+1) + '</b><span>' + bl.r + '</span>';
+  t.addEventListener('click', () => irA(i));
+  elPest.appendChild(t);
+
+  const sec = document.createElement('section');
+  sec.className = 'bloque'; sec.hidden = i !== 0;
+  sec.innerHTML = '<div class="bloque-cab"><p class="n">Bloque ' + (i+1) + ' de 5</p><h2>' + bl.t + '</h2></div>';
+  elBloques.appendChild(sec);
+});
+
+PREGUNTAS.forEach((p, idx) => {
+  const sec = elBloques.children[p.b];
+  const card = document.createElement('article');
+  card.className = 'p'; card.id = 'p' + idx;
+
+  const cab = document.createElement('div');
+  cab.className = 'p-cab';
+  cab.innerHTML = '<span class="p-num">' + (idx+1) + '</span><p class="enun">' + p.e + '</p>';
+  card.appendChild(cab);
+
+  if (p.doble) {
+    const av = document.createElement('p');
+    av.className = 'aviso'; av.textContent = 'Doble respuesta: marca las dos opciones';
+    card.appendChild(av);
+  }
+
+  const ops = document.createElement('div');
+  ops.className = 'ops';
+  p.o.forEach((texto, j) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'op';
+    b.innerHTML = '<span class="letra">' + LETRAS[j] + '</span><span>' + texto + '</span>';
+    b.addEventListener('click', () => elegir(idx, j));
+    ops.appendChild(b);
+  });
+  card.appendChild(ops);
+
+  if (p.doble) {
+    const btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'comprobar'; btn.textContent = 'Comprobar respuesta';
+    btn.disabled = true;
+    btn.addEventListener('click', () => corregir(idx));
+    card.appendChild(btn);
+  }
+
+  const r = document.createElement('div');
+  r.className = 'retro'; r.hidden = true;
+  card.appendChild(r);
+  sec.appendChild(card);
+});
+
+BLOQUES.forEach((bl, i) => {
+  const sec = elBloques.children[i];
+  const nav = document.createElement('div');
+  nav.className = 'nav';
+  const atras = document.createElement('button');
+  atras.type = 'button'; atras.textContent = 'Bloque anterior';
+  atras.hidden = i === 0;
+  atras.addEventListener('click', () => irA(i-1));
+  const alante = document.createElement('button');
+  alante.type = 'button'; alante.className = 'avanzar';
+  alante.textContent = i === BLOQUES.length - 1 ? 'Ver resultado' : 'Siguiente bloque';
+  alante.addEventListener('click', () => i === BLOQUES.length - 1 ? verResultado() : irA(i+1));
+  nav.appendChild(atras); nav.appendChild(alante);
+  sec.appendChild(nav);
+});
+
+/* ── Interacción ── */
+function elegir(idx, j) {
+  const e = estado[idx];
+  if (e.resuelta) return;
+  const p = PREGUNTAS[idx];
+  const card = document.getElementById('p' + idx);
+  const botones = card.querySelectorAll('.op');
+
+  if (!p.doble) {
+    e.marcadas = [j];
+    corregir(idx);
+    return;
+  }
+  const pos = e.marcadas.indexOf(j);
+  if (pos >= 0) e.marcadas.splice(pos, 1);
+  else if (e.marcadas.length < 2) e.marcadas.push(j);
+  botones.forEach((b, k) => b.classList.toggle('marcada', e.marcadas.indexOf(k) >= 0));
+  card.querySelector('.comprobar').disabled = e.marcadas.length !== 2;
+}
+
+function corregir(idx) {
+  const e = estado[idx];
+  if (e.resuelta) return;
+  const p = PREGUNTAS[idx];
+  const card = document.getElementById('p' + idx);
+  const botones = card.querySelectorAll('.op');
+
+  const acierto = e.marcadas.length === p.ok.length && p.ok.every(k => e.marcadas.indexOf(k) >= 0);
+  e.resuelta = true; e.acierto = acierto;
+
+  botones.forEach((b, k) => {
+    b.classList.remove('marcada');
+    b.classList.add('bloqueada');
+    b.disabled = true;
+    if (p.ok.indexOf(k) >= 0) b.classList.add('ok');
+    else if (e.marcadas.indexOf(k) >= 0) b.classList.add('mal');
+  });
+  if (p.doble) card.querySelector('.comprobar').remove();
+
+  const r = card.querySelector('.retro');
+  const correctas = p.ok.map(k => LETRAS[k]).join(' y ');
+  r.hidden = false;
+  r.className = 'retro ' + (acierto ? 'ok' : 'mal');
+  r.innerHTML = '<b>' + (acierto ? 'Correcto.' : 'No es la respuesta.') + '</b>' +
+                (acierto ? '' : 'La ' + (p.ok.length > 1 ? 'respuesta correcta son las opciones ' : 'respuesta correcta es la opción ') + correctas + '. ') + p.x;
+
+  actualizar();
+}
+
+function actualizar() {
+  const hechas = estado.filter(e => e.resuelta).length;
+  const bien = estado.filter(e => e.acierto).length;
+  document.getElementById('respondidas').textContent = hechas;
+  document.getElementById('aciertos').textContent = bien;
+  document.getElementById('relleno').style.width = (hechas / PREGUNTAS.length * 100) + '%';
+  BLOQUES.forEach((bl, i) => {
+    const total = PREGUNTAS.filter(p => p.b === i).length;
+    const listas = PREGUNTAS.filter((p, k) => p.b === i && estado[k].resuelta).length;
+    elPest.children[i].classList.toggle('hecho', listas === total);
+  });
+}
+
+function irA(i) {
+  Array.from(elBloques.children).forEach((s, k) => { s.hidden = k !== i; });
+  Array.from(elPest.children).forEach((t, k) => t.setAttribute('aria-selected', k === i ? 'true' : 'false'));
+  document.getElementById('resumen').classList.remove('visible');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function verResultado() {
+  const bien = estado.filter(e => e.acierto).length;
+  const sin = estado.filter(e => !e.resuelta).length;
+  document.getElementById('nAciertos').textContent = bien;
+
+  let msg;
+  if (bien >= 28) msg = 'Dominas el tema. Estás en condiciones de desarrollarlo por escrito en el examen.';
+  else if (bien >= 23) msg = 'Muy buen nivel. Solo te faltan matices de detalle.';
+  else if (bien >= 19) msg = 'Comprensión sólida, pero conviene repasar los puntos fallados antes de redactar el tema.';
+  else if (bien >= 13) msg = 'Base aceptable: necesitas una segunda lectura del tema, sobre todo de los factores y las etapas del proceso.';
+  else msg = 'Vuelve al tema con calma antes de repetir el cuestionario: falta asentar los hechos básicos.';
+  if (sin > 0) msg += ' Te quedan ' + sin + ' preguntas sin responder.';
+  document.getElementById('veredicto').textContent = msg;
+
+  const fallos = PREGUNTAS.filter((p, i) => estado[i].resuelta && !estado[i].acierto).map(p => p.tema);
+  const caja = document.getElementById('repasar');
+  if (fallos.length === 0 && sin === 0) {
+    caja.innerHTML = '<h3>Qué repasar</h3><p style="font-size:14.5px;color:var(--ink-soft)">No has fallado ninguna pregunta: el tema está asentado.</p>';
+  } else if (fallos.length === 0) {
+    caja.innerHTML = '<h3>Qué repasar</h3><p style="font-size:14.5px;color:var(--ink-soft)">De momento no has fallado nada. Termina las preguntas pendientes para tener el resultado completo.</p>';
+  } else {
+    caja.innerHTML = '<h3>Conviene repasar</h3><ul>' + fallos.map(f => '<li>' + f + '</li>').join('') + '</ul>';
+  }
+
+  Array.from(elBloques.children).forEach(s => { s.hidden = true; });
+  document.getElementById('resumen').classList.add('visible');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+document.getElementById('otraVez').addEventListener('click', reiniciar);
+document.getElementById('reinicio').addEventListener('click', reiniciar);
+
+function reiniciar() {
+  location.reload();
+}
+
+actualizar();
+</script>
+</body>
+</html>
