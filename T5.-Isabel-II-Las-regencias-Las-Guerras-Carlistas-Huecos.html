@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T5. Isabel II: regencias, guerras carlistas y Constitución de 1837 · Practica con huecos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --fondo:#14101f;
+  --panel:#1d1830;
+  --panel2:#241e3a;
+  --tinta:#ece9f4;
+  --suave:#aea7c6;
+  --oro:#d9a441;
+  --acento:#8a7ad1;
+  --ok:#5bb183;
+  --mal:#dd7068;
+  --linea:rgba(174,167,198,.22);
+  --sombra:0 10px 30px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-padding-top:150px}
+body{
+  background:
+    radial-gradient(900px 500px at 12% -8%, rgba(138,122,209,.20), transparent 60%),
+    radial-gradient(700px 420px at 96% 4%, rgba(217,164,65,.12), transparent 60%),
+    var(--fondo);
+  color:var(--tinta);
+  font-family:'Inter',system-ui,sans-serif;
+  line-height:1.6;
+  padding-bottom:80px;
+}
+header{max-width:900px;margin:0 auto;padding:48px 22px 26px}
+.cejilla{
+  font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--oro);margin-bottom:12px;
+}
+h1{
+  font-family:'Fraunces',Georgia,serif;font-weight:600;line-height:1.15;
+  font-size:clamp(1.8rem,4.4vw,2.7rem);letter-spacing:-.01em;
+}
+h1 em{font-style:italic;color:var(--oro)}
+.entradilla{color:var(--suave);margin-top:14px;max-width:62ch;font-size:1.02rem}
+.datos{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.datos span{
+  font-family:'JetBrains Mono',monospace;font-size:.76rem;color:var(--suave);
+  border:1px solid var(--linea);border-radius:999px;padding:5px 12px;
+}
+.datos b{color:var(--tinta)}
+
+.barra{position:sticky;top:0;z-index:30;background:rgba(20,16,31,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--linea)}
+.barra-in{max-width:900px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.pista{flex:1 1 200px;height:7px;background:rgba(174,167,198,.16);border-radius:999px;overflow:hidden;min-width:140px}
+.relleno{height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--acento),var(--oro));transition:width .35s ease}
+.marcador{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--suave);white-space:nowrap}
+.marcador b{color:var(--tinta)}
+.botones{display:flex;gap:8px;flex-wrap:wrap}
+button{
+  font-family:'Inter',sans-serif;font-size:.84rem;font-weight:600;cursor:pointer;
+  border-radius:8px;padding:8px 14px;border:1px solid var(--linea);
+  background:transparent;color:var(--tinta);transition:all .18s ease;
+}
+button:hover{border-color:var(--acento);color:#fff}
+#comprobar{background:var(--acento);border-color:var(--acento);color:#140f22}
+#comprobar:hover{background:#9d8ee0}
+#soluciones:hover{border-color:var(--oro);color:var(--oro)}
+
+main{max-width:900px;margin:0 auto;padding:30px 22px 0}
+.apartado{
+  background:linear-gradient(180deg,var(--panel),rgba(29,24,48,.6));
+  border:1px solid var(--linea);border-radius:14px;
+  padding:24px 26px;margin-bottom:22px;box-shadow:var(--sombra);
+}
+.apartado h2{
+  font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:1.3rem;
+  display:flex;align-items:center;gap:12px;margin-bottom:6px;letter-spacing:-.01em;
+}
+.letra{
+  font-family:'JetBrains Mono',monospace;font-size:.82rem;font-weight:600;
+  width:30px;height:30px;flex:0 0 30px;border-radius:8px;display:grid;place-items:center;
+  background:rgba(217,164,65,.16);color:var(--oro);border:1px solid rgba(217,164,65,.35);
+}
+.crono{font-family:'JetBrains Mono',monospace;font-size:.74rem;color:var(--suave);margin:0 0 16px 42px}
+.esquema ul{list-style:none;margin:0;padding:0}
+.esquema > ul > li{
+  border-left:2px solid rgba(138,122,209,.45);padding-left:16px;margin:14px 0 14px 8px;
+}
+.esquema li{margin:7px 0}
+.esquema li ul{padding-left:18px;border-left:1px dashed rgba(174,167,198,.2);margin-top:6px}
+.esquema li ul li{color:var(--suave);font-size:.95rem}
+.esquema li ul li ul li{font-size:.9rem}
+.esquema b{color:var(--tinta);font-weight:600}
+.esquema i{color:var(--oro);font-style:italic}
+.flecha{font-family:'JetBrains Mono',monospace;color:var(--acento);padding:0 2px}
+.cierre{
+  margin-top:4px;border:1px dashed rgba(217,164,65,.35);border-radius:10px;
+  padding:16px 18px;background:rgba(217,164,65,.05);
+}
+.cierre h3{font-family:'Fraunces',serif;font-size:.98rem;color:var(--oro);margin-bottom:8px}
+.cierre ul{list-style:none}
+.cierre li{font-family:'JetBrains Mono',monospace;font-size:.82rem;color:var(--suave);margin:4px 0}
+.cierre b{color:var(--tinta)}
+
+.hueco{display:inline-flex;align-items:baseline;gap:6px;white-space:nowrap}
+input.h{
+  font-family:'JetBrains Mono',monospace;font-size:.86rem;color:var(--tinta);
+  background:rgba(138,122,209,.12);border:none;border-bottom:2px dotted var(--acento);
+  padding:2px 6px;border-radius:4px 4px 0 0;outline:none;min-width:70px;
+  transition:all .18s ease;
+}
+input.h::placeholder{color:rgba(174,167,198,.6);font-style:italic;font-size:.78rem}
+input.h:focus{background:rgba(138,122,209,.22);border-bottom-color:var(--oro)}
+input.h.bien{color:var(--ok);border-bottom:2px solid var(--ok);background:rgba(91,177,131,.14)}
+input.h.mal{color:var(--mal);border-bottom:2px solid var(--mal);background:rgba(221,112,104,.12)}
+input.h.revelado{color:var(--oro);border-bottom:2px solid var(--oro);background:rgba(217,164,65,.12)}
+.sol{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--mal);display:none}
+.sol.ver{display:inline}
+
+#resultado{display:none;max-width:900px;margin:10px auto 0;padding:0 22px}
+#resultado.ver{display:block}
+.tarjeta{
+  background:linear-gradient(180deg,var(--panel2),var(--panel));
+  border:1px solid rgba(217,164,65,.35);border-radius:14px;padding:28px;text-align:center;
+  box-shadow:var(--sombra);
+}
+.tarjeta h2{font-family:'Fraunces',serif;font-size:1.2rem;margin-bottom:10px}
+.nota{font-family:'JetBrains Mono',monospace;font-size:2.4rem;font-weight:600;color:var(--oro);line-height:1.1}
+.nota small{font-size:1rem;color:var(--suave);font-weight:400}
+.veredicto{color:var(--tinta);margin:12px auto 0;max-width:56ch}
+.lema{
+  margin-top:18px;padding-top:16px;border-top:1px solid var(--linea);
+  font-family:'Fraunces',serif;font-style:italic;color:var(--oro);font-size:1rem;
+}
+.pie{
+  max-width:900px;margin:34px auto 0;padding:0 22px;
+  font-family:'JetBrains Mono',monospace;font-size:.74rem;color:rgba(174,167,198,.65);text-align:center;
+}
+@media(max-width:620px){
+  header{padding-top:32px}
+  .apartado{padding:20px 16px}
+  .esquema li ul{padding-left:12px}
+  .barra-in{gap:10px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <p class="cejilla">Bloque B2 · La construcción del Estado liberal (1833-1874)</p>
+  <h1>T5. Isabel II: las regencias, las guerras carlistas y la <em>Constitución de 1837</em></h1>
+  <p class="entradilla">El esquema completo del tema, con los datos clave en blanco. Escribe en cada hueco y pulsa <b>Comprobar</b>: verde si aciertas, rojo con la solución si fallas. Se toleran tildes y mayúsculas.</p>
+  <div class="datos">
+    <span><b id="chipHuecos">0</b> huecos</span>
+    <span><b>7</b> apartados</span>
+    <span><b>1833-1843</b></span>
+  </div>
+</header>
+
+<div class="barra">
+  <div class="barra-in">
+    <div class="pista"><div class="relleno" id="relleno"></div></div>
+    <p class="marcador"><b id="rellenados">0</b>/<span id="total">0</span> rellenados · <b id="aciertos">0</b> aciertos</p>
+    <div class="botones">
+      <button id="comprobar">Comprobar</button>
+      <button id="soluciones">Ver soluciones</button>
+      <button id="reiniciar">Reiniciar</button>
+    </div>
+  </div>
+</div>
+
+<main>
+<div id="esquema">
+
+  <section class="apartado">
+    <h2><span class="letra">A</span> Introducción: el origen del conflicto carlista</h2>
+    <p class="crono">1833</p>
+    <div class="esquema">
+      <ul>
+        <li>El reinado de <b>Isabel II</b> ({{1833-1868;1833 1868|¿años?}}) es uno de los más <b>convulsos</b> de nuestra historia <span class="flecha">⟶</span> el <b>Estado liberal</b> comienza con una guerra civil, la <b>1.ª Guerra Carlista</b> ({{1833-1840;1833-40;1833 1840|¿años?}})</li>
+        <li>Muere <b>Fernando VII</b> en 1833 <span class="flecha">→</span> se aplica la <b>{{Pragmática Sanción;Pragmatica Sancion|¿norma?}}</b> de 1830
+          <ul>
+            <li>Anulación de la <b>{{Ley Sálica;Ley Salica|¿ley?}}</b></li>
+            <li>Eliminación de {{Carlos María Isidro;Carlos Maria Isidro|¿infante?}} de la sucesión al trono</li>
+          </ul>
+        </li>
+        <li>Significa el <b>triunfo liberal</b> frente a los realistas puros, ultras o {{apostólicos;apostolicos|¿nombre?}}</li>
+        <li>Carlos María Isidro <b>se autoproclama rey</b> como {{Carlos V|¿nombre regio?}} <span class="flecha">→</span> <b>Manifiesto de {{Abrantes|¿localidad?}}</b> ({{1 de octubre de 1833;1-10-1833|¿fecha?}})</li>
+        <li><b>Ideario del carlismo</b> <span class="flecha">→</span> mantener las tradiciones del Antiguo Régimen
+          <ul>
+            <li>Tradición política <span class="flecha">→</span> <b>Monarquía absoluta</b></li>
+            <li>Restauración del poder de la {{Iglesia|¿institución?}}, con un <b>catolicismo excluyente</b></li>
+            <li>Idealización del medio {{rural|¿medio?}} <span class="flecha">↔</span> rechazo de la sociedad urbana y de la burguesía</li>
+            <li>Defensa de las instituciones y de los {{fueros|¿derechos?}} <span class="flecha">↔</span> liberales frente a vascos, navarros y catalanes</li>
+          </ul>
+        </li>
+        <li><b>Extensión</b> <span class="flecha">→</span> zonas rurales: el {{Maestrazgo|¿comarca?}}, País Vasco, Navarra, Aragón y Cataluña</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="apartado">
+    <h2><span class="letra">B</span> La 1.ª Guerra Carlista</h2>
+    <p class="crono">1833-1840</p>
+    <div class="esquema">
+      <ul>
+        <li><b>1. Foco insurreccional</b> (1833-1835)
+          <ul>
+            <li>Bando carlista dirigido por el general {{Zumalacárregui;Zumalacarregui|¿general?}}</li>
+            <li>Dominio del <b>País Vasco, Navarra, norte de Cataluña</b> y la comarca del Maestrazgo: ocupan el espacio <b>rural</b>, pero no las {{ciudades|¿qué?}} por el apoyo liberal</li>
+            <li>Sitio de {{Bilbao|¿ciudad?}} (1835)</li>
+          </ul>
+        </li>
+        <li><b>2. Las expediciones</b> (1835-1837) <span class="flecha">→</span> reacción liberal y unión de las zonas ocupadas
+          <ul>
+            <li>El general {{Cabrera|¿general carlista?}} consolida el <b>Maestrazgo</b> e intenta extender la guerra al centro y sur peninsular</li>
+            <li>Expedición real de <b>Don Carlos</b> hasta {{Madrid|¿ciudad?}} <span class="flecha">→</span> fracaso</li>
+            <li>{{Espartero|¿general liberal?}} defiende el sitio de Bilbao (1836) <span class="flecha">→</span> <b>batalla de {{Luchana|¿batalla?}}</b> y muerte de Zumalacárregui <span class="flecha">⟶</span> cambio de tendencia a favor del bando <b>liberal</b></li>
+          </ul>
+        </li>
+        <li><b>3. Iniciativa isabelina</b> (1837-1839) <span class="flecha">→</span> presión liberal y <b>división carlista</b>
+          <ul>
+            <li>{{Transaccionistas|¿partidarios de un acuerdo?}} <span class="flecha">↔</span> <b>apostólicos</b> o continuistas, como el general {{Maroto|¿general?}} <span class="flecha">→</span> fusilamiento de mandos</li>
+          </ul>
+        </li>
+        <li><b>4. Guerra en el Maestrazgo</b> (1839-1840)
+          <ul>
+            <li><b>{{Convenio de Vergara;Abrazo de Vergara|¿acuerdo?}}</b> (agosto de {{1839|¿año?}}), entre <b>Espartero</b> (isabelinos) y <b>Maroto</b> (carlistas)</li>
+            <li>Compromiso de admitir a los <b>militares carlistas</b> con sus grados y estudios, y de mantener los <b>fueros vascos</b></li>
+          </ul>
+        </li>
+        <li><b>5. Consecuencias</b>
+          <ul>
+            <li>Inclinación de la monarquía hacia el {{liberalismo|¿sistema?}}</li>
+            <li>Eliminación del <b>absolutismo</b> como opción política viable</li>
+            <li><b>Aparición política de los militares</b>, nombrados defensores de la monarquía liberal <span class="flecha">→</span> los {{espadones|¿apodo?}}, que promoverán cambios de gobierno mediante {{pronunciamientos|¿método?}}</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="apartado">
+    <h2><span class="letra">C</span> La 2.ª y la 3.ª Guerras Carlistas</h2>
+    <p class="crono">1846-1849 y 1872-1876</p>
+    <div class="esquema">
+      <ul>
+        <li><b>2.ª Guerra Carlista</b> ({{1846-1849;1846-49;1846 1849|¿años?}})
+          <ul>
+            <li>Carlos María Isidro <b>abdica</b> (1845) en su hijo {{Carlos Luis de Borbón;Carlos Luis de Borbon;Carlos Luis|¿heredero?}} (<b>Carlos VI</b>), que tratará de casarse con {{Isabel II|¿reina?}}</li>
+            <li>Los carlistas llegan a {{Barcelona|¿ciudad?}} y <b>son derrotados</b> en País Vasco, Navarra y Cataluña</li>
+          </ul>
+        </li>
+        <li><b>3.ª Guerra Carlista</b> ({{1872-1876;1872 1876|¿años?}}) <span class="flecha">→</span> ya en el <b>Sexenio Democrático</b>
+          <ul>
+            <li>{{Amadeo de Saboya|¿rey?}} accede al trono (1871) <span class="flecha">→</span> provoca el ataque carlista de {{Carlos VII|¿pretendiente?}}, sofocado por los liberales</li>
+            <li>Con {{Alfonso XII|¿rey?}} (1876): nueva Constitución y <b>eliminación de los fueros</b> vascos y navarros <span class="flecha">⟶</span> origen de los <b>nacionalismos periféricos</b></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="apartado">
+    <h2><span class="letra">D</span> Los grupos políticos</h2>
+    <p class="crono">Desde 1833</p>
+    <div class="esquema">
+      <ul>
+        <li><b>1. Partido {{Moderado|¿partido?}}</b> (doceañistas, 1833) <span class="flecha">→</span> <b>Unión Liberal</b> a partir de {{1854|¿año?}}
+          <ul>
+            <li>Liberalismo <b>doctrinario</b> y soberanía {{compartida|¿tipo?}} (rey + Cortes)</li>
+            <li>Amplios poderes del rey y <b>limitación de los derechos</b> individuales y colectivos</li>
+            <li>Sectores sociales: {{terratenientes|¿grupo?}}, alta burguesía y clase media-alta</li>
+            <li>Líder: el general {{Narváez;Narvaez|¿general?}} (1799-1868)</li>
+          </ul>
+        </li>
+        <li><b>2. Partido {{Progresista|¿partido?}}</b> (veinteañistas, 1833) <span class="flecha">→</span> <b>Partido Demócrata</b> a partir de {{1849|¿año?}}
+          <ul>
+            <li>Soberanía {{nacional|¿tipo?}}, residente en las Cortes, y <b>limitación de los poderes del rey</b></li>
+            <li>Sectores sociales: clase {{media|¿clase?}}</li>
+            <li>Líder: {{Baldomero Espartero;Espartero|¿general?}} (1793-1879), vencedor de la 1.ª Guerra Carlista</li>
+          </ul>
+        </li>
+        <li>Durante el <b>reinado efectivo</b> los partidos sufren <b>escisiones</b>; el <b>carlismo</b> se mantendrá más como corriente ideológica que como partido político</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="apartado">
+    <h2><span class="letra">E</span> La regencia de María Cristina y el Estatuto Real</h2>
+    <p class="crono">1833-1840</p>
+    <div class="esquema">
+      <ul>
+        <li><b>Objetivo de la revolución liberal:</b> desmantelar la <b>monarquía absolutista</b> para establecer un <b>régimen liberal, parlamentario y constitucional</b></li>
+        <li>Monárquicos reformistas y liberales moderados promulgan el <b>{{Estatuto Real|¿texto?}}</b> ({{1834|¿año?}}), carta {{otorgada|¿tipo de carta?}} (concesión real) de {{Martínez de la Rosa;Martinez de la Rosa|¿político?}} (moderado)
+          <ul>
+            <li>Sistema <b>bicameral</b>: Estamento de {{Próceres;Proceres|¿cámara alta?}} (cámara alta) y Estamento de {{Procuradores|¿cámara baja?}} (cámara baja)</li>
+            <li>Conservación del poder del rey: Cortes de carácter {{consultivo|¿carácter?}} y sufragio {{censitario|¿tipo?}} (apenas el 0,15 % de la población)</li>
+          </ul>
+        </li>
+        <li>Las reformas <b>no satisfacen a los progresistas</b> <span class="flecha">→</span> revueltas organizadas por las <b>juntas locales</b>
+          <ul>
+            <li>Nombramiento de {{Mendizábal;Juan Álvarez Mendizábal;Mendizabal|¿progresista?}} (progresista), ministro de Hacienda y luego presidente (1835)</li>
+            <li>En {{1836|¿año?}} se le destituye y se nombra a {{Istúriz;Isturiz|¿moderado?}} (moderado) presidente del Gobierno</li>
+          </ul>
+        </li>
+        <li><b>Descontento progresista</b> <span class="flecha">⟶</span> pronunciamiento de los sargentos de la Guardia Real en el palacio de La Granja: el <b>Motín de {{La Granja;Granja|¿lugar?}}</b> o <i>"la {{sargentada|¿apodo?}}"</i></li>
+        <li>Se nombra a {{Calatrava|¿progresista?}} (progresista) y se obliga a María Cristina a <b>restablecer la Constitución de 1812</b></li>
+        <li>Nuevo gobierno <span class="flecha">→</span> <b>Cortes Constituyentes</b> con sufragio {{universal|¿tipo?}} (frente al Estatuto Real) <span class="flecha">⟶</span> promulgación de la <b>Constitución de {{1837|¿año?}}</b>, primer régimen constitucional en España</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="apartado">
+    <h2><span class="letra">F</span> La Constitución de 1837 y su importancia</h2>
+    <p class="crono">1836-1837</p>
+    <div class="esquema">
+      <ul>
+        <li><b>Aportación progresista</b> (principios propios de la C12)
+          <ul>
+            <li><b>Soberanía nacional</b> y <b>división de poderes</b> (ejecutivo, legislativo y judicial)</li>
+            <li>Derechos y libertades, como el de {{culto|¿libertad?}}</li>
+            <li><b>Limitación del poder</b> de la monarquía e importancia de las <b>Cortes</b></li>
+            <li>Elección de los poderes municipales: los {{alcaldes|¿cargo?}} los eligen <b>los vecinos</b> y no el gobierno</li>
+            <li>Recuperación de la <b>{{Milicia Nacional|¿cuerpo?}}</b></li>
+          </ul>
+        </li>
+        <li><b>Aportación moderada</b> (propia del Estatuto Real de 1834)
+          <ul>
+            <li>Cortes {{bicamerales;bicameral|¿cuántas cámaras?}}: {{Senado|¿cámara?}}, con miembros designados por el rey, y <b>Congreso</b>, por sufragio directo y censitario, aunque más amplio que en el Estatuto</li>
+            <li>Poderes del rey: potestad de <b>hacer leyes</b> junto a las Cortes, potestad de <b>convocar Cortes</b> y derecho de {{veto|¿derecho?}}</li>
+          </ul>
+        </li>
+        <li><b>Importancia</b> <span class="flecha">⟶</span> implantación <b>definitiva</b> de un régimen {{constitucional|¿régimen?}} en España
+          <ul>
+            <li>Desaparecen los <b>señoríos</b> y {{mayorazgos|¿institución?}} (1836)</li>
+            <li>Abolición del régimen {{señorial;senorial|¿régimen?}} (1837)</li>
+            <li>Abolición de la {{Mesta|¿institución?}} y de los gremios (1837)</li>
+            <li><b>Desamortización de {{Mendizábal;Mendizabal|¿político?}}</b> (1837)</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="apartado">
+    <h2><span class="letra">G</span> La regencia de Espartero</h2>
+    <p class="crono">1840-1843</p>
+    <div class="esquema">
+      <ul>
+        <li>Intento de la Corona de promulgar una ley contraria a la C37: la <b>Ley de {{Ayuntamientos|¿ley?}}</b> ({{1840|¿año?}}), por la que los alcaldes serían elegidos por el <b>gobierno</b>
+          <ul>
+            <li><span class="flecha">→</span> sublevación encabezada por <b>Espartero</b>, nombrado presidente del Gobierno: la reina renuncia y la ley queda suspendida</li>
+            <li>Espartero es nombrado <b>regente</b> en {{1841|¿año?}} <span class="flecha">⟶</span> comienza la <b>segunda regencia</b> del reinado</li>
+          </ul>
+        </li>
+        <li>Espartero ejerce el cargo con gran {{autoritarismo|¿rasgo?}}
+          <ul>
+            <li>Se aleja de su propio partido y se enfrenta a los <b>moderados</b></li>
+            <li>Supresión de los aranceles a las importaciones de textiles {{ingleses;británicos|¿de dónde?}} ({{1842|¿año?}}) <span class="flecha">⟶</span> la industria <b>textil</b> catalana resulta perjudicada</li>
+            <li><b>Motín de {{Barcelona|¿ciudad?}}</b>: Espartero <b>bombardea</b> la ciudad y muere {{Diego de León|¿militar moderado?}} <span class="flecha">→</span> pérdida de apoyos</li>
+          </ul>
+        </li>
+        <li>Pronunciamiento del general {{Narváez;Narvaez|¿general?}} (moderado) en {{1843|¿año?}} <span class="flecha">⟶</span> <b>fin de la regencia de Espartero</b></li>
+      </ul>
+      <div class="cierre">
+        <h3>Las tres fases del reinado (para situarte)</h3>
+        <ul>
+          <li><b>1833-1840</b> → regencia de María Cristina: Estatuto Real y Constitución de 1837</li>
+          <li><b>1840-1843</b> → regencia de Espartero: autoritarismo y caída</li>
+          <li><b>1843-1868</b> → reinado efectivo de Isabel II</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</div>
+</main>
+
+<div id="resultado">
+  <div class="tarjeta">
+    <h2>Resultado</h2>
+    <p class="nota"><span id="nAciertos">0</span> <small>de <span id="nTotal">0</span></small></p>
+    <p class="veredicto" id="veredicto"></p>
+    <p class="lema">1833 Abrantes abre la guerra · 1834 Estatuto Real · 1837 primera Constitución del reinado · 1839 Vergara · 1843 cae Espartero.</p>
+  </div>
+</div>
+
+<p class="pie">Elaborado a partir del mapa mental del T5 · Bloque B2 · Historia de España, 2.º de Bachillerato</p>
+
+<script>
+(function(){
+  const cont = document.getElementById('esquema');
+  const SOL = [];
+  let i = 0;
+
+  cont.innerHTML = cont.innerHTML.replace(/\{\{([^{}]+?)\}\}/g, function(m, cuerpo){
+    const partes = cuerpo.split('|');
+    const alts = partes[0].split(';').map(function(s){ return s.trim(); }).filter(Boolean);
+    const pista = (partes[1] || '…').trim();
+    SOL.push(alts);
+    const ancho = Math.max(7, Math.min(24, alts[0].length + 1));
+    const idx = i++;
+    return '<span class="hueco"><input class="h" data-i="' + idx + '" size="' + ancho +
+           '" autocomplete="off" spellcheck="false" placeholder="' + pista +
+           '" aria-label="' + pista + '"><span class="sol" id="sol-' + idx + '"></span></span>';
+  });
+
+  const campos = Array.prototype.slice.call(document.querySelectorAll('input.h'));
+  const total = campos.length;
+  document.getElementById('total').textContent = total;
+  document.getElementById('nTotal').textContent = total;
+  document.getElementById('chipHuecos').textContent = total;
+
+  function normaliza(s){
+    return (s || '')
+      .toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9 ]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function esCorrecto(idx, valor){
+    const v = normaliza(valor);
+    if (!v) return false;
+    return SOL[idx].some(function(a){ return normaliza(a) === v; });
+  }
+
+  function actualizaProgreso(){
+    const llenos = campos.filter(function(c){ return c.value.trim() !== ''; }).length;
+    document.getElementById('rellenados').textContent = llenos;
+    document.getElementById('relleno').style.width = (llenos / total * 100) + '%';
+  }
+
+  function comprobar(){
+    let bien = 0;
+    campos.forEach(function(c){
+      const idx = +c.dataset.i;
+      const sol = document.getElementById('sol-' + idx);
+      c.classList.remove('bien', 'mal', 'revelado');
+      sol.classList.remove('ver');
+      if (esCorrecto(idx, c.value)) {
+        c.classList.add('bien');
+        bien++;
+      } else {
+        c.classList.add('mal');
+        sol.textContent = '→ ' + SOL[idx][0];
+        sol.classList.add('ver');
+      }
+    });
+    document.getElementById('aciertos').textContent = bien;
+    muestraResultado(bien);
+  }
+
+  function muestraResultado(bien){
+    const pct = Math.round(bien / total * 100);
+    let txt;
+    if (pct === 100)      txt = 'Perfecto. Tienes el carlismo, las dos regencias y las dos constituciones del periodo. Listo para desarrollar el tema entero.';
+    else if (pct >= 85)   txt = 'Muy bien. Dominas el tema; repasa solo los huecos en rojo y lo tienes cerrado.';
+    else if (pct >= 70)   txt = 'Buen nivel. Cuidado con no mezclar Estatuto Real (1834) y Constitución de 1837: son la clave del apartado.';
+    else if (pct >= 50)   txt = 'Vas por el camino. Fija primero las cuatro etapas de la 1.ª Guerra Carlista y las dos regencias, y repite el ejercicio.';
+    else                  txt = 'Toca estudiar antes de practicar. Empieza por el origen del conflicto en 1833 y la diferencia entre moderados y progresistas.';
+    document.getElementById('nAciertos').textContent = bien;
+    document.getElementById('veredicto').textContent = txt;
+    const caja = document.getElementById('resultado');
+    caja.classList.add('ver');
+    if (caja.scrollIntoView) caja.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function verSoluciones(){
+    campos.forEach(function(c){
+      const idx = +c.dataset.i;
+      c.value = SOL[idx][0];
+      c.classList.remove('bien', 'mal');
+      c.classList.add('revelado');
+      document.getElementById('sol-' + idx).classList.remove('ver');
+    });
+    actualizaProgreso();
+    document.getElementById('resultado').classList.remove('ver');
+  }
+
+  function reiniciar(){
+    campos.forEach(function(c){
+      c.value = '';
+      c.classList.remove('bien', 'mal', 'revelado');
+      document.getElementById('sol-' + (+c.dataset.i)).classList.remove('ver');
+    });
+    document.getElementById('aciertos').textContent = '0';
+    actualizaProgreso();
+    document.getElementById('resultado').classList.remove('ver');
+    if (window.scrollTo) { try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch(e){} }
+  }
+
+  campos.forEach(function(c){
+    c.addEventListener('input', function(){
+      c.classList.remove('bien', 'mal', 'revelado');
+      document.getElementById('sol-' + (+c.dataset.i)).classList.remove('ver');
+      actualizaProgreso();
+    });
+    c.addEventListener('keydown', function(e){
+      if (e.key === 'Enter') { e.preventDefault(); comprobar(); }
+    });
+  });
+
+  document.getElementById('comprobar').addEventListener('click', comprobar);
+  document.getElementById('soluciones').addEventListener('click', verSoluciones);
+  document.getElementById('reiniciar').addEventListener('click', reiniciar);
+})();
+</script>
+</body>
+</html>

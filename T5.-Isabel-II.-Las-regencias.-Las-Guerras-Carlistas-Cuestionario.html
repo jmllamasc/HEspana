@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T5. Isabel II: las regencias y las guerras carlistas — Cuestionario</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#1B1A17;
+  --ink-soft:#57544E;
+  --ink-faint:#94908A;
+  --paper:#F7F7F5;
+  --white:#FFFFFF;
+  --rule:#E3E1DB;
+
+  --corte:#453366;         /* púrpura de la corte isabelina */
+  --corte-2:#5C4788;
+  --oro:#A98334;           /* oro de las condecoraciones */
+  --oro-claro:#FAF4E7;
+  --ok:#2D6A4F;
+  --ok-claro:#E9F4EE;
+  --mal:#9B2226;
+  --mal-claro:#FBECEC;
+
+  --sans:'IBM Plex Sans',-apple-system,'Segoe UI',Arial,sans-serif;
+  --serif:'Playfair Display',Georgia,serif;
+  --mono:'IBM Plex Mono',ui-monospace,Consolas,monospace;
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+html{scroll-behavior:smooth;scroll-padding-top:120px}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);font-size:16px;line-height:1.6;-webkit-text-size-adjust:100%}
+:focus-visible{outline:2.5px solid var(--oro);outline-offset:2px}
+
+/* ── CABECERA ── */
+.head{background:linear-gradient(140deg,#2A1E42 0%,#53407C 55%,#2A1E42 100%);color:#fff;padding:34px 28px 30px;border-bottom:3px solid var(--oro)}
+.head-in{max-width:880px;margin:0 auto}
+.head .curso{font-family:var(--mono);font-size:11px;letter-spacing:1.6px;color:rgba(255,255,255,.5)}
+.head h1{font-family:var(--serif);font-weight:700;font-size:clamp(25px,4.4vw,38px);line-height:1.12;margin:10px 0 8px}
+.head p{color:rgba(255,255,255,.68);font-size:14.5px;max-width:62ch}
+.head .datos{display:flex;gap:26px;flex-wrap:wrap;margin-top:18px;font-family:var(--mono);font-size:11.5px;color:rgba(255,255,255,.55)}
+.head .datos strong{color:#DEBA6B;font-size:13px;font-weight:500}
+
+/* ── BARRA FIJA ── */
+.barra{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.97);border-bottom:1px solid var(--rule);backdrop-filter:blur(6px)}
+.barra-in{max-width:880px;margin:0 auto;padding:11px 28px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.pista{flex:1;min-width:150px;height:7px;background:var(--rule);border-radius:4px;overflow:hidden}
+.relleno{height:100%;width:0;background:linear-gradient(90deg,var(--corte),var(--oro));transition:width .35s ease}
+.marcador{font-family:var(--mono);font-size:12.5px;white-space:nowrap}
+.marcador b{font-weight:500}
+.reinicio{font-family:var(--mono);font-size:11px;color:var(--ink-faint);background:none;border:1px solid var(--rule);border-radius:5px;padding:5px 11px;cursor:pointer}
+.reinicio:hover{color:var(--ink);border-color:var(--ink-soft)}
+
+/* ── PESTAÑAS DE BLOQUE ── */
+.pestanas{max-width:880px;margin:0 auto;padding:0 28px 11px;display:flex;gap:7px;overflow-x:auto}
+.pest{flex:1;min-width:58px;background:none;border:1px solid var(--rule);border-radius:7px;padding:7px 6px 8px;cursor:pointer;font-family:var(--sans);text-align:center;color:var(--ink-faint);transition:border-color .2s,color .2s}
+.pest b{display:block;font-family:var(--mono);font-size:13px;font-weight:500;line-height:1.3}
+.pest span{display:block;font-size:10px;letter-spacing:.3px}
+.pest:hover{border-color:var(--ink-soft);color:var(--ink-soft)}
+.pest[aria-selected="true"]{background:var(--corte);border-color:var(--corte);color:#fff}
+.pest[aria-selected="true"] span{color:rgba(255,255,255,.65)}
+.pest.hecho:not([aria-selected="true"]){border-color:var(--ok);color:var(--ok)}
+
+/* ── CUERPO ── */
+main{max-width:880px;margin:0 auto;padding:30px 28px 70px}
+.bloque[hidden]{display:none}
+.bloque-cab{border-left:3px solid var(--oro);padding-left:15px;margin-bottom:26px}
+.bloque-cab .n{font-family:var(--mono);font-size:11px;letter-spacing:1.4px;color:var(--oro)}
+.bloque-cab h2{font-family:var(--serif);font-size:24px;font-weight:600;line-height:1.25;margin-top:5px}
+
+.p{background:var(--white);border:1px solid var(--rule);border-radius:11px;padding:21px 22px;margin-bottom:17px}
+.p-cab{display:flex;gap:11px;align-items:baseline;margin-bottom:13px}
+.p-num{font-family:var(--mono);font-size:12px;color:var(--ink-faint);padding-top:2px}
+.enun{font-size:16.5px;line-height:1.5;font-weight:500}
+.aviso{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:1.1px;color:var(--corte);background:#EFEBF6;border-radius:4px;padding:3px 8px;margin-bottom:11px}
+.ops{display:flex;flex-direction:column;gap:8px}
+.op{display:flex;gap:11px;align-items:flex-start;border:1px solid var(--rule);border-radius:8px;padding:11px 13px;cursor:pointer;background:var(--white);text-align:left;font:inherit;color:inherit;line-height:1.45;transition:border-color .18s,background .18s}
+.op:hover:not(.bloqueada){border-color:var(--corte-2)}
+.op .letra{font-family:var(--mono);font-size:12.5px;color:var(--ink-faint);padding-top:2px;min-width:14px}
+.op.marcada{border-color:var(--corte);background:#F4F1FA}
+.op.marcada .letra{color:var(--corte)}
+.op.ok{border-color:var(--ok);background:var(--ok-claro)}
+.op.ok .letra{color:var(--ok)}
+.op.mal{border-color:var(--mal);background:var(--mal-claro)}
+.op.mal .letra{color:var(--mal)}
+.op.bloqueada{cursor:default}
+.comprobar{margin-top:11px;font-family:var(--sans);font-size:13.5px;font-weight:500;color:#fff;background:var(--corte);border:0;border-radius:7px;padding:9px 17px;cursor:pointer}
+.comprobar:hover{background:var(--corte-2)}
+.comprobar:disabled{background:var(--rule);color:var(--ink-faint);cursor:default}
+.retro{margin-top:13px;padding:12px 14px;border-radius:8px;font-size:14.5px;line-height:1.5}
+.retro b{font-weight:600;display:block;margin-bottom:3px}
+.retro.ok{background:var(--ok-claro);color:#1E4B37;border-left:3px solid var(--ok)}
+.retro.mal{background:var(--mal-claro);color:#6E1519;border-left:3px solid var(--mal)}
+
+.nav{display:flex;justify-content:space-between;gap:12px;margin-top:26px}
+.nav button{font-family:var(--sans);font-size:14px;font-weight:500;border-radius:8px;padding:11px 20px;cursor:pointer;border:1px solid var(--corte);background:var(--white);color:var(--corte)}
+.nav button:hover{background:#F3F0F8}
+.nav .avanzar{background:var(--corte);color:#fff}
+.nav .avanzar:hover{background:var(--corte-2)}
+.nav button[hidden]{display:none}
+
+/* ── RESUMEN ── */
+#resumen{display:none;background:var(--white);border:1px solid var(--rule);border-top:4px solid var(--oro);border-radius:11px;padding:30px 26px;margin-top:8px}
+#resumen.visible{display:block}
+#resumen h2{font-family:var(--serif);font-size:26px;font-weight:600}
+.nota{font-family:var(--mono);font-size:40px;font-weight:500;margin:14px 0 4px;color:var(--corte)}
+.nota span{font-size:19px;color:var(--ink-faint)}
+.veredicto{font-size:16px;color:var(--ink-soft);max-width:60ch}
+.repasar{margin-top:22px;background:var(--oro-claro);border-left:3px solid var(--oro);border-radius:0 8px 8px 0;padding:16px 18px}
+.repasar h3{font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:.3px;margin-bottom:9px}
+.repasar ul{margin:0;padding-left:19px;font-size:14.5px;line-height:1.75;color:var(--ink-soft)}
+.pie{max-width:880px;margin:0 auto;padding:0 28px 46px;font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+@media(max-width:620px){
+  .head{padding:26px 20px 24px}
+  .barra-in,.pestanas,main,.pie{padding-left:18px;padding-right:18px}
+  .pest span{display:none}
+  .p{padding:18px 16px}
+}
+</style>
+</head>
+<body>
+
+<header class="head">
+  <div class="head-in">
+    <p class="curso">2.º Bachillerato · Historia de España · Bloque B2</p>
+    <h1>Isabel II: las regencias<br>y las guerras carlistas</h1>
+    <p>Comprueba lo que has entendido del tema. Elige una opción y recibirás la corrección al instante, con la respuesta correcta y el porqué.</p>
+    <div class="datos">
+      <span><strong>30</strong> preguntas</span>
+      <span><strong>5</strong> bloques</span>
+      <span><strong>1833-1843</strong></span>
+    </div>
+  </div>
+</header>
+
+<div class="barra">
+  <div class="barra-in">
+    <div class="pista"><div class="relleno" id="relleno"></div></div>
+    <p class="marcador"><b id="respondidas">0</b>/30 respondidas · <b id="aciertos">0</b> aciertos</p>
+    <button class="reinicio" id="reinicio">Empezar de nuevo</button>
+  </div>
+  <div class="pestanas" role="tablist" id="pestanas"></div>
+</div>
+
+<main>
+  <div id="bloques"></div>
+  <section id="resumen" aria-live="polite">
+    <h2>Resultado</h2>
+    <p class="nota"><span id="nAciertos">0</span> <span>de 30</span></p>
+    <p class="veredicto" id="veredicto"></p>
+    <div class="repasar" id="repasar"></div>
+    <div class="nav" style="justify-content:flex-start">
+      <button id="otraVez">Repetir el cuestionario</button>
+    </div>
+  </section>
+</main>
+
+<p class="pie">Elaborado a partir del tema T5 del Bloque B2. Colegio El Valle.</p>
+
+<script>
+const BLOQUES = [
+  {t:"El conflicto dinástico y el ideario carlista", r:"1830-1833"},
+  {t:"La Primera Guerra Carlista", r:"1833-1839"},
+  {t:"Consecuencias y las otras guerras carlistas", r:"1846-1876"},
+  {t:"Los partidos y el Estatuto Real", r:"Partidos"},
+  {t:"Las regencias de M.ª Cristina y Espartero", r:"1834-1843"}
+];
+
+const PREGUNTAS = [
+/* BLOQUE 1 */
+{b:0,e:"¿Qué diferenció el paso al liberalismo en España respecto al resto de Europa?",
+ o:["Que aquí se produjo antes que en ningún otro país europeo",
+    "Que en España comenzó con una cruenta guerra civil, la Primera Guerra Carlista, mientras que en el resto de Europa fue más o menos pacífico",
+    "Que en España no hubo ninguna resistencia absolutista",
+    "Que fue impuesto desde fuera por la Santa Alianza"],
+ ok:[1], x:"En esa guerra no se decidió solo quién ocupaba el trono, sino el mantenimiento del absolutismo o el establecimiento de un régimen liberal.",
+ tema:"el carácter conflictivo del liberalismo en España"},
+
+{b:0,e:"¿En qué dos etapas se divide el reinado de Isabel II (1833-1868)?",
+ o:["Década Moderada (1833-1843) y Bienio Progresista (1843-1868)",
+    "Regencia de Espartero (1833-1840) y regencia de Narváez (1840-1868)",
+    "Minoría de edad (1833-1843), con las regencias de M.ª Cristina y de Espartero, y reinado efectivo (1843-1868)",
+    "Sexenio absolutista (1833-1840) y reinado efectivo (1840-1868)"],
+ ok:[2], x:"Dentro de la minoría: regencia de M.ª Cristina de Borbón, su madre (1833-1840), y regencia de Espartero (1840-1843).",
+ tema:"las dos etapas del reinado de Isabel II"},
+
+{b:0,e:"¿Qué consecuencia política tuvo la Pragmática Sanción de 1830 al morir Fernando VII?",
+ o:["Isabel heredó el trono al anularse la Ley Sálica, quedando excluido don Carlos M.ª Isidro: fue el triunfo de los liberales sobre los realistas puros o apostólicos",
+    "Don Carlos M.ª Isidro fue reconocido como rey por las Cortes",
+    "Se restableció la Constitución de 1812 de forma automática",
+    "La corona pasó a una regencia designada por las potencias europeas"],
+ ok:[0], x:"Los liberales apoyan a Isabel II; los ultras o apostólicos respaldaban a Carlos María Isidro desde 1826.",
+ tema:"la Pragmática Sanción y el triunfo de los liberales"},
+
+{b:0,doble:true,e:"Señala los dos rasgos que definen el ideario carlista.",
+ o:["La tradición política del absolutismo monárquico y la restauración del poder de la Iglesia, con un catolicismo excluyente",
+    "La defensa de las instituciones y los fueros históricos de vascos, navarros y catalanes frente a la uniformidad política y jurídica liberal",
+    "La idealización de la sociedad urbana e industrial burguesa",
+    "La implantación del sufragio universal masculino"],
+ ok:[0,1], x:"El carlismo idealizaba el medio rural y rechazaba la sociedad urbana e industrial: la Constitución de 1812 ya había recogido la centralización del Estado frente a las peculiaridades históricas de los reinos.",
+ tema:"el ideario carlista"},
+
+{b:0,e:"¿Cuáles eran los dos apoyos sociales básicos del carlismo?",
+ o:["La alta burguesía industrial y la oficialidad del ejército",
+    "Un sector del clero, que veía en el liberalismo el gran enemigo de la Iglesia, y el pequeño campesinado, tradicionalmente conservador",
+    "Los grandes terratenientes y los comerciantes de las ciudades",
+    "Los artesanos urbanos y los empleados públicos"],
+ ok:[1], x:"El pequeño campesinado veía amenazadas sus tradiciones y su situación económica por las reformas liberales.",
+ tema:"los apoyos sociales del carlismo"},
+
+{b:0,e:"¿En qué territorios arraigó fundamentalmente el carlismo?",
+ o:["En Andalucía, Extremadura y las dos Castillas",
+    "En las grandes ciudades industriales del litoral",
+    "En Galicia y Asturias, por su aislamiento geográfico",
+    "En las zonas rurales de las Vascongadas, Navarra, Aragón, la Cataluña interior y el Maestrazgo"],
+ ok:[3], x:"Son territorios donde el pequeño campesinado era numeroso; en cambio, las ciudades apoyaban al liberalismo.",
+ tema:"las áreas geográficas del carlismo"},
+
+/* BLOQUE 2 */
+{b:1,e:"¿Cómo fue la Primera Guerra Carlista (1833-1840) y cómo empezó?",
+ o:["Fue el más largo y cruel de los tres conflictos, con casi 200.000 muertos; los primeros levantamientos se produjeron a los pocos días de la muerte de Fernando VII, por los seguidores del autoproclamado Carlos V",
+    "Fue un conflicto breve que se resolvió en pocos meses",
+    "Comenzó en 1846, tras la abdicación de Carlos M.ª Isidro",
+    "Se inició con la sublevación de la Guardia Real en La Granja"],
+ ok:[0], x:"Los levantamientos fueron sofocados con rapidez salvo donde el ideario carlista estaba más arraigado.",
+ tema:"el inicio y la magnitud de la Primera Guerra Carlista"},
+
+{b:1,e:"¿Quiénes dirigieron cada bando en la primera etapa (1833-1835)?",
+ o:["Cabrera el ejército carlista del norte y Zumalacárregui el cristino",
+    "Zumalacárregui a los carlistas en el País Vasco y Navarra, Cabrera en el norte de Cataluña y el Maestrazgo, y Espartero el ejército cristino",
+    "Maroto a los carlistas y Narváez al ejército isabelino",
+    "Don Carlos en persona a los carlistas y Gutiérrez de la Concha al ejército liberal"],
+ ok:[1], x:"Dos focos carlistas, norte y Maestrazgo, frente al ejército cristino o isabelino dirigido por Baldomero Espartero.",
+ tema:"los jefes militares de la primera etapa"},
+
+{b:1,e:"¿Cuál fue el límite militar del carlismo en la zona vasco-navarra?",
+ o:["Dominó los espacios rurales, pero nunca consiguió conquistar las ciudades, que apoyaban al liberalismo",
+    "Dominó las ciudades, pero no logró penetrar en el campo",
+    "No consiguió asentarse en ningún punto del territorio",
+    "Conquistó Bilbao y la mantuvo hasta el final de la guerra"],
+ ok:[0], x:"De ahí el empeño en tomar Bilbao: en su primer sitio, en 1835, murió Zumalacárregui.",
+ tema:"el dominio rural carlista y la resistencia de las ciudades"},
+
+{b:1,e:"¿Qué fue la Expedición Real de la segunda etapa (1835-1837)?",
+ o:["El envío de tropas carlistas a América para buscar apoyos",
+    "La incursión del pretendiente don Carlos hasta las puertas de Madrid, que fracasó y terminó con su vuelta a los reductos del norte peninsular",
+    "El traslado de la corte isabelina a Sevilla ante el avance carlista",
+    "La expedición de Espartero para romper el cerco de Bilbao"],
+ ok:[1], x:"Fue uno de los intentos carlistas de romper su confinamiento y extender la guerra al centro y el sur del país.",
+ tema:"la Expedición Real de don Carlos"},
+
+{b:1,e:"¿Qué significó la batalla de Luchana, a finales de 1836?",
+ o:["La derrota definitiva del ejército isabelino en el norte",
+    "La entrada de las tropas carlistas en Madrid",
+    "Los liberales dirigidos por Espartero rompieron el cerco de Bilbao, lo que marcó un definitivo cambio de tendencia en la guerra",
+    "El inicio de las negociaciones de paz entre Maroto y Espartero"],
+ ok:[2], x:"El fracaso del segundo asedio de Bilbao cierra la segunda etapa e inclina la guerra del lado liberal.",
+ tema:"la batalla de Luchana y el giro de la guerra"},
+
+{b:1,doble:true,e:"Señala las dos afirmaciones correctas sobre el final de la guerra.",
+ o:["En la tercera etapa (1837-1839) creció la división entre transaccionistas, partidarios de un acuerdo, e intransigentes o apostólicos, que querían continuar el conflicto",
+    "El Convenio de Vergara (agosto de 1839) lo firmaron Espartero y Maroto, y comprometía al Estado a admitir a los militares carlistas en el ejército manteniendo sus grados y a estudiar el mantenimiento de los fueros vascos",
+    "La guerra terminó con la victoria carlista y la coronación de Carlos V",
+    "El convenio obligó a Isabel II a abdicar en don Carlos"],
+ ok:[0,1], x:"Maroto encabezó a los transaccionistas y mandó fusilar a los mandos contrarios al acuerdo de paz.",
+ tema:"la división carlista y el Convenio de Vergara"},
+
+/* BLOQUE 3 */
+{b:2,e:"¿Qué consecuencia política fundamental tuvo la Primera Guerra Carlista?",
+ o:["La inclinación de la monarquía hacia el liberalismo, que se convirtió en el principal apoyo de Isabel II, y la derrota del tradicionalismo",
+    "El restablecimiento del absolutismo como régimen estable",
+    "La implantación inmediata del sufragio universal",
+    "La independencia foral del País Vasco y Navarra"],
+ ok:[0], x:"El absolutismo queda eliminado como opción política viable para el resto del siglo.",
+ tema:"la inclinación de la monarquía hacia el liberalismo"},
+
+{b:2,e:"¿Quiénes eran los espadones y qué papel desempeñaron?",
+ o:["Los jefes carlistas que se negaron a firmar el Convenio de Vergara",
+    "Los diputados que redactaron la Constitución de 1837",
+    "Los militares que, como defensores de la monarquía liberal, se pusieron al frente de los partidos y se erigieron en árbitros de la vida política, promoviendo cambios de gobierno mediante pronunciamientos",
+    "Los sargentos sublevados en el palacio de La Granja"],
+ ok:[2], x:"De ahí que se hable de la Era de los Pronunciamientos: el ejército se convierte en actor político de primer orden.",
+ tema:"los espadones y la Era de los Pronunciamientos"},
+
+{b:2,e:"¿Cómo se intentó paliar el pesado lastre económico que dejaron las guerras?",
+ o:["Con la Desamortización de Mendizábal",
+    "Con nuevos préstamos de la Santa Alianza",
+    "Con el restablecimiento del diezmo eclesiástico",
+    "Con la venta de las últimas colonias americanas"],
+ ok:[0], x:"Mantener un ejército en permanente estado de alerta resultaba muy costoso para una Hacienda ya exhausta.",
+ tema:"el lastre económico y la Desamortización de Mendizábal"},
+
+{b:2,e:"¿Dónde se desarrolló fundamentalmente la Segunda Guerra Carlista (1846-1849)?",
+ o:["En Navarra y el País Vasco",
+    "En Cataluña, donde los carlistas llegaron hasta Barcelona y fueron derrotados por Manuel Gutiérrez de la Concha",
+    "En el Maestrazgo y Valencia",
+    "En Galicia y Asturias"],
+ ok:[1], x:"Carlos M.ª Isidro había abdicado en 1845 en su hijo Carlos Luis de Borbón, Carlos VI, que intentó casarse con Isabel II.",
+ tema:"la Segunda Guerra Carlista"},
+
+{b:2,e:"¿Qué desencadenó la Tercera Guerra Carlista (1872-1876) y cómo terminó?",
+ o:["La muerte de Isabel II; terminó con la restauración de los fueros",
+    "La proclamación de la Primera República; terminó con la victoria carlista en Navarra",
+    "La Desamortización de Madoz; terminó con el Convenio de Vergara",
+    "El acceso al trono de Amadeo de Saboya en 1871, que provocó el ataque carlista; en 1876 Alfonso XII la terminó promulgando una nueva constitución y eliminando definitivamente los fueros navarros y vascos"],
+ ok:[3], x:"Se localizó en el País Vasco, Cataluña, el Maestrazgo y Navarra, y fue sofocada por el ejército liberal.",
+ tema:"la Tercera Guerra Carlista y el fin de los fueros"},
+
+{b:2,e:"¿Qué consecuencia a largo plazo tuvo la eliminación de los fueros vascos y navarros?",
+ o:["El carlismo desapareció por completo de la vida política española",
+    "Los fueros fueron restituidos pocos años después por Alfonso XII",
+    "Dio lugar al nacimiento de los nacionalismos periféricos y a la fundación del Partido Nacionalista Vasco",
+    "Se creó un Estado federal con amplias autonomías"],
+ ok:[2], x:"El carlismo se mantuvo más como corriente ideológica que como partido político, pero su herencia foral alimentó el nacionalismo.",
+ tema:"los fueros y el nacimiento de los nacionalismos periféricos"},
+
+/* BLOQUE 4 */
+{b:3,e:"¿Qué defendía el Partido Moderado?",
+ o:["La soberanía nacional representada únicamente en las Cortes",
+    "Un liberalismo doctrinario, con soberanía compartida entre el rey y las Cortes, amplios poderes para el monarca y limitación de los derechos individuales",
+    "La república y el sufragio universal masculino",
+    "La vuelta al absolutismo y la abolición de las Cortes"],
+ ok:[1], x:"Procedían de los antiguos doceañistas y se apoyaban en los grandes terratenientes, la alta burguesía y la clase media alta. Su líder fue el general Narváez.",
+ tema:"el ideario y la base social del Partido Moderado"},
+
+{b:3,e:"¿Qué defendía el Partido Progresista y quién fue su líder indiscutible?",
+ o:["La soberanía nacional representada en las Cortes y la limitación de los poderes del rey; su líder fue Baldomero Espartero",
+    "La soberanía compartida y el reforzamiento de la Corona; su líder fue Narváez",
+    "El mantenimiento de los fueros históricos; su líder fue Maroto",
+    "La confesionalidad excluyente del Estado; su líder fue Martínez de la Rosa"],
+ ok:[0], x:"Procedían de los antiguos exaltados o veinteañistas y se apoyaban en la pequeña y mediana burguesía, las clases medias, empleados y artesanos.",
+ tema:"el ideario y la base social del Partido Progresista"},
+
+{b:3,doble:true,e:"Señala las dos diferencias correctas entre moderados y progresistas.",
+ o:["Los moderados defendían la confesionalidad del Estado y los progresistas la aconfesionalidad",
+    "Los moderados limitaban los derechos individuales, sobre todo los colectivos, mientras los progresistas defendían su ampliación",
+    "Los progresistas defendían la soberanía compartida entre el rey y las Cortes",
+    "Los moderados proponían el sufragio universal masculino"],
+ ok:[0,1], x:"Ambos partidos defendían el sufragio restringido, aunque los progresistas pretendían ampliar el cuerpo electoral.",
+ tema:"las diferencias entre moderados y progresistas"},
+
+{b:3,e:"¿Qué escisiones sufrieron ambos partidos a mediados del siglo XIX?",
+ o:["El Partido Carlista y el Partido Republicano",
+    "El Partido Demócrata y la Unión Liberal",
+    "El Partido Nacionalista Vasco y la Lliga",
+    "Los transaccionistas y los apostólicos"],
+ ok:[1], x:"Aparecen ya en el periodo del reinado efectivo de Isabel II.",
+ tema:"el Partido Demócrata y la Unión Liberal"},
+
+{b:3,e:"¿Qué era el Estatuto Real de 1834, obra de Martínez de la Rosa?",
+ o:["La primera constitución del reinado de Isabel II, aprobada en Cortes",
+    "Un decreto que restablecía la Constitución de 1812",
+    "Una ley electoral que implantaba el sufragio universal masculino",
+    "No era propiamente una constitución, sino una carta otorgada: una concesión real en un acto de soberana voluntad"],
+ ok:[3], x:"Como el Estatuto de Bayona: la reina, sin despojarse de sus poderes, admite reformar las Cortes del Antiguo Régimen.",
+ tema:"el Estatuto Real de 1834 como carta otorgada"},
+
+{b:3,e:"¿Qué sistema de representación establecía el Estatuto Real?",
+ o:["Una cámara única elegida por sufragio universal",
+    "Un sistema bicameral con un Estamento de Próceres, nombrado por la reina entre la oligarquía, y otro de Procuradores, elegidos por sufragio restringido",
+    "Unas Cortes estamentales con representación del clero, la nobleza y el pueblo llano",
+    "Un parlamento elegido por los ayuntamientos"],
+ ok:[1], x:"El rey convocaba, suspendía y disolvía las Cortes, que eran eminentemente consultivas; la ley electoral reducía el censo a unos 16.000 electores, el 0,15 % de la población.",
+ tema:"el bicameralismo y el sufragio censitario del Estatuto Real"},
+
+/* BLOQUE 5 */
+{b:4,e:"¿Qué hizo la regente al nombrar a Juan Álvarez Mendizábal, primero ministro de Hacienda y después presidente?",
+ o:["Frenar el descontento progresista; Mendizábal llevó a cabo un amplio programa desamortizador de bienes pertenecientes a la Iglesia",
+    "Restablecer la Inquisición y el diezmo",
+    "Suprimir la Milicia Nacional",
+    "Convocar unas Cortes estamentales"],
+ ok:[0], x:"Entre 1836 y 1837 se desamortiza y se emprenden grandes medidas de liberalización: desaparición de los señoríos, desvinculación de los mayorazgos y abolición de la Mesta y los gremios.",
+ tema:"Mendizábal y el programa desamortizador"},
+
+{b:4,e:"¿Qué provocó el Motín de la Granja o Sargenteada (1836)?",
+ o:["La abdicación de la regente en favor de Espartero",
+    "El pronunciamiento de los sargentos de la Guardia Real obligó a la regente a nombrar presidente al progresista Calatrava y a restablecer la Constitución de 1812",
+    "La disolución del Partido Progresista",
+    "El fin de la Primera Guerra Carlista"],
+ ok:[1], x:"Lo desencadenó la destitución de Mendizábal y el nombramiento del moderado Istúriz; el nuevo gobierno convocó Cortes Constituyentes.",
+ tema:"el Motín de la Granja y el restablecimiento de la Constitución de 1812"},
+
+{b:4,e:"¿Cómo se eligieron las Cortes Constituyentes que elaboraron la Constitución de 1837 y cuál es la importancia del texto?",
+ o:["Por sufragio censitario según la ley electoral de 1834; su importancia es que restablecía el Antiguo Régimen",
+    "Por designación real; su importancia es que creaba el Estamento de Próceres",
+    "Al amparo de la Constitución de 1812, por sufragio universal y no censitario; su importancia es que implantaba definitivamente el régimen constitucional en España",
+    "Por los ayuntamientos; su importancia es que suprimía la Milicia Nacional"],
+ ok:[2], x:"Las Cortes, de claro predominio progresista, iniciaron la reforma de la Constitución de 1812, pero acabaron promulgando un texto nuevo.",
+ tema:"el origen y la importancia de la Constitución de 1837"},
+
+{b:4,doble:true,e:"La Constitución de 1837 combina rasgos de ambas tendencias. Señala los dos correctos.",
+ o:["De signo progresista: la soberanía nacional y la recuperación de la Milicia Nacional como garante de las libertades",
+    "De signo moderado: unas Cortes bicamerales, con un Senado integrado por miembros de designación real",
+    "Era una carta otorgada concedida por la reina sin intervención de las Cortes",
+    "Establecía el sufragio universal masculino para elegir el Congreso"],
+ ok:[0,1], x:"El Congreso se elegía por sufragio directo y censitario, aunque más amplio que el del Estatuto Real. El rey conservaba el veto y la potestad de convocar y disolver las Cortes.",
+ tema:"los rasgos progresistas y moderados de la Constitución de 1837"},
+
+{b:4,e:"¿Qué provocó el fin de la regencia de M.ª Cristina en 1840?",
+ o:["Su derrota en la Primera Guerra Carlista",
+    "Un pronunciamiento encabezado por Narváez",
+    "La muerte de Isabel II",
+    "El Proyecto de Ley de Ayuntamientos, que pretendía que los alcaldes fueran designados por el gobierno y provocó una sublevación encabezada por Espartero; la regente renunció y se exilió a Francia"],
+ ok:[3], x:"Espartero gozaba de gran prestigio como El Pacificador de la Primera Guerra Carlista, reforzado por su papel en la Revolución de 1840.",
+ tema:"la Ley de Ayuntamientos y la caída de M.ª Cristina"},
+
+{b:4,e:"¿Por qué fracasó la regencia de Espartero (1841-1843)?",
+ o:["Por su autoritarismo y su política librecambista, que al suprimir los aranceles a los textiles ingleses provocó en 1842 un motín en Barcelona y el bombardeo de la ciudad; perdió todos sus apoyos y un pronunciamiento de Narváez la puso fin en 1843",
+    "Porque perdió la Segunda Guerra Carlista",
+    "Porque restableció el Estatuto Real de 1834",
+    "Porque Isabel II alcanzó la mayoría de edad en 1841"],
+ ok:[0], x:"A ello se sumó el fusilamiento del general moderado Diego de León, acusado de instigar contra él.",
+ tema:"el autoritarismo de Espartero y el fin de su regencia"}
+];
+
+const LETRAS = ['a','b','c','d'];
+const estado = PREGUNTAS.map(() => ({resuelta:false, acierto:false, marcadas:[]}));
+
+const elPest = document.getElementById('pestanas');
+const elBloques = document.getElementById('bloques');
+
+/* ── Construcción ── */
+BLOQUES.forEach((bl, i) => {
+  const t = document.createElement('button');
+  t.className = 'pest'; t.type = 'button'; t.setAttribute('role','tab');
+  t.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+  t.innerHTML = '<b>' + (i+1) + '</b><span>' + bl.r + '</span>';
+  t.addEventListener('click', () => irA(i));
+  elPest.appendChild(t);
+
+  const sec = document.createElement('section');
+  sec.className = 'bloque'; sec.hidden = i !== 0;
+  sec.innerHTML = '<div class="bloque-cab"><p class="n">Bloque ' + (i+1) + ' de 5</p><h2>' + bl.t + '</h2></div>';
+  elBloques.appendChild(sec);
+});
+
+PREGUNTAS.forEach((p, idx) => {
+  const sec = elBloques.children[p.b];
+  const card = document.createElement('article');
+  card.className = 'p'; card.id = 'p' + idx;
+
+  const cab = document.createElement('div');
+  cab.className = 'p-cab';
+  cab.innerHTML = '<span class="p-num">' + (idx+1) + '</span><p class="enun">' + p.e + '</p>';
+  card.appendChild(cab);
+
+  if (p.doble) {
+    const av = document.createElement('p');
+    av.className = 'aviso'; av.textContent = 'Doble respuesta: marca las dos opciones';
+    card.appendChild(av);
+  }
+
+  const ops = document.createElement('div');
+  ops.className = 'ops';
+  p.o.forEach((texto, j) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'op';
+    b.innerHTML = '<span class="letra">' + LETRAS[j] + '</span><span>' + texto + '</span>';
+    b.addEventListener('click', () => elegir(idx, j));
+    ops.appendChild(b);
+  });
+  card.appendChild(ops);
+
+  if (p.doble) {
+    const btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'comprobar'; btn.textContent = 'Comprobar respuesta';
+    btn.disabled = true;
+    btn.addEventListener('click', () => corregir(idx));
+    card.appendChild(btn);
+  }
+
+  const r = document.createElement('div');
+  r.className = 'retro'; r.hidden = true;
+  card.appendChild(r);
+  sec.appendChild(card);
+});
+
+BLOQUES.forEach((bl, i) => {
+  const sec = elBloques.children[i];
+  const nav = document.createElement('div');
+  nav.className = 'nav';
+  const atras = document.createElement('button');
+  atras.type = 'button'; atras.textContent = 'Bloque anterior';
+  atras.hidden = i === 0;
+  atras.addEventListener('click', () => irA(i-1));
+  const alante = document.createElement('button');
+  alante.type = 'button'; alante.className = 'avanzar';
+  alante.textContent = i === BLOQUES.length - 1 ? 'Ver resultado' : 'Siguiente bloque';
+  alante.addEventListener('click', () => i === BLOQUES.length - 1 ? verResultado() : irA(i+1));
+  nav.appendChild(atras); nav.appendChild(alante);
+  sec.appendChild(nav);
+});
+
+/* ── Interacción ── */
+function elegir(idx, j) {
+  const e = estado[idx];
+  if (e.resuelta) return;
+  const p = PREGUNTAS[idx];
+  const card = document.getElementById('p' + idx);
+  const botones = card.querySelectorAll('.op');
+
+  if (!p.doble) {
+    e.marcadas = [j];
+    corregir(idx);
+    return;
+  }
+  const pos = e.marcadas.indexOf(j);
+  if (pos >= 0) e.marcadas.splice(pos, 1);
+  else if (e.marcadas.length < 2) e.marcadas.push(j);
+  botones.forEach((b, k) => b.classList.toggle('marcada', e.marcadas.indexOf(k) >= 0));
+  card.querySelector('.comprobar').disabled = e.marcadas.length !== 2;
+}
+
+function corregir(idx) {
+  const e = estado[idx];
+  if (e.resuelta) return;
+  const p = PREGUNTAS[idx];
+  const card = document.getElementById('p' + idx);
+  const botones = card.querySelectorAll('.op');
+
+  const acierto = e.marcadas.length === p.ok.length && p.ok.every(k => e.marcadas.indexOf(k) >= 0);
+  e.resuelta = true; e.acierto = acierto;
+
+  botones.forEach((b, k) => {
+    b.classList.remove('marcada');
+    b.classList.add('bloqueada');
+    b.disabled = true;
+    if (p.ok.indexOf(k) >= 0) b.classList.add('ok');
+    else if (e.marcadas.indexOf(k) >= 0) b.classList.add('mal');
+  });
+  if (p.doble) card.querySelector('.comprobar').remove();
+
+  const r = card.querySelector('.retro');
+  const correctas = p.ok.map(k => LETRAS[k]).join(' y ');
+  r.hidden = false;
+  r.className = 'retro ' + (acierto ? 'ok' : 'mal');
+  r.innerHTML = '<b>' + (acierto ? 'Correcto.' : 'No es la respuesta.') + '</b>' +
+                (acierto ? '' : 'La ' + (p.ok.length > 1 ? 'respuesta correcta son las opciones ' : 'respuesta correcta es la opción ') + correctas + '. ') + p.x;
+
+  actualizar();
+}
+
+function actualizar() {
+  const hechas = estado.filter(e => e.resuelta).length;
+  const bien = estado.filter(e => e.acierto).length;
+  document.getElementById('respondidas').textContent = hechas;
+  document.getElementById('aciertos').textContent = bien;
+  document.getElementById('relleno').style.width = (hechas / PREGUNTAS.length * 100) + '%';
+  BLOQUES.forEach((bl, i) => {
+    const total = PREGUNTAS.filter(p => p.b === i).length;
+    const listas = PREGUNTAS.filter((p, k) => p.b === i && estado[k].resuelta).length;
+    elPest.children[i].classList.toggle('hecho', listas === total);
+  });
+}
+
+function irA(i) {
+  Array.from(elBloques.children).forEach((s, k) => { s.hidden = k !== i; });
+  Array.from(elPest.children).forEach((t, k) => t.setAttribute('aria-selected', k === i ? 'true' : 'false'));
+  document.getElementById('resumen').classList.remove('visible');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function verResultado() {
+  const bien = estado.filter(e => e.acierto).length;
+  const sin = estado.filter(e => !e.resuelta).length;
+  document.getElementById('nAciertos').textContent = bien;
+
+  let msg;
+  if (bien >= 28) msg = 'Dominas el tema. Estás en condiciones de desarrollarlo por escrito en el examen.';
+  else if (bien >= 23) msg = 'Muy buen nivel. Solo te faltan matices de detalle.';
+  else if (bien >= 19) msg = 'Comprensión sólida, pero conviene repasar los puntos fallados antes de redactar el tema.';
+  else if (bien >= 13) msg = 'Base aceptable: necesitas una segunda lectura del tema, sobre todo de las etapas de la guerra y de los partidos.';
+  else msg = 'Vuelve al tema con calma antes de repetir el cuestionario: falta asentar los hechos básicos.';
+  if (sin > 0) msg += ' Te quedan ' + sin + ' preguntas sin responder.';
+  document.getElementById('veredicto').textContent = msg;
+
+  const fallos = PREGUNTAS.filter((p, i) => estado[i].resuelta && !estado[i].acierto).map(p => p.tema);
+  const caja = document.getElementById('repasar');
+  if (fallos.length === 0 && sin === 0) {
+    caja.innerHTML = '<h3>Qué repasar</h3><p style="font-size:14.5px;color:var(--ink-soft)">No has fallado ninguna pregunta: el tema está asentado.</p>';
+  } else if (fallos.length === 0) {
+    caja.innerHTML = '<h3>Qué repasar</h3><p style="font-size:14.5px;color:var(--ink-soft)">De momento no has fallado nada. Termina las preguntas pendientes para tener el resultado completo.</p>';
+  } else {
+    caja.innerHTML = '<h3>Conviene repasar</h3><ul>' + fallos.map(f => '<li>' + f + '</li>').join('') + '</ul>';
+  }
+
+  Array.from(elBloques.children).forEach(s => { s.hidden = true; });
+  document.getElementById('resumen').classList.add('visible');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+document.getElementById('otraVez').addEventListener('click', reiniciar);
+document.getElementById('reinicio').addEventListener('click', reiniciar);
+
+function reiniciar() {
+  location.reload();
+}
+
+actualizar();
+</script>
+</body>
+</html>
