@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tarjetas didácticas · Isabel II: el reinado efectivo</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  :root{
+    --vellum:    #e9e0cb;
+    --vellum-dk: #ddd1b4;
+    --ink:       #2a2118;
+    --ink-soft:  #5a4d3a;
+    --gold:      #a8842c;
+    --gold-lt:   #c9a64e;
+    --porphyry:  #7d2e3a;
+    --porphyry-dk:#5f1f29;
+    --verdigris: #3f6b5c;
+    --line:      rgba(42,33,24,.18);
+    --shadow:    rgba(42,33,24,.28);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0;}
+
+  body{
+    font-family:'Spectral',Georgia,serif;
+    color:var(--ink);
+    background:
+      radial-gradient(circle at 20% 10%, rgba(168,132,44,.10), transparent 45%),
+      radial-gradient(circle at 85% 90%, rgba(125,46,58,.10), transparent 45%),
+      var(--vellum);
+    background-attachment:fixed;
+    min-height:100vh;
+    padding:2rem 1.25rem 4rem;
+    -webkit-tap-highlight-color:transparent;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    mix-blend-mode:multiply;
+  }
+
+  .wrap{max-width:760px;margin:0 auto;position:relative;z-index:1;}
+
+  /* ---------- Cabecera ---------- */
+  header{text-align:center;margin-bottom:1.6rem;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--porphyry);margin-bottom:.7rem;
+  }
+  h1{
+    font-family:'Cinzel',serif;font-weight:700;
+    font-size:clamp(1.7rem,5.5vw,2.7rem);
+    line-height:1.05;color:var(--ink);
+    letter-spacing:.01em;
+  }
+  h1 .crown{display:block;color:var(--gold);font-size:1.4rem;margin-bottom:.3rem;}
+  .sub{
+    margin-top:.6rem;color:var(--ink-soft);font-style:italic;
+    font-size:.95rem;
+  }
+  .rule{
+    width:140px;height:2px;margin:1.1rem auto 0;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  }
+
+  /* ---------- Barra de control ---------- */
+  .controls{
+    display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;
+    margin:1.6rem 0 1.2rem;
+  }
+  .btn{
+    font-family:'IBM Plex Mono',monospace;font-size:.72rem;
+    letter-spacing:.12em;text-transform:uppercase;
+    padding:.6rem 1rem;border:1.5px solid var(--ink);
+    background:transparent;color:var(--ink);cursor:pointer;
+    border-radius:2px;transition:all .18s ease;
+  }
+  .btn:hover{background:var(--ink);color:var(--vellum);}
+  .btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px;}
+  .btn.primary{background:var(--porphyry);border-color:var(--porphyry);color:var(--vellum);}
+  .btn.primary:hover{background:var(--porphyry-dk);border-color:var(--porphyry-dk);}
+
+  /* ---------- Progreso ---------- */
+  .meta{
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:'IBM Plex Mono',monospace;font-size:.72rem;
+    color:var(--ink-soft);letter-spacing:.08em;margin-bottom:.7rem;
+    padding:0 .2rem;
+  }
+  .tag{
+    font-family:'IBM Plex Mono',monospace;font-size:.62rem;
+    letter-spacing:.16em;text-transform:uppercase;
+    padding:.25rem .55rem;border-radius:2px;
+    color:var(--vellum);background:var(--verdigris);
+  }
+  .tag.fecha{background:var(--gold);}
+  .tag.causa{background:var(--porphyry);}
+  .tag.concepto{background:var(--verdigris);}
+  .tag.institucion{background:#4a5a78;}
+
+  /* ---------- Tarjeta ---------- */
+  .stage{perspective:1600px;margin-bottom:1.2rem;}
+  .card{
+    position:relative;width:100%;min-height:340px;
+    transform-style:preserve-3d;transition:transform .6s cubic-bezier(.4,.1,.2,1);
+    cursor:pointer;
+  }
+  .card.flipped{transform:rotateY(180deg);}
+  .face{
+    position:absolute;inset:0;backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
+    border-radius:6px;padding:2.2rem 2rem;
+    display:flex;flex-direction:column;
+    box-shadow:0 18px 38px -16px var(--shadow), 0 0 0 1px var(--line);
+    overflow:auto;
+  }
+  .face::after{
+    content:"";position:absolute;inset:.55rem;border:1px solid var(--line);
+    border-radius:3px;pointer-events:none;
+  }
+  .front{
+    background:linear-gradient(160deg,var(--vellum) 0%,var(--vellum-dk) 100%);
+  }
+  .back{
+    background:linear-gradient(160deg,#2f2519 0%,#241c12 100%);
+    color:var(--vellum);transform:rotateY(180deg);
+  }
+  .back::after{border-color:rgba(201,166,78,.3);}
+
+  .corner{
+    position:absolute;top:1.1rem;right:1.3rem;
+    font-family:'Cinzel',serif;font-size:.85rem;font-weight:600;
+    color:var(--gold);letter-spacing:.05em;z-index:2;
+  }
+  .card-label{
+    font-family:'IBM Plex Mono',monospace;font-size:.65rem;
+    letter-spacing:.2em;text-transform:uppercase;
+    color:var(--porphyry);margin-bottom:1.1rem;
+  }
+  .back .card-label{color:var(--gold);}
+  .q{
+    font-family:'Cinzel',serif;font-weight:600;
+    font-size:clamp(1.25rem,3.6vw,1.7rem);line-height:1.3;
+    margin:auto 0;
+  }
+  .a{
+    font-size:clamp(1rem,2.6vw,1.15rem);line-height:1.6;
+    margin:auto 0;
+  }
+  .a strong{color:var(--gold-lt);font-weight:600;}
+  .hint-flip{
+    position:absolute;bottom:1.2rem;left:0;right:0;text-align:center;
+    font-family:'IBM Plex Mono',monospace;font-size:.62rem;
+    letter-spacing:.16em;text-transform:uppercase;opacity:.5;
+  }
+
+  /* ---------- Autoevaluación ---------- */
+  .judge{
+    display:flex;gap:.8rem;justify-content:center;margin-bottom:1rem;
+    opacity:0;pointer-events:none;transition:opacity .3s ease;
+  }
+  .judge.show{opacity:1;pointer-events:auto;}
+  .judge button{
+    flex:1;max-width:200px;font-family:'IBM Plex Mono',monospace;
+    font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;
+    padding:.8rem;border-radius:3px;cursor:pointer;border:1.5px solid;
+    transition:all .18s ease;
+  }
+  .know{background:transparent;border-color:var(--verdigris);color:var(--verdigris);}
+  .know:hover{background:var(--verdigris);color:var(--vellum);}
+  .dont{background:transparent;border-color:var(--porphyry);color:var(--porphyry);}
+  .dont:hover{background:var(--porphyry);color:var(--vellum);}
+
+  /* ---------- Navegación ---------- */
+  .nav{display:flex;justify-content:space-between;align-items:center;gap:1rem;}
+  .nav button{
+    font-family:'Cinzel',serif;font-size:1rem;font-weight:600;
+    background:transparent;border:none;color:var(--ink);cursor:pointer;
+    padding:.5rem .8rem;border-radius:3px;transition:background .15s;
+  }
+  .nav button:hover:not(:disabled){background:rgba(42,33,24,.08);}
+  .nav button:disabled{opacity:.25;cursor:default;}
+  .dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;max-width:60%;}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--line);transition:all .2s;}
+  .dot.active{background:var(--porphyry);transform:scale(1.5);}
+  .dot.known{background:var(--verdigris);}
+  .dot.unknown{background:var(--gold);}
+
+  /* ---------- Resumen ---------- */
+  .summary{
+    background:linear-gradient(160deg,#2f2519,#241c12);color:var(--vellum);
+    border-radius:6px;padding:2.4rem 2rem;text-align:center;
+    box-shadow:0 18px 38px -16px var(--shadow);display:none;
+  }
+  .summary h2{font-family:'Cinzel',serif;color:var(--gold);font-size:1.6rem;margin-bottom:1.2rem;}
+  .score{display:flex;justify-content:center;gap:2.5rem;margin:1.5rem 0;}
+  .score div{font-family:'IBM Plex Mono',monospace;}
+  .score .n{font-size:2.4rem;font-family:'Cinzel',serif;display:block;}
+  .score .ok .n{color:#7fb89e;}
+  .score .ko .n{color:var(--gold-lt);}
+  .score span.lbl{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;opacity:.7;}
+  .summary p{font-style:italic;opacity:.85;margin-bottom:1.6rem;line-height:1.5;}
+
+  footer{text-align:center;margin-top:2.5rem;font-family:'IBM Plex Mono',monospace;
+    font-size:.62rem;letter-spacing:.14em;color:var(--ink-soft);opacity:.7;text-transform:uppercase;}
+
+  @media(max-width:480px){
+    .face{padding:1.8rem 1.4rem;}
+    .dots{display:none;}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .card{transition:none;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Historia de España · 2.º Bachillerato</div>
+    <h1><span class="crown">✦</span>Isabel II:<br>el reinado efectivo</h1>
+    <div class="sub">Bloque B · B2.2 · Tarjetas de repaso para la PAU</div>
+    <div class="rule"></div>
+  </header>
+
+  <div class="controls">
+    <button class="btn primary" id="shuffle">↻ Barajar</button>
+    <button class="btn" id="restart">Reiniciar repaso</button>
+    <button class="btn" id="onlyFails" disabled>Repasar fallos</button>
+  </div>
+
+  <div class="meta">
+    <span id="counter">Tarjeta 1 / 40</span>
+    <span class="tag" id="typeTag">Concepto</span>
+  </div>
+
+  <div class="stage">
+    <div class="card" id="card">
+      <div class="face front">
+        <span class="corner" id="cornerFront"></span>
+        <div class="card-label">Pregunta</div>
+        <div class="q" id="question"></div>
+        <div class="hint-flip">Toca para ver la respuesta</div>
+      </div>
+      <div class="face back">
+        <span class="corner" id="cornerBack"></span>
+        <div class="card-label">Respuesta</div>
+        <div class="a" id="answer"></div>
+        <div class="hint-flip">Toca para volver</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="judge" id="judge">
+    <button class="know" id="know">✓ Lo sé</button>
+    <button class="dont" id="dont">✗ No lo sé</button>
+  </div>
+
+  <div class="nav">
+    <button id="prev">‹ Anterior</button>
+    <div class="dots" id="dots"></div>
+    <button id="next">Siguiente ›</button>
+  </div>
+
+  <div class="summary" id="summary">
+    <h2>Repaso completado</h2>
+    <div class="score">
+      <div class="ok"><span class="n" id="okN">0</span><span class="lbl">Las sé</span></div>
+      <div class="ko"><span class="n" id="koN">0</span><span class="lbl">A repasar</span></div>
+    </div>
+    <p id="verdict"></p>
+    <button class="btn primary" id="reviewFails">Repasar las que fallé</button>
+    <button class="btn" id="restart2">Empezar de nuevo</button>
+  </div>
+
+  <footer>Colegios El Valle · B2.2 — Bloque B</footer>
+</div>
+
+<script>
+const CARDS = [
+  {t:"fecha", ti:"Marco general", q:"¿Cómo se inicia el <em>reinado efectivo</em> en 1843?",
+   a:"Tras el pronunciamiento de <strong>Narváez</strong> que acabó con la regencia de Espartero, las Cortes, <strong>para evitar la inestabilidad de una nueva regencia</strong>, proclamaron la <strong>mayoría de edad de la reina</strong>. Isabel II mostró desde el principio su <strong>preferencia por los moderados</strong>, dejando al margen a los progresistas."},
+
+  {t:"concepto", ti:"Etapas", q:"Divide el <em>reinado efectivo (1843-1868)</em> en sus etapas.",
+   a:"<strong>Década Moderada</strong> (1844-1854) → <strong>Bienio Progresista</strong> (1854-1856) → <strong>reacción moderada</strong> (1856-1868): Bienio Moderado, Gobierno Largo de la Unión Liberal y vuelta de Narváez."},
+
+  {t:"concepto", ti:"Rasgos diferenciales", q:"¿Qué diferenció la construcción del Estado liberal español de otros procesos europeos?",
+   a:"Hubo <strong>tres guerras civiles</strong> (las carlistas); la <strong>inestabilidad política fue constante</strong>; el <strong>ejército intervino en política</strong> mediante <strong>pronunciamientos</strong>; y se sucedieron <strong>varias constituciones de distinto signo</strong>."},
+
+  {t:"institucion", ti:"Década Moderada", q:"¿Qué fue la creación de la <em>Guardia Civil</em> (1844)?",
+   a:"Una <strong>fuerza armada</strong> encargada de aplicar la ley y el orden <strong>esencialmente en el medio rural</strong>, con la misión primordial de <strong>prestar auxilio al jefe político provincial</strong>. Como medida complementaria <strong>se suprimió la Milicia Nacional</strong>, símbolo del liberalismo progresista."},
+
+  {t:"institucion", ti:"Década Moderada", q:"¿Qué estableció la <em>Ley de Ayuntamientos de 1845</em>?",
+   a:"<strong>Reforzaba el centralismo</strong>, reservando <strong>al gobierno el nombramiento de los alcaldes</strong>. Es justo lo contrario de lo que defendía la Constitución de 1837 ⟶ el mismo proyecto que en 1840 había costado la regencia a M.ª Cristina."},
+
+  {t:"concepto", ti:"Ley Mon-Santillán", q:"¿En qué consistió la <em>reforma del sistema fiscal de 1845</em>?",
+   a:"Conocida como <strong>Ley Mon-Santillán</strong>, por el ministro de Hacienda <strong>Alejandro Mon</strong> y su colaborador <strong>Ramón de Santillán</strong>. Estableció un sistema <strong>más racional, eficaz y moderno</strong> que puso fin al <strong>complejo sistema impositivo del Antiguo Régimen</strong>: suprimió la maraña de tributos antiguos y los redujo a unos pocos <strong>impuestos directos</strong> (sobre la propiedad) e <strong>indirectos</strong> (los <em>consumos</em>). Es la <strong>primera gran reforma fiscal del Estado liberal</strong>."},
+
+  {t:"institucion", ti:"Plan Pidal", q:"¿Qué fue el <em>Plan Pidal</em> (1845)?",
+   a:"La gran <strong>reforma de la enseñanza</strong> de la Década Moderada, obra de <strong>Pedro José Pidal</strong>. <strong>Centralizó la educación en manos del Estado</strong>, con <strong>planes de estudio uniformes</strong> para toda España, y la organizó en <strong>niveles</strong> —primaria, secundaria y universitaria—, creando los <strong>institutos</strong> de enseñanza secundaria. Sería sustituido por la <strong>Ley Moyano (1857)</strong>."},
+
+  {t:"institucion", ti:"Década Moderada", q:"¿Qué fue el <em>Concordato de 1851</em>?",
+   a:"Acuerdo con la <strong>Santa Sede</strong>: el <strong>Papa reconoció a Isabel II como reina</strong> y <strong>aceptó la pérdida de los bienes eclesiásticos ya desamortizados</strong>. A cambio, el Estado se comprometió a <strong>subvencionar a la Iglesia</strong> y a <strong>entregarle el control de la enseñanza</strong>."},
+
+  {t:"concepto", ti:"Constitución 1845", q:"¿Cómo se presentó la <em>Constitución de 1845</em> y cuál era su objetivo real?",
+   a:"Se presentó como una <strong>simple reforma de la de 1837</strong>, pero su verdadero objetivo era <strong>ajustar el sistema político a la concepción del Partido Moderado</strong> para <strong>garantizar su ejercicio del poder</strong>. Es la <strong>tercera</strong> de nuestras constituciones."},
+
+  {t:"concepto", ti:"Constitución 1845", q:"¿Qué cambia la Constitución de 1845 en materia de <em>soberanía</em>?",
+   a:"Sustituye la <strong>soberanía nacional</strong> por la <strong>soberanía compartida del rey y las Cortes</strong>: el <strong>poder legislativo es compartido</strong> por ambas instituciones y hay una <strong>clara preeminencia de la Corona</strong> en el proceso político."},
+
+  {t:"institucion", ti:"Constitución 1845", q:"¿Cómo organiza la Constitución de 1845 las Cortes?",
+   a:"<strong>Sistema bicameral</strong>: un <strong>Senado</strong> de miembros <strong>designados por el rey</strong>, en número ilimitado y con <strong>carácter vitalicio</strong>, y un <strong>Congreso</strong> de diputados elegidos por <strong>sufragio censitario</strong> según la Ley Electoral de 1846."},
+
+  {t:"concepto", ti:"Constitución 1845", q:"¿Qué establece sobre la <em>religión</em> y los <em>derechos</em>?",
+   a:"<strong>Confesionalidad del Estado</strong>: la religión católica se reconoce como <strong>la única de la nación española</strong> y el Estado se obliga a mantener el culto y sus ministros. Además, <strong>recorta los derechos individuales</strong>, especialmente la <strong>libertad de expresión</strong>."},
+
+  {t:"fecha", ti:"Fecha clave", q:"¿Qué supuso la <em>Ley Electoral de 1846</em>?",
+   a:"La ley de <strong>18 de marzo de 1846</strong> configuró un verdadero <strong>régimen oligárquico</strong>: elevó la contribución exigida a <strong>400 reales anuales</strong>, de modo que el cuerpo electoral quedó en unos <strong>97.000 varones mayores de 25 años</strong>, el <strong>0,8 % de la población</strong> total."},
+
+  {t:"causa", ti:"Balance", q:"¿Qué balance cabe hacer del texto de 1845?",
+   a:"Fijó el modelo de <strong>Constitución conservadora</strong> y <strong>consolidó el poder de los moderados</strong>, garantizando el control del país por parte de la <strong>oligarquía agraria y financiera</strong>. Es la implantación del <strong>liberalismo doctrinario</strong>."},
+
+  {t:"causa", ti:"Causa-consec.", q:"¿Qué provocó el pronunciamiento de <em>1854</em>?",
+   a:"El poder cada vez más <strong>dictatorial de Narváez</strong>, que generó un creciente descontento. El pronunciamiento tuvo un <strong>desarrollo complejo</strong>: comenzó como golpe militar y acabó convertido en revolución."},
+
+  {t:"fecha", ti:"Fecha clave", q:"¿Qué fue la <em>Vicalvarada</em>?",
+   a:"El golpe militar iniciado por el <strong>general O'Donnell</strong> en <strong>Vicálvaro</strong> en <strong>1854</strong>, punto de partida de la revolución que puso fin a la Década Moderada."},
+
+  {t:"fecha", ti:"Documento clave", q:"¿Qué fue el <em>Manifiesto de Manzanares</em>?",
+   a:"Documento del <strong>7 de julio de 1854</strong>, <strong>redactado por Antonio Cánovas del Castillo</strong> y <strong>firmado por el general Leopoldo O'Donnell</strong>. Exigía <strong>reformas políticas</strong> y unas <strong>Cortes Constituyentes</strong> para una auténtica <strong>«regeneración liberal»</strong> ⟶ dio al golpe un <strong>amplio respaldo popular</strong>."},
+
+  {t:"concepto", ti:"Bienio Progresista", q:"¿Cómo terminó el pronunciamiento de 1854 y qué etapa abrió?",
+   a:"El golpe <strong>triunfó</strong> y propició un gobierno presidido por el progresista <strong>Espartero</strong>: se inicia el <strong>Bienio Progresista (1854-1856)</strong>, que trató de dar un nuevo impulso a la <strong>economía</strong>, la <strong>industria</strong> y una <strong>nueva constitución</strong>."},
+
+  {t:"concepto", ti:"Constitución de 1856", q:"¿Qué fue la <em>Constitución «non nata»</em> y por qué se llama así?",
+   a:"La <strong>Constitución de 1856</strong>, de <strong>ideario progresista</strong>: recuperaba la <strong>soberanía nacional</strong> y ampliaba los derechos. Fue <strong>discutida y votada por las Cortes Constituyentes</strong>, pero el golpe de O'Donnell impidió su promulgación ⟶ <strong>nunca llegó a entrar en vigor</strong>, de ahí el nombre. Mientras se redactaba estuvo vigente la <strong>Constitución de 1837</strong>."},
+
+  {t:"fecha", ti:"Fecha clave", q:"¿Qué fue la <em>Desamortización de Madoz</em> (1855)?",
+   a:"Una <strong>desamortización general</strong> que afectó sobre todo a los <strong>bienes de los municipios</strong> y <strong>culminó el proceso desamortizador</strong> iniciado por <strong>Mendizábal en 1837</strong>."},
+
+  {t:"concepto", ti:"Bienio Progresista", q:"¿Qué otras medidas económicas destacan del Bienio?",
+   a:"La <strong>Ley General de Ferrocarriles (1855)</strong>, que pretendía <strong>extender las vías férreas para facilitar el comercio</strong>, y las <strong>leyes bancarias de 1856</strong>, dentro de una amplia <strong>reordenación económica</strong>."},
+
+  {t:"causa", ti:"Causa-consec.", q:"¿Por qué aumentó la <em>conflictividad social</em> durante el Bienio?",
+   a:"Por la <strong>crisis de subsistencias</strong> unida a la <strong>epidemia de cólera</strong>, que golpeó a las clases populares, y por la <strong>conflictividad obrera en Cataluña</strong>. Los militares promovieron <strong>duras medidas represivas amparadas por O'Donnell</strong> ⟶ enfrentamiento con el gobierno de Espartero."},
+
+  {t:"causa", ti:"Fin del Bienio", q:"¿Cómo terminó el Bienio Progresista en <em>1856</em>?",
+   a:"La reina se posicionó a favor de <strong>O'Donnell</strong>, lo nombró presidente, <strong>proclamó el estado de guerra</strong> y <strong>clausuró las Cortes</strong> (otro pronunciamiento). Se <strong>restableció la Constitución de 1845</strong> y se inició un <strong>revisionismo</strong> de toda la obra del Bienio."},
+
+  {t:"concepto", ti:"Partido Demócrata", q:"¿Cómo nació el <em>Partido Demócrata</em> y qué defendía?",
+   a:"Escisión de los <strong>progresistas</strong> surgida al amparo de las <strong>revoluciones europeas de 1848</strong>: integraba <strong>progresistas radicales, republicanos</strong> e incluso figuras del <strong>socialismo incipiente</strong>. Su <strong>Manifiesto de 1849</strong> defendía la <strong>soberanía nacional</strong>, el <strong>sufragio universal</strong>, los derechos de <strong>asociación y reunión</strong> y la <strong>libertad de conciencia</strong>. Base social: <strong>clases populares</strong>."},
+
+  {t:"concepto", ti:"Unión Liberal", q:"¿Cómo nació la <em>Unión Liberal</em> y qué espacio ocupaba?",
+   a:"Escisión del <strong>Partido Moderado</strong> creada por <strong>O'Donnell</strong> a raíz de la <strong>revolución de 1854</strong>. Cubría un <strong>espacio de centro</strong>: se nutría del <strong>ala izquierda de los moderados</strong> y del <strong>ala derecha de los progresistas</strong>, equidistante del <strong>moderantismo reaccionario</strong> y del <strong>progresismo radical</strong>; gobernó con estos últimos durante el Bienio."},
+
+  {t:"concepto", ti:"Partidos", q:"Relaciona cada partido con su líder e ideología.",
+   a:"- <strong>Moderado</strong> → <em>liberalismo doctrinario</em>; <strong>Narváez</strong><br>- <strong>Progresista</strong> → <em>liberalismo radical</em>; <strong>Espartero</strong>, luego <strong>Prim</strong><br>- <strong>Unión Liberal</strong> → <em>liberalismo pragmático o centrista</em>; <strong>O'Donnell</strong><br>- <strong>Demócrata</strong> → <em>liberalismo democrático</em>; nacido de los sectores más radicales del progresismo"},
+
+  {t:"fecha", ti:"Reacción moderada", q:"¿Qué fue el <em>Bienio Moderado</em>?",
+   a:"La vuelta de <strong>Narváez y los moderados</strong> al poder desde <strong>octubre de 1856 hasta 1858</strong>, tras el revisionismo del Bienio Progresista. Un decreto de <strong>15 de septiembre de 1856</strong> había restablecido la <strong>Constitución de 1845</strong>, retocada por un <strong>Acta Adicional</strong> de vida efímera."},
+
+  {t:"institucion", ti:"Ley Moyano", q:"¿Qué fue la <em>Ley Moyano</em> (1857)?",
+   a:"La <strong>Ley de Instrucción Pública</strong> impulsada por el ministro de Fomento <strong>Claudio Moyano</strong>, que consolidó el sistema educativo liberal sobre la base del Plan Pidal. Organizaba la enseñanza en <strong>tres niveles</strong> —primera (<strong>obligatoria de los 6 a los 9 años</strong> y gratuita para quien no pudiera pagarla), segunda y superior—, con criterio <strong>centralista</strong> y reconociendo el <strong>papel de la Iglesia</strong> en la enseñanza. Fue la <strong>ley educativa más longeva</strong> de nuestra historia: rigió en lo sustancial <strong>hasta 1970</strong>."},
+
+  {t:"fecha", ti:"Gobierno Largo", q:"¿Qué fue el <em>Gobierno Largo</em> (1858-1863)?",
+   a:"El gobierno de la <strong>Unión Liberal</strong> con <strong>O'Donnell</strong> como presidente: el <strong>más largo de un gobierno no moderado</strong> de todo el reinado."},
+
+  {t:"concepto", ti:"Política exterior", q:"¿En qué consistió la <em>guerra de prestigio</em>?",
+   a:"La activa política exterior del Gobierno Largo, con la que se trataba de <strong>devolver a España el prestigio internacional perdido</strong>: <strong>expedición a Conchinchina</strong>, <strong>guerra de Marruecos</strong>, <strong>intervención en México</strong> y <strong>guerra del Pacífico</strong>. Resultado: <strong>escaso éxito y gran coste económico y humano</strong>."},
+
+  {t:"causa", ti:"Crisis final", q:"¿Qué caracteriza la etapa <em>1863-1868</em>?",
+   a:"La vuelta de <strong>Narváez y los moderados</strong> marca el <strong>periodo terminal del partido moderado</strong>: <strong>inestabilidad política</strong> y <strong>deriva autoritaria</strong> de los gobiernos, con el fin de la bonanza tras la <strong>crisis económica de 1864</strong>."},
+
+  {t:"fecha", ti:"Noche de San Daniel", q:"¿Qué fue la <em>Noche de San Daniel</em> (1865)?",
+   a:"La represión sangrienta, el <strong>10 de abril de 1865</strong>, de los estudiantes que se manifestaban en la <strong>Puerta del Sol</strong> en apoyo del rector de la Universidad Central, destituido por no cesar al catedrático <strong>Emilio Castelar</strong>, autor de artículos muy críticos con la reina. Hubo <strong>muertos y numerosos heridos</strong> y acabó costándole el gobierno a <strong>Narváez</strong> ⟶ síntoma claro de la <strong>descomposición del régimen isabelino</strong>."},
+
+  {t:"fecha", ti:"Fecha clave", q:"¿Qué fue el <em>motín del cuartel de San Gil</em> (1866)?",
+   a:"Un <strong>intento de insurrección</strong> en <strong>Madrid</strong>, <strong>duramente reprimido</strong> por el gobierno. Es una muestra del clima de represión que precede a la revolución de 1868."},
+
+  {t:"fecha", ti:"Pacto de Ostende", q:"¿Quién promovió el <em>Pacto de Ostende</em> (1866) y por qué?",
+   a:"El <strong>general Prim</strong>, que había sucedido a <strong>Espartero</strong> al frente del <strong>Partido Progresista</strong>, como respuesta al <strong>creciente autoritarismo del anciano Narváez</strong>."},
+
+  {t:"concepto", ti:"Pacto de Ostende", q:"¿Cuáles eran los <em>puntos</em> del Pacto de Ostende?",
+   a:"<strong>1)</strong> El objeto de la revolución es la <strong>caída de los Borbones</strong>.<br><strong>2)</strong> El cambio de régimen, mediante <strong>plebiscito</strong> o <strong>Cortes Constituyentes elegidas por sufragio universal</strong>.<br><strong>3)</strong> El régimen seguiría siendo la <strong>monarquía</strong>, pero con una <strong>nueva dinastía</strong>.<br><strong>4)</strong> Se reconocía a <strong>Prim</strong> como <strong>jefe y director militar</strong> del movimiento."},
+
+  {t:"fecha", ti:"La Gloriosa", q:"¿Cómo y cuándo estalla <em>La Gloriosa</em>?",
+   a:"El <strong>18 de septiembre de 1868</strong>, con la sublevación del almirante <strong>Topete</strong> en la <strong>bahía de Cádiz</strong>, apoyado por <strong>Prim</strong> y <strong>Serrano</strong>. También se la conoce como <strong>la Septembrina</strong>."},
+
+  {t:"concepto", ti:"La Gloriosa", q:"¿Qué fue el manifiesto <em>«España con honra»</em>?",
+   a:"El <strong>manifiesto de la revolución de 1868</strong>, ampliamente difundido, que hizo que el movimiento se extendiera por toda España con <strong>levantamientos populares</strong> y la organización de <strong>juntas locales</strong>."},
+
+  {t:"fecha", ti:"Fin del reinado", q:"¿Cómo acaba el reinado de Isabel II?",
+   a:"<strong>Serrano</strong> venció al ejército gubernamental en la <strong>batalla de Alcolea</strong> (Córdoba) e <strong>Isabel II abandonó España para exiliarse en Francia</strong>."},
+
+  {t:"concepto", ti:"Visión de conjunto", q:"Resume las <em>cuatro constituciones</em> del reinado y su signo.",
+   a:"<strong>Estatuto Real (1834)</strong> → carta otorgada.<br><strong>Constitución de 1837</strong> → progresista, de consenso.<br><strong>Constitución de 1845</strong> → moderada y conservadora.<br><strong>Constitución «non nata»</strong> → progresista, nunca aplicada."},
+
+  {t:"concepto", ti:"Visión de conjunto", q:"Ordena cronológicamente: Pacto de Ostende, Concordato, Constitución de 1845, Manifiesto de Manzanares, Desamortización de Madoz.",
+   a:"<strong>Constitución de 1845</strong> → <strong>Concordato</strong> (1851) → <strong>Manifiesto de Manzanares</strong> (1854) → <strong>Desamortización de Madoz</strong> (1855) → <strong>Pacto de Ostende</strong> (1866)."}
+];
+
+let order = CARDS.map((_,i)=>i);
+let pos = 0;
+const status = {}; // idx -> 'known' | 'unknown'
+
+const card = document.getElementById('card');
+const qEl = document.getElementById('question');
+const aEl = document.getElementById('answer');
+const counter = document.getElementById('counter');
+const typeTag = document.getElementById('typeTag');
+const cornerF = document.getElementById('cornerFront');
+const cornerB = document.getElementById('cornerBack');
+const dotsEl = document.getElementById('dots');
+const judge = document.getElementById('judge');
+const summary = document.getElementById('summary');
+const stage = document.querySelector('.stage');
+const onlyFailsBtn = document.getElementById('onlyFails');
+
+function render(){
+  const idx = order[pos];
+  const c = CARDS[idx];
+  card.classList.remove('flipped');
+  judge.classList.remove('show');
+  qEl.innerHTML = c.q;
+  aEl.innerHTML = c.a;
+  counter.textContent = `Tarjeta ${pos+1} / ${order.length}`;
+  typeTag.textContent = c.ti;
+  typeTag.className = 'tag '+c.t;
+  cornerF.textContent = cornerB.textContent = (idx+1);
+  document.getElementById('prev').disabled = pos===0;
+  document.getElementById('next').textContent = pos===order.length-1 ? 'Terminar ›' : 'Siguiente ›';
+  buildDots();
+}
+
+function buildDots(){
+  dotsEl.innerHTML='';
+  order.forEach((idx,i)=>{
+    const d=document.createElement('div');
+    d.className='dot';
+    if(i===pos) d.classList.add('active');
+    if(status[idx]==='known') d.classList.add('known');
+    if(status[idx]==='unknown') d.classList.add('unknown');
+    dotsEl.appendChild(d);
+  });
+}
+
+card.addEventListener('click',()=>{
+  card.classList.toggle('flipped');
+  if(card.classList.contains('flipped')) judge.classList.add('show');
+});
+
+document.getElementById('know').addEventListener('click',e=>{e.stopPropagation();mark('known');});
+document.getElementById('dont').addEventListener('click',e=>{e.stopPropagation();mark('unknown');});
+
+function mark(val){
+  status[order[pos]]=val;
+  buildDots();
+  refreshFailsBtn();
+  if(pos<order.length-1){ pos++; render(); }
+  else finish();
+}
+
+function refreshFailsBtn(){
+  const fails = Object.values(status).filter(v=>v==='unknown').length;
+  onlyFailsBtn.disabled = fails===0;
+}
+
+document.getElementById('next').addEventListener('click',()=>{
+  if(pos<order.length-1){pos++;render();} else finish();
+});
+document.getElementById('prev').addEventListener('click',()=>{
+  if(pos>0){pos--;render();}
+});
+
+document.getElementById('shuffle').addEventListener('click',()=>{
+  for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]];}
+  pos=0;showStage();render();
+});
+
+function fullReset(){
+  order=CARDS.map((_,i)=>i);
+  for(const k in status) delete status[k];
+  pos=0;showStage();render();refreshFailsBtn();
+}
+document.getElementById('restart').addEventListener('click',fullReset);
+document.getElementById('restart2').addEventListener('click',fullReset);
+
+function reviewFails(){
+  const fails = order.filter(idx=>status[idx]==='unknown');
+  if(!fails.length) return;
+  order = fails;
+  for(const idx of fails) delete status[idx];
+  pos=0;showStage();render();refreshFailsBtn();
+}
+onlyFailsBtn.addEventListener('click',reviewFails);
+document.getElementById('reviewFails').addEventListener('click',reviewFails);
+
+function showStage(){
+  stage.style.display='';
+  judge.classList.remove('show');
+  document.querySelector('.nav').style.display='flex';
+  document.querySelector('.meta').style.display='flex';
+  summary.style.display='none';
+}
+
+function finish(){
+  const ok = Object.values(status).filter(v=>v==='known').length;
+  const ko = Object.values(status).filter(v=>v==='unknown').length;
+  document.getElementById('okN').textContent=ok;
+  document.getElementById('koN').textContent=ko;
+  let msg;
+  if(ko===0 && ok>0) msg="Dominas el reinado efectivo de Isabel II. Listo para el examen.";
+  else if(ok>=ko) msg="Buen nivel. Repasa las marcadas y afianza las etapas y la Constitución de 1845.";
+  else msg="Conviene un segundo repaso: céntrate en las tarjetas a repasar.";
+  document.getElementById('verdict').textContent=msg;
+  document.getElementById('reviewFails').style.display = ko>0?'':'none';
+  stage.style.display='none';
+  judge.classList.remove('show');
+  document.querySelector('.nav').style.display='none';
+  document.querySelector('.meta').style.display='none';
+  summary.style.display='block';
+}
+
+document.addEventListener('keydown',e=>{
+  if(summary.style.display==='block') return;
+  if(e.key==='ArrowRight'){document.getElementById('next').click();}
+  if(e.key==='ArrowLeft'){document.getElementById('prev').click();}
+  if(e.key===' '){e.preventDefault();card.click();}
+});
+
+render();
+refreshFailsBtn();
+</script>
+</body>
+</html>

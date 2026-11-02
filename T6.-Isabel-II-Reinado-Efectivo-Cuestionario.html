@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T6. Isabel II: el reinado efectivo — Cuestionario</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#1B1A17;
+  --ink-soft:#57544E;
+  --ink-faint:#94908A;
+  --paper:#F7F7F5;
+  --white:#FFFFFF;
+  --rule:#E3E1DB;
+
+  --acero:#2F3E4E;         /* acero de los espadones */
+  --acero-2:#44586D;
+  --cobre:#B4622E;         /* cobre de la Gloriosa */
+  --cobre-claro:#FBF0E8;
+  --ok:#2D6A4F;
+  --ok-claro:#E9F4EE;
+  --mal:#9B2226;
+  --mal-claro:#FBECEC;
+
+  --sans:'IBM Plex Sans',-apple-system,'Segoe UI',Arial,sans-serif;
+  --serif:'Playfair Display',Georgia,serif;
+  --mono:'IBM Plex Mono',ui-monospace,Consolas,monospace;
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+html{scroll-behavior:smooth;scroll-padding-top:120px}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);font-size:16px;line-height:1.6;-webkit-text-size-adjust:100%}
+:focus-visible{outline:2.5px solid var(--cobre);outline-offset:2px}
+
+/* ── CABECERA ── */
+.head{background:linear-gradient(140deg,#1D2832 0%,#3C4F63 55%,#1D2832 100%);color:#fff;padding:34px 28px 30px;border-bottom:3px solid var(--cobre)}
+.head-in{max-width:880px;margin:0 auto}
+.head .curso{font-family:var(--mono);font-size:11px;letter-spacing:1.6px;color:rgba(255,255,255,.5)}
+.head h1{font-family:var(--serif);font-weight:700;font-size:clamp(25px,4.4vw,38px);line-height:1.12;margin:10px 0 8px}
+.head p{color:rgba(255,255,255,.68);font-size:14.5px;max-width:62ch}
+.head .datos{display:flex;gap:26px;flex-wrap:wrap;margin-top:18px;font-family:var(--mono);font-size:11.5px;color:rgba(255,255,255,.55)}
+.head .datos strong{color:#E29760;font-size:13px;font-weight:500}
+
+/* ── BARRA FIJA ── */
+.barra{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.97);border-bottom:1px solid var(--rule);backdrop-filter:blur(6px)}
+.barra-in{max-width:880px;margin:0 auto;padding:11px 28px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.pista{flex:1;min-width:150px;height:7px;background:var(--rule);border-radius:4px;overflow:hidden}
+.relleno{height:100%;width:0;background:linear-gradient(90deg,var(--acero),var(--cobre));transition:width .35s ease}
+.marcador{font-family:var(--mono);font-size:12.5px;white-space:nowrap}
+.marcador b{font-weight:500}
+.reinicio{font-family:var(--mono);font-size:11px;color:var(--ink-faint);background:none;border:1px solid var(--rule);border-radius:5px;padding:5px 11px;cursor:pointer}
+.reinicio:hover{color:var(--ink);border-color:var(--ink-soft)}
+
+/* ── PESTAÑAS DE BLOQUE ── */
+.pestanas{max-width:880px;margin:0 auto;padding:0 28px 11px;display:flex;gap:7px;overflow-x:auto}
+.pest{flex:1;min-width:58px;background:none;border:1px solid var(--rule);border-radius:7px;padding:7px 6px 8px;cursor:pointer;font-family:var(--sans);text-align:center;color:var(--ink-faint);transition:border-color .2s,color .2s}
+.pest b{display:block;font-family:var(--mono);font-size:13px;font-weight:500;line-height:1.3}
+.pest span{display:block;font-size:10px;letter-spacing:.3px}
+.pest:hover{border-color:var(--ink-soft);color:var(--ink-soft)}
+.pest[aria-selected="true"]{background:var(--acero);border-color:var(--acero);color:#fff}
+.pest[aria-selected="true"] span{color:rgba(255,255,255,.65)}
+.pest.hecho:not([aria-selected="true"]){border-color:var(--ok);color:var(--ok)}
+
+/* ── CUERPO ── */
+main{max-width:880px;margin:0 auto;padding:30px 28px 70px}
+.bloque[hidden]{display:none}
+.bloque-cab{border-left:3px solid var(--cobre);padding-left:15px;margin-bottom:26px}
+.bloque-cab .n{font-family:var(--mono);font-size:11px;letter-spacing:1.4px;color:var(--cobre)}
+.bloque-cab h2{font-family:var(--serif);font-size:24px;font-weight:600;line-height:1.25;margin-top:5px}
+
+.p{background:var(--white);border:1px solid var(--rule);border-radius:11px;padding:21px 22px;margin-bottom:17px}
+.p-cab{display:flex;gap:11px;align-items:baseline;margin-bottom:13px}
+.p-num{font-family:var(--mono);font-size:12px;color:var(--ink-faint);padding-top:2px}
+.enun{font-size:16.5px;line-height:1.5;font-weight:500}
+.aviso{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:1.1px;color:var(--acero);background:#EAEEF2;border-radius:4px;padding:3px 8px;margin-bottom:11px}
+.ops{display:flex;flex-direction:column;gap:8px}
+.op{display:flex;gap:11px;align-items:flex-start;border:1px solid var(--rule);border-radius:8px;padding:11px 13px;cursor:pointer;background:var(--white);text-align:left;font:inherit;color:inherit;line-height:1.45;transition:border-color .18s,background .18s}
+.op:hover:not(.bloqueada){border-color:var(--acero-2)}
+.op .letra{font-family:var(--mono);font-size:12.5px;color:var(--ink-faint);padding-top:2px;min-width:14px}
+.op.marcada{border-color:var(--acero);background:#F1F4F7}
+.op.marcada .letra{color:var(--acero)}
+.op.ok{border-color:var(--ok);background:var(--ok-claro)}
+.op.ok .letra{color:var(--ok)}
+.op.mal{border-color:var(--mal);background:var(--mal-claro)}
+.op.mal .letra{color:var(--mal)}
+.op.bloqueada{cursor:default}
+.comprobar{margin-top:11px;font-family:var(--sans);font-size:13.5px;font-weight:500;color:#fff;background:var(--acero);border:0;border-radius:7px;padding:9px 17px;cursor:pointer}
+.comprobar:hover{background:var(--acero-2)}
+.comprobar:disabled{background:var(--rule);color:var(--ink-faint);cursor:default}
+.retro{margin-top:13px;padding:12px 14px;border-radius:8px;font-size:14.5px;line-height:1.5}
+.retro b{font-weight:600;display:block;margin-bottom:3px}
+.retro.ok{background:var(--ok-claro);color:#1E4B37;border-left:3px solid var(--ok)}
+.retro.mal{background:var(--mal-claro);color:#6E1519;border-left:3px solid var(--mal)}
+
+.nav{display:flex;justify-content:space-between;gap:12px;margin-top:26px}
+.nav button{font-family:var(--sans);font-size:14px;font-weight:500;border-radius:8px;padding:11px 20px;cursor:pointer;border:1px solid var(--acero);background:var(--white);color:var(--acero)}
+.nav button:hover{background:#F0F3F6}
+.nav .avanzar{background:var(--acero);color:#fff}
+.nav .avanzar:hover{background:var(--acero-2)}
+.nav button[hidden]{display:none}
+
+/* ── RESUMEN ── */
+#resumen{display:none;background:var(--white);border:1px solid var(--rule);border-top:4px solid var(--cobre);border-radius:11px;padding:30px 26px;margin-top:8px}
+#resumen.visible{display:block}
+#resumen h2{font-family:var(--serif);font-size:26px;font-weight:600}
+.nota{font-family:var(--mono);font-size:40px;font-weight:500;margin:14px 0 4px;color:var(--acero)}
+.nota span{font-size:19px;color:var(--ink-faint)}
+.veredicto{font-size:16px;color:var(--ink-soft);max-width:60ch}
+.repasar{margin-top:22px;background:var(--cobre-claro);border-left:3px solid var(--cobre);border-radius:0 8px 8px 0;padding:16px 18px}
+.repasar h3{font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:.3px;margin-bottom:9px}
+.repasar ul{margin:0;padding-left:19px;font-size:14.5px;line-height:1.75;color:var(--ink-soft)}
+.pie{max-width:880px;margin:0 auto;padding:0 28px 46px;font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+@media(max-width:620px){
+  .head{padding:26px 20px 24px}
+  .barra-in,.pestanas,main,.pie{padding-left:18px;padding-right:18px}
+  .pest span{display:none}
+  .p{padding:18px 16px}
+}
+</style>
+</head>
+<body>
+
+<header class="head">
+  <div class="head-in">
+    <p class="curso">2.º Bachillerato · Historia de España · Bloque B2</p>
+    <h1>Isabel II:<br>el reinado efectivo</h1>
+    <p>Comprueba lo que has entendido del tema. Elige una opción y recibirás la corrección al instante, con la respuesta correcta y el porqué.</p>
+    <div class="datos">
+      <span><strong>30</strong> preguntas</span>
+      <span><strong>5</strong> bloques</span>
+      <span><strong>1843-1868</strong></span>
+    </div>
+  </div>
+</header>
+
+<div class="barra">
+  <div class="barra-in">
+    <div class="pista"><div class="relleno" id="relleno"></div></div>
+    <p class="marcador"><b id="respondidas">0</b>/30 respondidas · <b id="aciertos">0</b> aciertos</p>
+    <button class="reinicio" id="reinicio">Empezar de nuevo</button>
+  </div>
+  <div class="pestanas" role="tablist" id="pestanas"></div>
+</div>
+
+<main>
+  <div id="bloques"></div>
+  <section id="resumen" aria-live="polite">
+    <h2>Resultado</h2>
+    <p class="nota"><span id="nAciertos">0</span> <span>de 30</span></p>
+    <p class="veredicto" id="veredicto"></p>
+    <div class="repasar" id="repasar"></div>
+    <div class="nav" style="justify-content:flex-start">
+      <button id="otraVez">Repetir el cuestionario</button>
+    </div>
+  </section>
+</main>
+
+<p class="pie">Elaborado a partir del tema T6 del Bloque B2. Colegio El Valle.</p>
+
+<script>
+const BLOQUES = [
+  {t:"La Década Moderada", r:"1844-1854"},
+  {t:"La Constitución de 1845", r:"1845-1846"},
+  {t:"La Vicalvarada y el Bienio Progresista", r:"1854-1856"},
+  {t:"Los nuevos partidos políticos", r:"Partidos"},
+  {t:"La crisis final del reinado", r:"1856-1868"}
+];
+
+const PREGUNTAS = [
+/* BLOQUE 1 */
+{b:0,e:"¿Por qué las Cortes proclamaron la mayoría de edad de la reina en 1843?",
+ o:["Para evitar la inestabilidad de una nueva regencia, aunque la reina tenía tan solo 13 años",
+    "Porque así lo exigía la Constitución de 1837",
+    "Porque Espartero renunció voluntariamente a la regencia",
+    "Para poder aprobar la Constitución de 1845"],
+ ok:[0], x:"El autoritarismo de Espartero había terminado en el pronunciamiento del general moderado Narváez, que puso fin a la regencia.",
+ tema:"la proclamación de la mayoría de edad en 1843"},
+
+{b:0,e:"¿Qué actitud política mostró Isabel II desde el principio de su reinado efectivo?",
+ o:["Alternó de forma equilibrada a moderados y progresistas en el gobierno",
+    "Una clara preferencia por los moderados, que gobernaron la mayor parte del reinado, dejando fuera del juego político al partido progresista",
+    "Una preferencia por los progresistas, herederos de Espartero",
+    "Se mantuvo al margen, sin intervenir en la designación de gobiernos"],
+ ok:[1], x:"Esa exclusión sistemática del progresismo explica que este recurra una y otra vez al pronunciamiento.",
+ tema:"la preferencia de Isabel II por los moderados"},
+
+{b:0,e:"¿Qué periodo abre el reinado efectivo y qué supuso?",
+ o:["El Bienio Progresista (1854-1856), en el que se impulsó la desamortización",
+    "La Reacción Moderada (1856-1868), marcada por la alternancia de Narváez y O'Donnell",
+    "Las Regencias (1833-1843), en las que se aprobó el Estatuto Real",
+    "La Década Moderada (1844-1854), en la que quedó consolidado el nuevo Estado"],
+ ok:[3], x:"Es la etapa en la que se implanta el liberalismo doctrinario y se construyen los grandes instrumentos del Estado liberal.",
+ tema:"la Década Moderada y la consolidación del Estado"},
+
+{b:0,e:"¿Qué fue la Guardia Civil creada en 1844?",
+ o:["Una fuerza armada encargada de aplicar la ley y el orden esencialmente en el medio rural, cuya creación se complementó con la supresión de la Milicia Nacional",
+    "Un cuerpo de voluntarios civiles dependiente de los ayuntamientos",
+    "La guardia personal de la reina en el Palacio Real",
+    "El ejército encargado de combatir en la Segunda Guerra Carlista"],
+ ok:[0], x:"Su misión primordial era prestar auxilio al jefe político provincial. Suprimir la Milicia Nacional desarmaba, de paso, al progresismo.",
+ tema:"la creación de la Guardia Civil y la supresión de la Milicia Nacional"},
+
+{b:0,doble:true,e:"Señala las dos medidas de 1845 que consolidaron el nuevo Estado moderado.",
+ o:["La Ley de Ayuntamientos, que reforzaba el centralismo reservando al gobierno el nombramiento de los alcaldes",
+    "La elección popular de los alcaldes por los vecinos de cada municipio",
+    "La reforma del sistema fiscal, que estableció un sistema más racional, eficaz y moderno y puso fin al complejo sistema impositivo del Antiguo Régimen",
+    "El restablecimiento de la Milicia Nacional como garante de las libertades"],
+ ok:[0,2], x:"Centralismo administrativo y Hacienda moderna: los dos pilares del Estado que construyen los moderados.",
+ tema:"la Ley de Ayuntamientos y la reforma fiscal de 1845"},
+
+{b:0,e:"¿Qué estableció el Concordato de 1851 con la Santa Sede?",
+ o:["La ruptura de relaciones entre España y el Vaticano",
+    "La devolución a la Iglesia de todos los bienes desamortizados",
+    "El Papa reconoció a Isabel II como reina y aceptó la pérdida de los bienes ya desamortizados; a cambio, el Estado se comprometió a subvencionar a la Iglesia y a entregarle el control de la enseñanza",
+    "La declaración de un Estado aconfesional con libertad de cultos"],
+ ok:[2], x:"El acuerdo cierra el conflicto abierto por las desamortizaciones y da a la Iglesia una posición central en la educación.",
+ tema:"el Concordato de 1851"},
+
+/* BLOQUE 2 */
+{b:1,e:"¿Cómo se presentó la Constitución de 1845 y cuál era su verdadero objetivo?",
+ o:["Como un texto enteramente nuevo, para sustituir el modelo de Cádiz",
+    "Como una simple reforma de la de 1837, aunque su objetivo real era ajustar el sistema político a la concepción del Partido Moderado para garantizar su ejercicio del poder",
+    "Como una carta otorgada concedida por la reina",
+    "Como un texto de consenso entre moderados y progresistas"],
+ ok:[1], x:"Es la tercera de nuestras constituciones y anula los aspectos más progresistas del texto de 1837.",
+ tema:"el carácter y el objetivo de la Constitución de 1845"},
+
+{b:1,e:"¿Qué cambio introdujo el texto de 1845 en materia de soberanía?",
+ o:["Sustituyó la soberanía nacional por la soberanía compartida del rey y las Cortes, con una clara preeminencia de la Corona en el proceso político",
+    "Proclamó por primera vez la soberanía nacional",
+    "Atribuyó la soberanía en exclusiva a las Cortes",
+    "Dejó la cuestión de la soberanía sin regular"],
+ ok:[0], x:"El poder legislativo pasa a ser compartido por ambas instituciones: es el principio del liberalismo doctrinario.",
+ tema:"la soberanía compartida en la Constitución de 1845"},
+
+{b:1,e:"¿Cómo se componían las Cortes según la Constitución de 1845?",
+ o:["Una cámara única elegida por sufragio universal masculino",
+    "Un Senado elegido por los ayuntamientos y un Congreso de designación real",
+    "Un Senado de miembros designados por el rey con carácter vitalicio y un Congreso de diputados elegidos por sufragio censitario",
+    "Un Estamento de Próceres y otro de Procuradores"],
+ ok:[2], x:"El Senado vitalicio de nombramiento real asegura a la Corona el control de una de las dos cámaras.",
+ tema:"el bicameralismo de la Constitución de 1845"},
+
+{b:1,e:"¿Qué supuso la Ley Electoral de 1846?",
+ o:["La implantación del sufragio universal masculino",
+    "La ampliación del censo a la mitad de la población adulta",
+    "La devolución del voto a los ayuntamientos",
+    "La configuración de un verdadero régimen oligárquico, con un sufragio tan restringido que suponía el 0,8 % del total de la población"],
+ ok:[3], x:"Sin esa ley electoral, la Constitución quedaría incompleta: es la que decide quién vota de verdad.",
+ tema:"la Ley Electoral de 1846 y el régimen oligárquico"},
+
+{b:1,doble:true,e:"Señala los dos rasgos que la Constitución de 1845 recoge frente al texto de 1837.",
+ o:["La confesionalidad del Estado, con el reconocimiento de la religión católica como la única de la nación española",
+    "La proclamación de la libertad de cultos",
+    "El recorte de los derechos individuales, especialmente la libertad de expresión",
+    "El restablecimiento de la Milicia Nacional"],
+ ok:[0,2], x:"Confesionalidad y restricción de libertades son las dos señas del giro conservador de 1845.",
+ tema:"la confesionalidad y el recorte de derechos en 1845"},
+
+{b:1,e:"¿Qué modelo fijó en conclusión el texto de 1845?",
+ o:["El modelo de constitución conservadora, que consolidó el poder de los moderados y garantizaba el control del país por la oligarquía agraria y financiera",
+    "Un modelo de consenso que sirvió de referencia a progresistas y demócratas",
+    "Un modelo federal con amplia descentralización",
+    "Un modelo de monarquía meramente simbólica"],
+ ok:[0], x:"Será el texto de referencia del moderantismo durante todo el reinado, restablecido incluso tras el Bienio Progresista.",
+ tema:"el modelo conservador de la Constitución de 1845"},
+
+/* BLOQUE 3 */
+{b:2,e:"¿Qué provocó el pronunciamiento de 1854 y dónde se inició?",
+ o:["La crisis económica de 1864; se inició en Cádiz",
+    "El poder cada vez más dictatorial de Narváez; lo inició el general O'Donnell en Vicálvaro, de ahí el nombre de la Vicalvarada",
+    "La muerte de O'Donnell; se inició en Barcelona",
+    "El Concordato de 1851; se inició en Zaragoza"],
+ ok:[1], x:"El golpe tuvo un desarrollo complejo: empezó como una conspiración de generales y acabó con respaldo popular.",
+ tema:"la Vicalvarada de 1854"},
+
+{b:2,e:"¿Qué papel desempeñó el Manifiesto de Manzanares (7 de julio de 1854)?",
+ o:["Radicalizó el golpe: redactado por Cánovas del Castillo y firmado por O'Donnell, exigía reformas políticas y unas Cortes Constituyentes para hacer posible una auténtica regeneración liberal",
+    "Proclamó la República en España",
+    "Anunciaba la abdicación de Isabel II",
+    "Reclamaba la vuelta al absolutismo y la supresión de las Cortes"],
+ ok:[0], x:"Ese programa le dio un amplio respaldo popular y animó a otros generales a unirse a la rebelión.",
+ tema:"el Manifiesto de Manzanares"},
+
+{b:2,e:"¿Qué gobierno salió del triunfo del golpe de 1854?",
+ o:["Un gobierno presidido por el progresista Espartero",
+    "Un gobierno presidido por Narváez",
+    "Un gobierno de la Unión Liberal presidido por Serrano",
+    "Un gobierno provisional presidido por Prim"],
+ ok:[0], x:"Se abre así el Bienio Progresista (1854-1856), con O'Donnell en el Ministerio de la Guerra.",
+ tema:"el gobierno de Espartero y el inicio del Bienio"},
+
+{b:2,e:"¿Qué fue la llamada Constitución non nata?",
+ o:["El texto de 1845, que fue derogado antes de aplicarse",
+    "Una nueva constitución de ideario progresista, elaborada durante el Bienio, que no llegó a aplicarse",
+    "Un proyecto de constitución federal redactado por los demócratas",
+    "La reforma del Estatuto Real que nunca se votó"],
+ ok:[1], x:"El Bienio terminó antes de que pudiera entrar en vigor y se restableció la Constitución moderada de 1845.",
+ tema:"la Constitución non nata del Bienio"},
+
+{b:2,e:"¿En qué se basó la política económica del Bienio Progresista?",
+ o:["En el Concordato con la Santa Sede y la subvención al clero",
+    "En la supresión de los aranceles a los textiles ingleses",
+    "En la Desamortización general de Madoz (1855), que culminó el proceso iniciado por Mendizábal con los bienes de los municipios, y en la Ley General de Ferrocarriles",
+    "En la creación del Banco Real de San Fernando y de la Bolsa de Madrid"],
+ ok:[2], x:"La ley de ferrocarriles pretendía extender las vías férreas para facilitar el comercio: impulso a la economía y a la industria.",
+ tema:"la Desamortización de Madoz y la Ley de Ferrocarriles"},
+
+{b:2,e:"¿Qué conflictividad social marcó el Bienio Progresista?",
+ o:["Una crisis de subsistencia unida a la epidemia de cólera y a la conflictividad obrera en Cataluña, que llevó a los militares a promover duras medidas represivas amparadas por O'Donnell",
+    "Una sublevación carlista generalizada en el norte",
+    "La insurrección de las colonias americanas",
+    "Un levantamiento campesino en Andalucía dirigido por los demócratas"],
+ ok:[0], x:"Esa represión enfrentó a O'Donnell con el gobierno de Espartero y precipitó el final del Bienio.",
+ tema:"la conflictividad social del Bienio Progresista"},
+
+/* BLOQUE 4 */
+{b:3,e:"¿Cómo y cuándo surgió el Partido Demócrata?",
+ o:["En 1854, como escisión del Partido Moderado tras la Vicalvarada",
+    "En 1866, a raíz del Pacto de Ostende",
+    "En 1833, junto al Partido Moderado y al Progresista",
+    "En 1848, al amparo de las revoluciones que se extendieron por toda Europa, como escisión del progresismo"],
+ ok:[3], x:"Integraba a progresistas radicales, republicanos e incluso alguna figura del incipiente socialismo.",
+ tema:"el origen del Partido Demócrata"},
+
+{b:3,e:"¿Qué defendía el Manifiesto de 1849, programa del Partido Demócrata?",
+ o:["La soberanía nacional y el sufragio universal, los derechos de asociación y reunión y la libertad de conciencia",
+    "La soberanía compartida y el sufragio censitario",
+    "El centralismo administrativo y la confesionalidad del Estado",
+    "La restauración de los fueros vascos y navarros"],
+ ok:[0], x:"Su base social se encontraba entre las clases populares, lo que lo distinguía de los dos partidos dinásticos.",
+ tema:"el programa del Partido Demócrata"},
+
+{b:3,e:"¿Cómo nació la Unión Liberal y qué espacio político ocupaba?",
+ o:["Nació en 1848 como escisión de los progresistas y defendía el sufragio universal",
+    "Nació de la fusión del Partido Moderado y el carlismo",
+    "La creó el general O'Donnell a raíz de la revolución del 54: un partido de centro que se nutría del ala izquierda de los moderados y del ala derecha de los progresistas",
+    "La creó el general Prim en 1866 para dirigir la revolución"],
+ ok:[2], x:"Como todo partido centrista, pretendía estar equidistante del moderantismo reaccionario y del progresismo radical, aunque gobernó con estos últimos durante el Bienio.",
+ tema:"el origen y el espacio político de la Unión Liberal"},
+
+{b:3,e:"¿Qué defendía el programa político de la Unión Liberal?",
+ o:["La Constitución moderada de 1845 y la desamortización de las tierras de la Iglesia, pero de acuerdo con Roma",
+    "La soberanía nacional y la enseñanza primaria obligatoria y gratuita",
+    "La vuelta al Estatuto Real de 1834",
+    "El Estado aconfesional y la descentralización"],
+ ok:[0], x:"Pragmatismo: acepta el marco constitucional moderado, pero no renuncia a la desamortización.",
+ tema:"el programa de la Unión Liberal"},
+
+{b:3,doble:true,e:"Señala las dos afirmaciones correctas sobre moderados y progresistas.",
+ o:["El Partido Moderado, liderado por Narváez, defendía la soberanía compartida, un sufragio censitario muy restringido, el Estado confesional y el centralismo",
+    "El Partido Progresista, liderado por Espartero, defendía la soberanía nacional, el predominio del poder de las Cortes y el fortalecimiento de los poderes locales",
+    "El Partido Demócrata defendía el sufragio censitario y la influencia de la Iglesia",
+    "La Unión Liberal rechazaba la Constitución de 1845 y pedía una nueva constituyente"],
+ ok:[0,1], x:"La base social también los separa: terratenientes, alta burguesía y altos mandos frente a la pequeña y mediana burguesía y las clases medias.",
+ tema:"las diferencias entre moderados y progresistas"},
+
+{b:3,e:"¿Quién sucedió a Espartero en el liderato del Partido Progresista?",
+ o:["El general Serrano",
+    "El general O'Donnell",
+    "El general Prim",
+    "Antonio Cánovas del Castillo"],
+ ok:[2], x:"Será él quien promueva el Pacto de Ostende y dirija militarmente la revolución de 1868.",
+ tema:"el relevo de Espartero por Prim"},
+
+/* BLOQUE 5 */
+{b:4,e:"¿Cómo terminó el Bienio Progresista en 1856?",
+ o:["La reina se posicionó a favor de O'Donnell, lo nombró presidente, se proclamó el estado de guerra y se clausuraron las Cortes, restableciéndose la Constitución de 1845",
+    "Espartero disolvió las Cortes y convocó elecciones por sufragio universal",
+    "La Constitución non nata entró en vigor y sustituyó a la de 1845",
+    "Un pronunciamiento carlista derribó al gobierno progresista"],
+ ok:[0], x:"El revisionismo del Bienio trajo de vuelta a Narváez y a los moderados en octubre de 1856: es el llamado Bienio Moderado, hasta 1858.",
+ tema:"el final del Bienio Progresista y el restablecimiento de la Constitución de 1845"},
+
+{b:4,e:"¿Qué fue el llamado Gobierno Largo (1858-1863)?",
+ o:["El gobierno de Narváez durante la Década Moderada",
+    "El gobierno de la Unión Liberal con O'Donnell como presidente, el más largo de un gobierno no moderado",
+    "El gobierno provisional surgido de la Gloriosa",
+    "El segundo gobierno de Espartero tras la Vicalvarada"],
+ ok:[1], x:"Es el momento de mayor estabilidad del reinado efectivo, apoyado además en una etapa de bonanza económica.",
+ tema:"el Gobierno Largo de la Unión Liberal"},
+
+{b:4,e:"¿En qué consistió la llamada guerra de prestigio?",
+ o:["En la Segunda Guerra Carlista, librada en Cataluña",
+    "En el intento de recuperar las colonias americanas perdidas",
+    "En una activa política exterior —Conchinchina, Marruecos, México y la Guerra del Pacífico— con la que se trataba de devolver a España el prestigio internacional perdido, con escaso éxito y gran coste económico y humano",
+    "En la intervención española en la unificación de Italia"],
+ ok:[2], x:"Fue el rasgo más característico del Gobierno Largo de O'Donnell.",
+ tema:"la política exterior de prestigio"},
+
+{b:4,e:"¿Qué caracterizó la etapa final del partido moderado (1863-1868)?",
+ o:["Una gran estabilidad política y la ampliación del sufragio",
+    "El retorno de la Unión Liberal al poder con un programa reformista",
+    "El acuerdo entre moderados y demócratas para reformar la Constitución",
+    "La inestabilidad política y la deriva autoritaria de los gobiernos, con el fin de la bonanza tras la crisis económica de 1864 y la dura represión del motín de San Gil (1866)"],
+ ok:[3], x:"Narváez y los moderados vuelven a la presidencia, pero el régimen ha agotado ya su capacidad de integrar a nadie más.",
+ tema:"el periodo terminal del partido moderado"},
+
+{b:4,doble:true,e:"Señala los dos puntos del Pacto de Ostende (1866).",
+ o:["Que el objeto de la revolución en España era la caída de los Borbones",
+    "Que se proclamaría inmediatamente la República como forma de gobierno",
+    "Que el régimen político seguiría siendo la monarquía, pero buscando una nueva dinastía que reemplazara a la borbónica",
+    "Que se mantendría el sufragio censitario de la Ley Electoral de 1846"],
+ ok:[0,2], x:"El cambio de régimen se decidiría por plebiscito o por unas Cortes Constituyentes elegidas por sufragio universal, y se reconocía a Prim como jefe y director militar del movimiento.",
+ tema:"los puntos del Pacto de Ostende"},
+
+{b:4,e:"¿Cómo se desarrolló la revolución de la Gloriosa en 1868?",
+ o:["Comenzó el 18 de septiembre con la sublevación del almirante Topete en la bahía de Cádiz, apoyado por Prim y Serrano; Serrano venció en la batalla de Alcolea e Isabel II se exilió en Francia",
+    "Comenzó con el motín de San Gil en Madrid y terminó con la abdicación de la reina en su hijo",
+    "La inició Narváez para forzar una reforma constitucional",
+    "Fue una sublevación carlista que llevó al trono a Carlos VII"],
+ ok:[0], x:"El manifiesto de la revolución, España con honra, se difundió ampliamente y el movimiento se extendió con levantamientos populares y juntas locales.",
+ tema:"la revolución de la Gloriosa de 1868"}
+];
+
+const LETRAS = ['a','b','c','d'];
+const estado = PREGUNTAS.map(() => ({resuelta:false, acierto:false, marcadas:[]}));
+
+const elPest = document.getElementById('pestanas');
+const elBloques = document.getElementById('bloques');
+
+/* ── Construcción ── */
+BLOQUES.forEach((bl, i) => {
+  const t = document.createElement('button');
+  t.className = 'pest'; t.type = 'button'; t.setAttribute('role','tab');
+  t.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+  t.innerHTML = '<b>' + (i+1) + '</b><span>' + bl.r + '</span>';
+  t.addEventListener('click', () => irA(i));
+  elPest.appendChild(t);
+
+  const sec = document.createElement('section');
+  sec.className = 'bloque'; sec.hidden = i !== 0;
+  sec.innerHTML = '<div class="bloque-cab"><p class="n">Bloque ' + (i+1) + ' de 5</p><h2>' + bl.t + '</h2></div>';
+  elBloques.appendChild(sec);
+});
+
+PREGUNTAS.forEach((p, idx) => {
+  const sec = elBloques.children[p.b];
+  const card = document.createElement('article');
+  card.className = 'p'; card.id = 'p' + idx;
+
+  const cab = document.createElement('div');
+  cab.className = 'p-cab';
+  cab.innerHTML = '<span class="p-num">' + (idx+1) + '</span><p class="enun">' + p.e + '</p>';
+  card.appendChild(cab);
+
+  if (p.doble) {
+    const av = document.createElement('p');
+    av.className = 'aviso'; av.textContent = 'Doble respuesta: marca las dos opciones';
+    card.appendChild(av);
+  }
+
+  const ops = document.createElement('div');
+  ops.className = 'ops';
+  p.o.forEach((texto, j) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'op';
+    b.innerHTML = '<span class="letra">' + LETRAS[j] + '</span><span>' + texto + '</span>';
+    b.addEventListener('click', () => elegir(idx, j));
+    ops.appendChild(b);
+  });
+  card.appendChild(ops);
+
+  if (p.doble) {
+    const btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'comprobar'; btn.textContent = 'Comprobar respuesta';
+    btn.disabled = true;
+    btn.addEventListener('click', () => corregir(idx));
+    card.appendChild(btn);
+  }
+
+  const r = document.createElement('div');
+  r.className = 'retro'; r.hidden = true;
+  card.appendChild(r);
+  sec.appendChild(card);
+});
+
+BLOQUES.forEach((bl, i) => {
+  const sec = elBloques.children[i];
+  const nav = document.createElement('div');
+  nav.className = 'nav';
+  const atras = document.createElement('button');
+  atras.type = 'button'; atras.textContent = 'Bloque anterior';
+  atras.hidden = i === 0;
+  atras.addEventListener('click', () => irA(i-1));
+  const alante = document.createElement('button');
+  alante.type = 'button'; alante.className = 'avanzar';
+  alante.textContent = i === BLOQUES.length - 1 ? 'Ver resultado' : 'Siguiente bloque';
+  alante.addEventListener('click', () => i === BLOQUES.length - 1 ? verResultado() : irA(i+1));
+  nav.appendChild(atras); nav.appendChild(alante);
+  sec.appendChild(nav);
+});
+
+/* ── Interacción ── */
+function elegir(idx, j) {
+  const e = estado[idx];
+  if (e.resuelta) return;
+  const p = PREGUNTAS[idx];
+  const card = document.getElementById('p' + idx);
+  const botones = card.querySelectorAll('.op');
+
+  if (!p.doble) {
+    e.marcadas = [j];
+    corregir(idx);
+    return;
+  }
+  const pos = e.marcadas.indexOf(j);
+  if (pos >= 0) e.marcadas.splice(pos, 1);
+  else if (e.marcadas.length < 2) e.marcadas.push(j);
+  botones.forEach((b, k) => b.classList.toggle('marcada', e.marcadas.indexOf(k) >= 0));
+  card.querySelector('.comprobar').disabled = e.marcadas.length !== 2;
+}
+
+function corregir(idx) {
+  const e = estado[idx];
+  if (e.resuelta) return;
+  const p = PREGUNTAS[idx];
+  const card = document.getElementById('p' + idx);
+  const botones = card.querySelectorAll('.op');
+
+  const acierto = e.marcadas.length === p.ok.length && p.ok.every(k => e.marcadas.indexOf(k) >= 0);
+  e.resuelta = true; e.acierto = acierto;
+
+  botones.forEach((b, k) => {
+    b.classList.remove('marcada');
+    b.classList.add('bloqueada');
+    b.disabled = true;
+    if (p.ok.indexOf(k) >= 0) b.classList.add('ok');
+    else if (e.marcadas.indexOf(k) >= 0) b.classList.add('mal');
+  });
+  if (p.doble) card.querySelector('.comprobar').remove();
+
+  const r = card.querySelector('.retro');
+  const correctas = p.ok.map(k => LETRAS[k]).join(' y ');
+  r.hidden = false;
+  r.className = 'retro ' + (acierto ? 'ok' : 'mal');
+  r.innerHTML = '<b>' + (acierto ? 'Correcto.' : 'No es la respuesta.') + '</b>' +
+                (acierto ? '' : 'La ' + (p.ok.length > 1 ? 'respuesta correcta son las opciones ' : 'respuesta correcta es la opción ') + correctas + '. ') + p.x;
+
+  actualizar();
+}
+
+function actualizar() {
+  const hechas = estado.filter(e => e.resuelta).length;
+  const bien = estado.filter(e => e.acierto).length;
+  document.getElementById('respondidas').textContent = hechas;
+  document.getElementById('aciertos').textContent = bien;
+  document.getElementById('relleno').style.width = (hechas / PREGUNTAS.length * 100) + '%';
+  BLOQUES.forEach((bl, i) => {
+    const total = PREGUNTAS.filter(p => p.b === i).length;
+    const listas = PREGUNTAS.filter((p, k) => p.b === i && estado[k].resuelta).length;
+    elPest.children[i].classList.toggle('hecho', listas === total);
+  });
+}
+
+function irA(i) {
+  Array.from(elBloques.children).forEach((s, k) => { s.hidden = k !== i; });
+  Array.from(elPest.children).forEach((t, k) => t.setAttribute('aria-selected', k === i ? 'true' : 'false'));
+  document.getElementById('resumen').classList.remove('visible');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function verResultado() {
+  const bien = estado.filter(e => e.acierto).length;
+  const sin = estado.filter(e => !e.resuelta).length;
+  document.getElementById('nAciertos').textContent = bien;
+
+  let msg;
+  if (bien >= 28) msg = 'Dominas el tema. Estás en condiciones de desarrollarlo por escrito en el examen.';
+  else if (bien >= 23) msg = 'Muy buen nivel. Solo te faltan matices de detalle.';
+  else if (bien >= 19) msg = 'Comprensión sólida, pero conviene repasar los puntos fallados antes de redactar el tema.';
+  else if (bien >= 13) msg = 'Base aceptable: necesitas una segunda lectura del tema, sobre todo de las etapas y de los partidos.';
+  else msg = 'Vuelve al tema con calma antes de repetir el cuestionario: falta asentar los hechos básicos.';
+  if (sin > 0) msg += ' Te quedan ' + sin + ' preguntas sin responder.';
+  document.getElementById('veredicto').textContent = msg;
+
+  const fallos = PREGUNTAS.filter((p, i) => estado[i].resuelta && !estado[i].acierto).map(p => p.tema);
+  const caja = document.getElementById('repasar');
+  if (fallos.length === 0 && sin === 0) {
+    caja.innerHTML = '<h3>Qué repasar</h3><p style="font-size:14.5px;color:var(--ink-soft)">No has fallado ninguna pregunta: el tema está asentado.</p>';
+  } else if (fallos.length === 0) {
+    caja.innerHTML = '<h3>Qué repasar</h3><p style="font-size:14.5px;color:var(--ink-soft)">De momento no has fallado nada. Termina las preguntas pendientes para tener el resultado completo.</p>';
+  } else {
+    caja.innerHTML = '<h3>Conviene repasar</h3><ul>' + fallos.map(f => '<li>' + f + '</li>').join('') + '</ul>';
+  }
+
+  Array.from(elBloques.children).forEach(s => { s.hidden = true; });
+  document.getElementById('resumen').classList.add('visible');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+document.getElementById('otraVez').addEventListener('click', reiniciar);
+document.getElementById('reinicio').addEventListener('click', reiniciar);
+
+function reiniciar() {
+  location.reload();
+}
+
+actualizar();
+</script>
+</body>
+</html>
