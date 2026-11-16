@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T7. El Sexenio Revolucionario — Cuestionario</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#1B1A17;
+  --ink-soft:#57544E;
+  --ink-faint:#94908A;
+  --paper:#F7F7F5;
+  --white:#FFFFFF;
+  --rule:#E3E1DB;
+
+  --mar:#124E57;           /* verdemar de la bahía de Cádiz */
+  --mar-2:#226C77;
+  --ambar:#C2862A;         /* ámbar de la Septembrina */
+  --ambar-claro:#FBF3E4;
+  --ok:#2D6A4F;
+  --ok-claro:#E9F4EE;
+  --mal:#9B2226;
+  --mal-claro:#FBECEC;
+
+  --sans:'IBM Plex Sans',-apple-system,'Segoe UI',Arial,sans-serif;
+  --serif:'Playfair Display',Georgia,serif;
+  --mono:'IBM Plex Mono',ui-monospace,Consolas,monospace;
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+html{scroll-behavior:smooth;scroll-padding-top:120px}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);font-size:16px;line-height:1.6;-webkit-text-size-adjust:100%}
+:focus-visible{outline:2.5px solid var(--ambar);outline-offset:2px}
+
+/* ── CABECERA ── */
+.head{background:linear-gradient(140deg,#0C343B 0%,#1E6673 55%,#0C343B 100%);color:#fff;padding:34px 28px 30px;border-bottom:3px solid var(--ambar)}
+.head-in{max-width:880px;margin:0 auto}
+.head .curso{font-family:var(--mono);font-size:11px;letter-spacing:1.6px;color:rgba(255,255,255,.5)}
+.head h1{font-family:var(--serif);font-weight:700;font-size:clamp(25px,4.4vw,38px);line-height:1.12;margin:10px 0 8px}
+.head p{color:rgba(255,255,255,.68);font-size:14.5px;max-width:62ch}
+.head .datos{display:flex;gap:26px;flex-wrap:wrap;margin-top:18px;font-family:var(--mono);font-size:11.5px;color:rgba(255,255,255,.55)}
+.head .datos strong{color:#E8B86B;font-size:13px;font-weight:500}
+
+/* ── BARRA FIJA ── */
+.barra{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.97);border-bottom:1px solid var(--rule);backdrop-filter:blur(6px)}
+.barra-in{max-width:880px;margin:0 auto;padding:11px 28px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.pista{flex:1;min-width:150px;height:7px;background:var(--rule);border-radius:4px;overflow:hidden}
+.relleno{height:100%;width:0;background:linear-gradient(90deg,var(--mar),var(--ambar));transition:width .35s ease}
+.marcador{font-family:var(--mono);font-size:12.5px;white-space:nowrap}
+.marcador b{font-weight:500}
+.reinicio{font-family:var(--mono);font-size:11px;color:var(--ink-faint);background:none;border:1px solid var(--rule);border-radius:5px;padding:5px 11px;cursor:pointer}
+.reinicio:hover{color:var(--ink);border-color:var(--ink-soft)}
+
+/* ── PESTAÑAS DE BLOQUE ── */
+.pestanas{max-width:880px;margin:0 auto;padding:0 28px 11px;display:flex;gap:7px;overflow-x:auto}
+.pest{flex:1;min-width:58px;background:none;border:1px solid var(--rule);border-radius:7px;padding:7px 6px 8px;cursor:pointer;font-family:var(--sans);text-align:center;color:var(--ink-faint);transition:border-color .2s,color .2s}
+.pest b{display:block;font-family:var(--mono);font-size:13px;font-weight:500;line-height:1.3}
+.pest span{display:block;font-size:10px;letter-spacing:.3px}
+.pest:hover{border-color:var(--ink-soft);color:var(--ink-soft)}
+.pest[aria-selected="true"]{background:var(--mar);border-color:var(--mar);color:#fff}
+.pest[aria-selected="true"] span{color:rgba(255,255,255,.65)}
+.pest.hecho:not([aria-selected="true"]){border-color:var(--ok);color:var(--ok)}
+
+/* ── CUERPO ── */
+main{max-width:880px;margin:0 auto;padding:30px 28px 70px}
+.bloque[hidden]{display:none}
+.bloque-cab{border-left:3px solid var(--ambar);padding-left:15px;margin-bottom:26px}
+.bloque-cab .n{font-family:var(--mono);font-size:11px;letter-spacing:1.4px;color:var(--ambar)}
+.bloque-cab h2{font-family:var(--serif);font-size:24px;font-weight:600;line-height:1.25;margin-top:5px}
+
+.p{background:var(--white);border:1px solid var(--rule);border-radius:11px;padding:21px 22px;margin-bottom:17px}
+.p-cab{display:flex;gap:11px;align-items:baseline;margin-bottom:13px}
+.p-num{font-family:var(--mono);font-size:12px;color:var(--ink-faint);padding-top:2px}
+.enun{font-size:16.5px;line-height:1.5;font-weight:500}
+.aviso{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:1.1px;color:var(--mar);background:#E7F0F1;border-radius:4px;padding:3px 8px;margin-bottom:11px}
+.ops{display:flex;flex-direction:column;gap:8px}
+.op{display:flex;gap:11px;align-items:flex-start;border:1px solid var(--rule);border-radius:8px;padding:11px 13px;cursor:pointer;background:var(--white);text-align:left;font:inherit;color:inherit;line-height:1.45;transition:border-color .18s,background .18s}
+.op:hover:not(.bloqueada){border-color:var(--mar-2)}
+.op .letra{font-family:var(--mono);font-size:12.5px;color:var(--ink-faint);padding-top:2px;min-width:14px}
+.op.marcada{border-color:var(--mar);background:#EFF5F6}
+.op.marcada .letra{color:var(--mar)}
+.op.ok{border-color:var(--ok);background:var(--ok-claro)}
+.op.ok .letra{color:var(--ok)}
+.op.mal{border-color:var(--mal);background:var(--mal-claro)}
+.op.mal .letra{color:var(--mal)}
+.op.bloqueada{cursor:default}
+.comprobar{margin-top:11px;font-family:var(--sans);font-size:13.5px;font-weight:500;color:#fff;background:var(--mar);border:0;border-radius:7px;padding:9px 17px;cursor:pointer}
+.comprobar:hover{background:var(--mar-2)}
+.comprobar:disabled{background:var(--rule);color:var(--ink-faint);cursor:default}
+.retro{margin-top:13px;padding:12px 14px;border-radius:8px;font-size:14.5px;line-height:1.5}
+.retro b{font-weight:600;display:block;margin-bottom:3px}
+.retro.ok{background:var(--ok-claro);color:#1E4B37;border-left:3px solid var(--ok)}
+.retro.mal{background:var(--mal-claro);color:#6E1519;border-left:3px solid var(--mal)}
+
+.nav{display:flex;justify-content:space-between;gap:12px;margin-top:26px}
+.nav button{font-family:var(--sans);font-size:14px;font-weight:500;border-radius:8px;padding:11px 20px;cursor:pointer;border:1px solid var(--mar);background:var(--white);color:var(--mar)}
+.nav button:hover{background:#EEF4F5}
+.nav .avanzar{background:var(--mar);color:#fff}
+.nav .avanzar:hover{background:var(--mar-2)}
+.nav button[hidden]{display:none}
+
+/* ── RESUMEN ── */
+#resumen{display:none;background:var(--white);border:1px solid var(--rule);border-top:4px solid var(--ambar);border-radius:11px;padding:30px 26px;margin-top:8px}
+#resumen.visible{display:block}
+#resumen h2{font-family:var(--serif);font-size:26px;font-weight:600}
+.nota{font-family:var(--mono);font-size:40px;font-weight:500;margin:14px 0 4px;color:var(--mar)}
+.nota span{font-size:19px;color:var(--ink-faint)}
+.veredicto{font-size:16px;color:var(--ink-soft);max-width:60ch}
+.repasar{margin-top:22px;background:var(--ambar-claro);border-left:3px solid var(--ambar);border-radius:0 8px 8px 0;padding:16px 18px}
+.repasar h3{font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:.3px;margin-bottom:9px}
+.repasar ul{margin:0;padding-left:19px;font-size:14.5px;line-height:1.75;color:var(--ink-soft)}
+.pie{max-width:880px;margin:0 auto;padding:0 28px 46px;font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+@media(max-width:620px){
+  .head{padding:26px 20px 24px}
+  .barra-in,.pestanas,main,.pie{padding-left:18px;padding-right:18px}
+  .pest span{display:none}
+  .p{padding:18px 16px}
+}
+</style>
+</head>
+<body>
+
+<header class="head">
+  <div class="head-in">
+    <p class="curso">2.º Bachillerato · Historia de España · Bloque B2</p>
+    <h1>El Sexenio Revolucionario<br>(1868-1874)</h1>
+    <p>Comprueba lo que has entendido del tema. Elige una opción y recibirás la corrección al instante, con la respuesta correcta y el porqué.</p>
+    <div class="datos">
+      <span><strong>30</strong> preguntas</span>
+      <span><strong>5</strong> bloques</span>
+      <span><strong>1868-1874</strong></span>
+    </div>
+  </div>
+</header>
+
+<div class="barra">
+  <div class="barra-in">
+    <div class="pista"><div class="relleno" id="relleno"></div></div>
+    <p class="marcador"><b id="respondidas">0</b>/30 respondidas · <b id="aciertos">0</b> aciertos</p>
+    <button class="reinicio" id="reinicio">Empezar de nuevo</button>
+  </div>
+  <div class="pestanas" role="tablist" id="pestanas"></div>
+</div>
+
+<main>
+  <div id="bloques"></div>
+  <section id="resumen" aria-live="polite">
+    <h2>Resultado</h2>
+    <p class="nota"><span id="nAciertos">0</span> <span>de 30</span></p>
+    <p class="veredicto" id="veredicto"></p>
+    <div class="repasar" id="repasar"></div>
+    <div class="nav" style="justify-content:flex-start">
+      <button id="otraVez">Repetir el cuestionario</button>
+    </div>
+  </section>
+</main>
+
+<p class="pie">Elaborado a partir del tema T7 del Bloque B2. Colegio El Valle.</p>
+
+<script>
+const BLOQUES = [
+  {t:"Las causas y la revolución de la Gloriosa", r:"1868"},
+  {t:"El Gobierno Provisional", r:"1868-1870"},
+  {t:"La Constitución de 1869", r:"1869"},
+  {t:"De la regencia de Serrano a Amadeo I", r:"1869-1873"},
+  {t:"La Primera República y el fin del Sexenio", r:"1873-1874"}
+];
+
+const PREGUNTAS = [
+/* BLOQUE 1 */
+{b:0,e:"¿Qué supuso el Sexenio Revolucionario (1868-1874) y por qué fracasó?",
+ o:["Fue el intento de los sectores más progresistas de la burguesía por avanzar hacia un régimen parlamentario democrático; fracasó por la oposición tanto de los grupos oligárquicos como de las clases más populares",
+    "Fue un intento de restaurar el absolutismo que fracasó por la resistencia liberal",
+    "Fue un periodo de estabilidad política que terminó por agotamiento natural",
+    "Fue un proyecto carlista de recuperación de los fueros que el ejército sofocó"],
+ ok:[0], x:"Quedó aplastado entre dos rechazos simultáneos: el de arriba y el de abajo.",
+ tema:"el sentido y el fracaso del Sexenio"},
+
+{b:0,e:"¿Qué crisis económica y social precedió a la revolución de 1868?",
+ o:["Una crisis agraria provocada por la desamortización de Madoz",
+    "Una crisis económica debida a la escasa rentabilidad de la explotación de las líneas ferroviarias construidas, y una crisis social derivada del paro al interrumpirse la inversión en otros sectores",
+    "Una crisis financiera causada por la pérdida de las colonias americanas",
+    "Una crisis de subsistencias provocada por la guerra de Marruecos"],
+ ok:[1], x:"El ferrocarril había atraído el capital disponible; cuando no rindió lo esperado, arrastró al resto de la economía.",
+ tema:"la crisis económica y social de 1868"},
+
+{b:0,e:"¿En qué consistió la crisis política que desembocó en la revolución?",
+ o:["Progresistas y demócratas firmaron el Pacto de Ostende, por el que se acordaba el derrocamiento de Isabel II; un año después se les unió también la Unión Liberal",
+    "Narváez y O'Donnell pactaron turnarse en el gobierno",
+    "Los carlistas y los alfonsinos acordaron presentar un candidato común",
+    "Las Cortes retiraron su apoyo a la Constitución de 1845"],
+ ok:[0], x:"La Unión Liberal se incorporó una vez muerto O'Donnell: el régimen isabelino se quedó así sin ninguno de sus apoyos.",
+ tema:"el Pacto de Ostende y la crisis política"},
+
+{b:0,e:"¿Cómo se desarrolló la revolución de la Gloriosa?",
+ o:["Estalló en Madrid con el motín de San Gil y fue reprimida por Narváez",
+    "Comenzó con una sublevación carlista en Navarra que se extendió al resto del país",
+    "Estalló en Cádiz, iniciada por el unionista almirante Topete; al pronunciamiento militar se unieron rápidamente sublevaciones populares, y tras el triunfo en Alcolea (Córdoba) Isabel II se exilió a Francia",
+    "Fue un golpe de palacio que obligó a la reina a abdicar en su hijo Alfonso"],
+ ok:[2], x:"Pronunciamiento militar y movilización popular se combinan: es lo que distingue a la Gloriosa de los pronunciamientos anteriores.",
+ tema:"el desarrollo de la revolución de 1868"},
+
+{b:0,e:"¿Qué significó políticamente la revolución de septiembre?",
+ o:["La afirmación de un nuevo sentido del liberalismo, contrapuesto al rígido moderantismo, el fin del régimen de los generales de las décadas anteriores y el triunfo de la sociedad civil",
+    "La vuelta al liberalismo doctrinario de la Constitución de 1845",
+    "La implantación inmediata de la República",
+    "El refuerzo del papel político del ejército"],
+ ok:[0], x:"El protagonismo pasa, al menos en su planteamiento, de los espadones a la sociedad civil organizada.",
+ tema:"el significado de la revolución de septiembre"},
+
+{b:0,e:"¿En qué tres etapas se divide el Sexenio Democrático?",
+ o:["Década Moderada, Bienio Progresista y Reacción Moderada",
+    "Gobierno Provisional de Serrano (1868-1870), Monarquía democrática de Amadeo de Saboya (1871-1873) y Primera República (1873-1874)",
+    "Regencia de María Cristina, regencia de Espartero y reinado efectivo",
+    "Gobierno de Prim, dictadura de Pavía y Restauración borbónica"],
+ ok:[1], x:"Tres ensayos sucesivos —gobierno provisional, monarquía democrática y república— en apenas seis años.",
+ tema:"las tres etapas del Sexenio"},
+
+/* BLOQUE 2 */
+{b:1,e:"¿Quién presidió el Gobierno Provisional y por quién estaba constituido?",
+ o:["El general Prim, con un gobierno de demócratas y republicanos",
+    "El general Serrano, con un gobierno de unionistas y progresistas de clases medias, que aspiraban a un cambio político pero temían la radicalización social y defendían la monarquía como forma de Estado",
+    "El almirante Topete, con un gobierno de unionistas y carlistas",
+    "Cánovas del Castillo, con un gobierno de alfonsinos"],
+ ok:[1], x:"Querían un cambio político, no una revolución social: de ahí su recelo ante las propuestas contra la propiedad privada.",
+ tema:"la composición del Gobierno Provisional"},
+
+{b:1,e:"¿Qué posición ocupaban los demócratas respecto a ese gobierno?",
+ o:["Estaban excluidos, pero tenían gran influencia en las juntas revolucionarias formadas tras la Gloriosa, que funcionaban como un poder paralelo",
+    "Presidían el gobierno junto a los unionistas",
+    "Habían sido ilegalizados tras la revolución",
+    "Se habían integrado en el partido carlista"],
+ ok:[0], x:"Para disolver las juntas, el gobierno acabó cumpliendo gran parte de sus solicitudes.",
+ tema:"los demócratas y las juntas revolucionarias"},
+
+{b:1,e:"¿En qué dos facciones se escindió el Partido Demócrata?",
+ o:["En moderados y progresistas",
+    "En doceañistas y veinteañistas",
+    "En transaccionistas e intransigentes",
+    "En los demócratas cimbrios, dispuestos a cooperar con el gobierno, y los republicanos, que aspiraban a una república federal y a una mayor justicia económica y social"],
+ ok:[3], x:"Los republicanos, apoyados por las clases más populares, terminarán fundando el Partido Republicano Democrático Federal.",
+ tema:"la escisión del Partido Demócrata: cimbrios y republicanos"},
+
+{b:1,e:"¿Cómo se convocaron las Cortes Constituyentes de enero de 1869 y qué resultados dieron?",
+ o:["Por sufragio censitario; dieron mayoría absoluta a los carlistas",
+    "Por sufragio universal masculino; mayoría absoluta de las fuerzas gubernamentales en la España interior, mayoría republicana en la España mediterránea y escaños carlistas en Vizcaya, Guipúzcoa y Navarra",
+    "Por designación de las juntas revolucionarias; dieron mayoría a los alfonsinos",
+    "Por sufragio universal masculino y femenino; dieron mayoría a los republicanos federales"],
+ ok:[1], x:"Las fuerzas gubernamentales eran unionistas, progresistas y demócratas cimbrios. El mapa electoral muestra ya la fractura del país.",
+ tema:"las elecciones constituyentes de 1869"},
+
+{b:1,doble:true,e:"Señala las dos medidas de liberalización económica del Gobierno Provisional.",
+ o:["La desamortización del subsuelo o Ley de Minas, en 1868",
+    "El arancel Figuerola, que rebajaba los aranceles aduaneros, en 1869",
+    "Una reforma fiscal en profundidad que saneó la Hacienda pública",
+    "La supresión de la peseta como unidad monetaria"],
+ ok:[0,1], x:"Justo lo contrario de las otras dos: se instauró la peseta como nueva unidad monetaria y no se introdujo ninguna reforma fiscal, de modo que la deuda pública fue en aumento.",
+ tema:"la Ley de Minas y el arancel Figuerola"},
+
+{b:1,e:"¿Qué conflictos se extendieron pese a los cambios políticos?",
+ o:["Agitaciones campesinas en Andalucía, manifestaciones de los republicanos federales más intransigentes, sublevaciones en Cataluña y Valencia, motines de subsistencia y huelgas de las primeras asociaciones obreras",
+    "Únicamente la insurrección carlista en el norte",
+    "Revueltas de los grandes terratenientes contra la desamortización",
+    "Protestas estudiantiles como la Noche de San Daniel"],
+ ok:[0], x:"A ello se sumó la hostilidad de la Iglesia por la libertad de culto, las expropiaciones a conventos y la expulsión de los jesuitas, y los primeros brotes independentistas en Cuba: la Guerra de los Diez Años (1868-1878).",
+ tema:"la conflictividad social durante el Gobierno Provisional"},
+
+/* BLOQUE 3 */
+{b:2,e:"¿Qué carácter tiene la Constitución de 1869?",
+ o:["Es una carta otorgada, como el Estatuto Real",
+    "Es la más radicalmente liberal de las constituciones del siglo XIX, por lo que se habla de la constitución democrática de 1869",
+    "Es una reforma conservadora del texto de 1845",
+    "Es un texto provisional que nunca llegó a aplicarse"],
+ ok:[1], x:"Su primer principio es el reconocimiento de la soberanía nacional.",
+ tema:"el carácter democrático de la Constitución de 1869"},
+
+{b:2,e:"¿Qué sufragio establece el texto de 1869?",
+ o:["Sufragio censitario limitado al 0,8 % de la población",
+    "Sufragio universal masculino y femenino",
+    "Sufragio universal directo para los varones mayores de veinticinco años",
+    "Sufragio indirecto a través de los ayuntamientos"],
+ ok:[2], x:"Es la gran novedad democrática: el cuerpo electoral deja de depender de la renta.",
+ tema:"el sufragio universal masculino de 1869"},
+
+{b:2,e:"¿Qué forma de Estado establece la Constitución de 1869?",
+ o:["Una monarquía democrática, con una serie de limitaciones a los poderes del rey",
+    "Una república federal",
+    "Una monarquía absoluta de derecho divino",
+    "Una regencia colegiada de cinco miembros"],
+ ok:[0], x:"Monarquía, pero democrática: por eso el Gobierno Provisional tuvo que buscar un rey para una corona ya definida por las Cortes.",
+ tema:"la monarquía democrática como forma de Estado"},
+
+{b:2,e:"¿Cómo se reparten los poderes en el texto de 1869?",
+ o:["El rey concentra el ejecutivo y el legislativo y nombra a los jueces",
+    "El ejecutivo lo detenta el rey a través del Consejo de Ministros, responsables ante las Cortes; el legislativo reside en unas Cortes bicamerales cuyas dos cámaras elige el cuerpo electoral; el judicial queda reservado a los tribunales",
+    "El legislativo reside en una cámara única elegida por sufragio censitario",
+    "El Senado es de designación real y vitalicia, como en 1845"],
+ ok:[1], x:"Que también el Senado sea electivo es la diferencia decisiva con los textos de 1837 y 1845.",
+ tema:"la división de poderes en la Constitución de 1869"},
+
+{b:2,doble:true,e:"Señala los dos avances en materia de derechos que recoge la Constitución de 1869.",
+ o:["Una amplia declaración de derechos, en la que se reconocen por primera vez los de reunión y asociación",
+    "La libertad de cultos religiosos",
+    "La confesionalidad católica excluyente de cualquier otra creencia",
+    "La restricción de la libertad de expresión para garantizar el orden público"],
+ ok:[0,1], x:"Reunión, asociación y libertad de cultos: el núcleo de lo que convierte a este texto en el más avanzado del siglo.",
+ tema:"los derechos reconocidos en la Constitución de 1869"},
+
+{b:2,e:"¿Por qué se mostró la Iglesia claramente hostil al nuevo régimen?",
+ o:["Por la promulgación de la libertad de culto, las expropiaciones hechas a conventos y la expulsión de los jesuitas",
+    "Por la firma de un nuevo concordato con la Santa Sede",
+    "Por la supresión del matrimonio civil",
+    "Por la abolición de la esclavitud en Cuba y Puerto Rico"],
+ ok:[0], x:"La cuestión religiosa vuelve a situarse en el centro del conflicto entre liberalismo y tradición.",
+ tema:"la hostilidad de la Iglesia ante el Sexenio"},
+
+/* BLOQUE 4 */
+{b:3,e:"¿Qué cargos ocuparon Serrano y Prim una vez aprobada la Constitución?",
+ o:["Serrano fue elegido regente (1869-1870) y Prim, líder de los progresistas, pasó a dirigir el gobierno, tal como se había acordado en el Pacto de Ostende",
+    "Prim fue elegido regente y Serrano presidió el gobierno",
+    "Ambos formaron un directorio militar conjunto",
+    "Serrano fue proclamado rey y Prim, jefe del ejército"],
+ ok:[0], x:"Sus objetivos fueron unir a los partidos en un programa estabilizador —que no se logró—, desarrollar legislativamente la Constitución y buscar un candidato a la Corona.",
+ tema:"la regencia de Serrano y el gobierno de Prim"},
+
+{b:3,e:"¿En qué consistió el desarrollo legislativo de la Constitución entre 1869 y 1870?",
+ o:["En la aprobación de la Ley de Orden Público, un nuevo Código Penal, la Ley Electoral, la Ley Municipal y Provincial y la ley sobre el matrimonio civil",
+    "En la redacción de un proyecto de constitución federal",
+    "En el restablecimiento de la Ley de Ayuntamientos de 1845",
+    "En la aprobación del Concordato con la Santa Sede"],
+ ok:[0], x:"Una constitución no se aplica sola: necesita todo este andamiaje de leyes orgánicas.",
+ tema:"el desarrollo legislativo de la Constitución de 1869"},
+
+{b:3,e:"¿Quién fue elegido rey por las Cortes en 1871 y por qué?",
+ o:["Alfonso de Borbón, hijo de Isabel II, por ser el heredero legítimo",
+    "Carlos de Borbón y Austria-Este, por sus derechos dinásticos",
+    "Amadeo de Saboya, hijo de Víctor Manuel II de la recién unificada Italia y perteneciente a una dinastía con fama de liberal",
+    "Leopoldo de Hohenzollern, por el apoyo de Prusia"],
+ ok:[2], x:"Se inicia así la llamada Monarquía democrática de Amadeo I (1871-1873).",
+ tema:"la elección de Amadeo de Saboya"},
+
+{b:3,e:"¿Qué acontecimiento debilitó gravemente la posición del nuevo rey nada más llegar?",
+ o:["El asesinato del general Prim, su principal apoyo, atacado el 27 de diciembre de 1870",
+    "La abdicación de Serrano como regente",
+    "La derrota del ejército en la batalla de Alcolea",
+    "La proclamación de la República Federal en Cartagena"],
+ ok:[0], x:"El general progresista era su principal valedor; sin él, Amadeo quedó sin base política propia.",
+ tema:"el asesinato de Prim"},
+
+{b:3,doble:true,e:"Señala las dos fuerzas monárquicas que se opusieron a Amadeo I.",
+ o:["Los carlistas, que esgrimían los derechos dinásticos de Carlos de Borbón y Austria-Este frente al rey extranjero e iniciaron la Tercera Guerra Carlista en 1872",
+    "Los alfonsinos, partidarios de la vuelta de los Borbones en la figura de Alfonso, hijo de Isabel II, alineados con Cánovas del Castillo",
+    "Los unionistas, que reclamaban el regreso inmediato de Isabel II al trono",
+    "La jerarquía eclesiástica, que defendía la libertad de cultos frente al rey"],
+ ok:[0,1], x:"A ellos se sumaban dos rechazos no monárquicos: los republicanos, procedentes del Partido Demócrata y muy anticlericales, y el movimiento obrero al abrigo de la AIT.",
+ tema:"la oposición carlista y alfonsina a Amadeo I"},
+
+{b:3,e:"¿Por qué abdicó Amadeo I el 11 de febrero de 1873?",
+ o:["Porque las Cortes le retiraron formalmente la corona",
+    "Porque la alianza de unionistas, progresistas y demócratas que lo había llevado al trono se resquebrajó, y acabó harto de la inestabilidad y de la soledad en que se encontraba",
+    "Porque su padre le reclamó para gobernar Italia",
+    "Porque fue derrotado por los carlistas en el País Vasco"],
+ ok:[1], x:"Sus dos años de reinado fueron una continuación de la inestabilidad política y social iniciada durante la regencia de Serrano.",
+ tema:"la abdicación de Amadeo I"},
+
+/* BLOQUE 5 */
+{b:4,e:"¿Cómo se proclamó la Primera República?",
+ o:["Las Cortes la proclamaron el mismo día de la abdicación, sin otra alternativa posible, pese a que en ellas no había mayoría de republicanos",
+    "La proclamaron las juntas revolucionarias tras un referéndum",
+    "La impuso el general Pavía tras su golpe de Estado",
+    "La proclamaron las Cortes Constituyentes elegidas en mayo de 1873"],
+ ok:[0], x:"Era impensable iniciar una nueva búsqueda de rey entre las dinastías europeas: la República llega por descarte.",
+ tema:"la proclamación de la República sin mayoría republicana"},
+
+{b:4,e:"¿Qué apoyo social tenían las ideas republicanas?",
+ o:["Un apoyo mayoritario entre todas las clases sociales",
+    "El respaldo de la alta burguesía y del ejército",
+    "Un escaso apoyo social, con la oposición de la alta burguesía, los terratenientes, los altos mandos del ejército y las jerarquías eclesiásticas",
+    "El apoyo decidido de la Iglesia y de los terratenientes"],
+ ok:[2], x:"Los grupos sociales e instituciones más poderosos del país eran contrarios al nuevo régimen: de ahí su extrema debilidad.",
+ tema:"la debilidad social de la República"},
+
+{b:4,e:"¿Quiénes fueron los cuatro presidentes de la República, en orden?",
+ o:["Serrano, Prim, Topete y Pavía",
+    "Estanislao Figueras, Pi y Margall, Nicolás Salmerón y Emilio Castelar",
+    "Pi y Margall, Figueras, Castelar y Salmerón",
+    "Castelar, Salmerón, Serrano y Martínez Campos"],
+ ok:[1], x:"Cuatro presidentes en el breve lapso de un año: la mejor medida de la inestabilidad del régimen.",
+ tema:"los cuatro presidentes de la Primera República"},
+
+{b:4,e:"¿Qué fue la insurrección cantonal?",
+ o:["Una sublevación carlista en el País Vasco y Navarra",
+    "Una huelga general convocada por la AIT",
+    "Un levantamiento del ejército contra el gobierno de Figueras",
+    "Los republicanos federales más extremistas proclamaron cantones, pequeños estados regionales cuasi independientes, en Valencia, Murcia y Andalucía, sublevándose contra el gobierno republicano de Madrid"],
+ ok:[3], x:"Tumbó a Pi y Margall en poco más de un mes. La resistencia del cantón de Cartagena lo convirtió en símbolo del movimiento, con ideas republicano-federales y anarquistas entremezcladas.",
+ tema:"la insurrección cantonal y el cantón de Cartagena"},
+
+{b:4,doble:true,e:"Señala las dos reformas republicanas que acabaron volviéndose contra el propio régimen.",
+ o:["La supresión del impuesto de consumos, que al eliminar un impuesto indirecto agravó el déficit de la Hacienda",
+    "La eliminación de las quintas, que debilitó al Estado republicano frente a la insurrección carlista",
+    "La abolición de la esclavitud en Cuba y Puerto Rico",
+    "La reglamentación del trabajo infantil, que prohibía emplear a menores de diez años en fábricas y minas"],
+ ok:[0,1], x:"Ambas eran medidas muy populares y largamente reclamadas, pero dejaron a la República sin dinero y sin soldados.",
+ tema:"las reformas republicanas que debilitaron al régimen"},
+
+{b:4,e:"¿Cómo terminó el Sexenio y se llegó a la Restauración?",
+ o:["Con la victoria carlista y la proclamación de Carlos VII como rey",
+    "Con la vuelta de Isabel II al trono tras el fracaso de la República",
+    "Con el golpe del general Pavía (4 de enero de 1874), que disolvió las Cortes y dio paso a la dictadura personal de Serrano; después, el Manifiesto de Sandhurst y el pronunciamiento de Martínez Campos en Sagunto llevaron al trono a Alfonso XII en enero de 1875",
+    "Con unas elecciones constituyentes que aprobaron la Constitución federal"],
+ ok:[2], x:"El Manifiesto de Sandhurst lo redactó Cánovas y lo firmó el príncipe Alfonso, prometiendo una monarquía dialogante y democrática; Martínez Campos se adelantó al plan pacífico de Cánovas.",
+ tema:"el golpe de Pavía, Sandhurst y Sagunto"}
+];
+
+const LETRAS = ['a','b','c','d'];
+const estado = PREGUNTAS.map(() => ({resuelta:false, acierto:false, marcadas:[]}));
+
+const elPest = document.getElementById('pestanas');
+const elBloques = document.getElementById('bloques');
+
+/* ── Construcción ── */
+BLOQUES.forEach((bl, i) => {
+  const t = document.createElement('button');
+  t.className = 'pest'; t.type = 'button'; t.setAttribute('role','tab');
+  t.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+  t.innerHTML = '<b>' + (i+1) + '</b><span>' + bl.r + '</span>';
+  t.addEventListener('click', () => irA(i));
+  elPest.appendChild(t);
+
+  const sec = document.createElement('section');
+  sec.className = 'bloque'; sec.hidden = i !== 0;
+  sec.innerHTML = '<div class="bloque-cab"><p class="n">Bloque ' + (i+1) + ' de 5</p><h2>' + bl.t + '</h2></div>';
+  elBloques.appendChild(sec);
+});
+
+PREGUNTAS.forEach((p, idx) => {
+  const sec = elBloques.children[p.b];
+  const card = document.createElement('article');
+  card.className = 'p'; card.id = 'p' + idx;
+
+  const cab = document.createElement('div');
+  cab.className = 'p-cab';
+  cab.innerHTML = '<span class="p-num">' + (idx+1) + '</span><p class="enun">' + p.e + '</p>';
+  card.appendChild(cab);
+
+  if (p.doble) {
+    const av = document.createElement('p');
+    av.className = 'aviso'; av.textContent = 'Doble respuesta: marca las dos opciones';
+    card.appendChild(av);
+  }
+
+  const ops = document.createElement('div');
+  ops.className = 'ops';
+  p.o.forEach((texto, j) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'op';
+    b.innerHTML = '<span class="letra">' + LETRAS[j] + '</span><span>' + texto + '</span>';
+    b.addEventListener('click', () => elegir(idx, j));
+    ops.appendChild(b);
+  });
+  card.appendChild(ops);
+
+  if (p.doble) {
+    const btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'comprobar'; btn.textContent = 'Comprobar respuesta';
+    btn.disabled = true;
+    btn.addEventListener('click', () => corregir(idx));
+    card.appendChild(btn);
+  }
+
+  const r = document.createElement('div');
+  r.className = 'retro'; r.hidden = true;
+  card.appendChild(r);
+  sec.appendChild(card);
+});
+
+BLOQUES.forEach((bl, i) => {
+  const sec = elBloques.children[i];
+  const nav = document.createElement('div');
+  nav.className = 'nav';
+  const atras = document.createElement('button');
+  atras.type = 'button'; atras.textContent = 'Bloque anterior';
+  atras.hidden = i === 0;
+  atras.addEventListener('click', () => irA(i-1));
+  const alante = document.createElement('button');
+  alante.type = 'button'; alante.className = 'avanzar';
+  alante.textContent = i === BLOQUES.length - 1 ? 'Ver resultado' : 'Siguiente bloque';
+  alante.addEventListener('click', () => i === BLOQUES.length - 1 ? verResultado() : irA(i+1));
+  nav.appendChild(atras); nav.appendChild(alante);
+  sec.appendChild(nav);
+});
+
+/* ── Interacción ── */
+function elegir(idx, j) {
+  const e = estado[idx];
+  if (e.resuelta) return;
+  const p = PREGUNTAS[idx];
+  const card = document.getElementById('p' + idx);
+  const botones = card.querySelectorAll('.op');
+
+  if (!p.doble) {
+    e.marcadas = [j];
+    corregir(idx);
+    return;
+  }
+  const pos = e.marcadas.indexOf(j);
+  if (pos >= 0) e.marcadas.splice(pos, 1);
+  else if (e.marcadas.length < 2) e.marcadas.push(j);
+  botones.forEach((b, k) => b.classList.toggle('marcada', e.marcadas.indexOf(k) >= 0));
+  card.querySelector('.comprobar').disabled = e.marcadas.length !== 2;
+}
+
+function corregir(idx) {
+  const e = estado[idx];
+  if (e.resuelta) return;
+  const p = PREGUNTAS[idx];
+  const card = document.getElementById('p' + idx);
+  const botones = card.querySelectorAll('.op');
+
+  const acierto = e.marcadas.length === p.ok.length && p.ok.every(k => e.marcadas.indexOf(k) >= 0);
+  e.resuelta = true; e.acierto = acierto;
+
+  botones.forEach((b, k) => {
+    b.classList.remove('marcada');
+    b.classList.add('bloqueada');
+    b.disabled = true;
+    if (p.ok.indexOf(k) >= 0) b.classList.add('ok');
+    else if (e.marcadas.indexOf(k) >= 0) b.classList.add('mal');
+  });
+  if (p.doble) card.querySelector('.comprobar').remove();
+
+  const r = card.querySelector('.retro');
+  const correctas = p.ok.map(k => LETRAS[k]).join(' y ');
+  r.hidden = false;
+  r.className = 'retro ' + (acierto ? 'ok' : 'mal');
+  r.innerHTML = '<b>' + (acierto ? 'Correcto.' : 'No es la respuesta.') + '</b>' +
+                (acierto ? '' : 'La ' + (p.ok.length > 1 ? 'respuesta correcta son las opciones ' : 'respuesta correcta es la opción ') + correctas + '. ') + p.x;
+
+  actualizar();
+}
+
+function actualizar() {
+  const hechas = estado.filter(e => e.resuelta).length;
+  const bien = estado.filter(e => e.acierto).length;
+  document.getElementById('respondidas').textContent = hechas;
+  document.getElementById('aciertos').textContent = bien;
+  document.getElementById('relleno').style.width = (hechas / PREGUNTAS.length * 100) + '%';
+  BLOQUES.forEach((bl, i) => {
+    const total = PREGUNTAS.filter(p => p.b === i).length;
+    const listas = PREGUNTAS.filter((p, k) => p.b === i && estado[k].resuelta).length;
+    elPest.children[i].classList.toggle('hecho', listas === total);
+  });
+}
+
+function irA(i) {
+  Array.from(elBloques.children).forEach((s, k) => { s.hidden = k !== i; });
+  Array.from(elPest.children).forEach((t, k) => t.setAttribute('aria-selected', k === i ? 'true' : 'false'));
+  document.getElementById('resumen').classList.remove('visible');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function verResultado() {
+  const bien = estado.filter(e => e.acierto).length;
+  const sin = estado.filter(e => !e.resuelta).length;
+  document.getElementById('nAciertos').textContent = bien;
+
+  let msg;
+  if (bien >= 28) msg = 'Dominas el tema. Estás en condiciones de desarrollarlo por escrito en el examen.';
+  else if (bien >= 23) msg = 'Muy buen nivel. Solo te faltan matices de detalle.';
+  else if (bien >= 19) msg = 'Comprensión sólida, pero conviene repasar los puntos fallados antes de redactar el tema.';
+  else if (bien >= 13) msg = 'Base aceptable: necesitas una segunda lectura del tema, sobre todo de las tres etapas del Sexenio.';
+  else msg = 'Vuelve al tema con calma antes de repetir el cuestionario: falta asentar los hechos básicos.';
+  if (sin > 0) msg += ' Te quedan ' + sin + ' preguntas sin responder.';
+  document.getElementById('veredicto').textContent = msg;
+
+  const fallos = PREGUNTAS.filter((p, i) => estado[i].resuelta && !estado[i].acierto).map(p => p.tema);
+  const caja = document.getElementById('repasar');
+  if (fallos.length === 0 && sin === 0) {
+    caja.innerHTML = '<h3>Qué repasar</h3><p style="font-size:14.5px;color:var(--ink-soft)">No has fallado ninguna pregunta: el tema está asentado.</p>';
+  } else if (fallos.length === 0) {
+    caja.innerHTML = '<h3>Qué repasar</h3><p style="font-size:14.5px;color:var(--ink-soft)">De momento no has fallado nada. Termina las preguntas pendientes para tener el resultado completo.</p>';
+  } else {
+    caja.innerHTML = '<h3>Conviene repasar</h3><ul>' + fallos.map(f => '<li>' + f + '</li>').join('') + '</ul>';
+  }
+
+  Array.from(elBloques.children).forEach(s => { s.hidden = true; });
+  document.getElementById('resumen').classList.add('visible');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+document.getElementById('otraVez').addEventListener('click', reiniciar);
+document.getElementById('reinicio').addEventListener('click', reiniciar);
+
+function reiniciar() {
+  location.reload();
+}
+
+actualizar();
+</script>
+</body>
+</html>
